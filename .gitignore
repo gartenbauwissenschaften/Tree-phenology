@@ -5,10 +5,13 @@
 .Rproj.user/*
 .Ruserdata
 
-# Exclude data and renv folders
+# Exclude data and pictures folders in the future to reduce repo size
 # data/
 # pictures/
-renv/
+
+# Exclude renv package library and staging area
+renv/library/
+renv/staging/
 
 # Build output directories
 _book/
