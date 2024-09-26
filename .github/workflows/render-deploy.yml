@@ -50,7 +50,7 @@ jobs:
           cargo
       
       # Step 3: Set up Pandoc
-      - name: Install
+      - name: Install Pandoc
         uses: pandoc/actions/setup@v1
 
       # Step 4: Install renv and restore dependencies integrated with github cache
