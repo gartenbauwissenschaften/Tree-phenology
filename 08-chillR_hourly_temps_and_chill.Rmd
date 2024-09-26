@@ -1,0 +1,332 @@
+# Making hourly temperatures
+
+```{r load_packages, echo=FALSE, message=FALSE, warning=FALSE}
+require(chillR)
+require(ggplot2)
+require(tidyr)
+require(kableExtra)
+
+```
+
+## Learning goals for this lesson {-#goals_hourly}
+
+- Understand why we often need hourly temperature data and why we need ways of making them out of daily data
+- Understand some basic algorithms for making hourly data from daily minimum and maximum temperatures
+- Understand how we can make use of observed hourly temperatures to produce our own empirical transfer function that can make hourly from daily data
+- Be able to use the respective `chillR` functions that implement these steps
+
+
+## Generating hourly temperatures
+
+Now that we have the Chilling Hours function coded, we can move on to the next problem - we don't usually have hourly temperature data. Most sources only provide daily data, usually including minimum and maximum temperature of the day, from which we can't directly calculate Chilling Hours. This has long been a challenge, and people found a bunch of suboptimal solutions for this. For example, some reseachers calculated Chilling Hours for a certain number of days based on high-resolution data and then related the number of Chilling Hours to the minimum temperature [@crossa1955effets], or they made a more complex regression equation.
+
+When computing became easier, people started assuming that the daily minimum temperature occurred at a certain time of day, and the maximum temperature at another time. For hours between these times, they interpolated linearly, which resulted in a 'triangular' daily temperature pattern [@baldocchi2008accumulated] [*(Link)*](https://link.springer.com/article/10.1007/s10584-007-9367-8). Here's what this looks like:
+
+```{r triangular, out.width="80%", out.height="50%", echo=FALSE}
+
+
+
+KA_hours <- KA_weather[10:20, ]
+KA_hours[, "Hour"] <- 0
+KA_hours$Hour[nrow(KA_hours)] <- 23
+KA_hours[, "Temp"] <- 0
+KA_hours <- make_all_day_table(KA_hours, timestep = "hour")
+
+for (i in 2:nrow(KA_hours))
+{
+  if (is.na(KA_hours$Tmin[i]))
+    KA_hours$Tmin[i] <- KA_hours$Tmin[i - 1]
+  if (is.na(KA_hours$Tmax[i]))
+    KA_hours$Tmax[i] <- KA_hours$Tmax[i - 1]
+}
+KA_hours$Temp <- NA
+
+KA_hours$Temp[which(KA_hours$Hour == 6)] <-
+  KA_hours$Tmin[which(KA_hours$Hour == 6)]
+KA_hours$Temp[which(KA_hours$Hour == 18)] <-
+  KA_hours$Tmax[which(KA_hours$Hour == 18)]
+KA_hours$Temp <- interpolate_gaps(KA_hours$Temp)$interp
+
+ggplot(KA_hours[20:100, ], aes(DATE, Temp)) +
+  geom_line(lwd = 1.5) +
+  xlab("Date") +
+  ylab("Temperature (°C)") +
+  theme_bw(base_size = 20)
+
+```
+
+This may not be a totally unreasonable approximation, but of course this isn't particularly realistic. The rate of temperature increase in the morning is not the same as the rate of decrease in the evening. Besides, in particular the time of the lowest daily temperature varies considerably throughout the year (unless you're close to the equator), and it would be good to consider this.
+
+### Idealized daily temperature curves
+
+A major step forward was taken when Dale E. Linvill from Clemson University in South Carolina (USA) published a paper [@linvill1990calculating] [*(Link)*](https://journals.ashs.org/hortsci/view/journals/hortsci/25/1/article-p14.xml) that described the daily temperature curve using a combination of two mathematical equations: a sine curve to describe daytime warming, and a logarithmic decay function for nighttime cooling. The transition points between the two parts were determined by sunrise and sunset, and the duration of the parts was related to daylength. The equations in this paper paved the way for making more realistic daily temperature curves than could easily be constructed before. This of course doesn't mean that all studies that came later used these equations - very far from it! This is mainly because people have either not been aware of these equations, or they were lacking the data processing skills to use them in their work.
+
+One aspect that made Linvill's equations hard to use across different locations was the dependency on sunrise and sunset times. Of course, tables of these times can be produced from observations everywhere, but modelers would greatly benefit from a generic method to determine these. Fortunately, at least for locations without major topographic features, sunrise and sunset times can be calculated based on what we know about the geometry of our solar system. As agricultural scientists, this doesn't come naturally to us, but we can make use of what researchers in other fields have found out. The procedures in `chillR` rely on equations produced by @spencer1971fourier [*(Link)*](https://www.mail-archive.com/sundial@uni-koeln.de/msg01050.html) and @almorox2005statistical [*(Link)*](https://www.sciencedirect.com/science/article/abs/pii/S0196890404001992). Don't ask me now how exactly these equations work, since I don't remember... It was enough to figure this out once, in the early days of my chilling analysis career, code it into an R function (or actually first a `JSL` function, but that's another story) and then just rely on that function for all subsequent work.
+
+Putting together all these functions [@spencer1971fourier; @almorox2005statistical; @linvill1990calculating] basically worked the same way as what we've just seen with the development of the `CH()` function and its subsequent embedding in the `sum_CH` function - just that the individual components were a bit more complex. The result was a function that can produce credible daily temperature curves based only on the latitude of the location of interest.
+
+The code below provides some use examples of the `daylength` function, which is involved in producing daily temperature curves. Let's make plots of the sunrise time, sunset time and daylength at Klein-Altendorf (Latitude: 50.4°N) over the course of the year.
+
+```{r daily_curves, out.width="80%", out.height="50%", exercise=TRUE}
+require(chillR)
+require(ggplot2)
+require(reshape2)
+Days <- daylength(latitude = 50.4, JDay = 1:365)
+Days_df <-
+  data.frame(
+    JDay = 1:365,
+    Sunrise = Days$Sunrise,
+    Sunset = Days$Sunset,
+    Daylength = Days$Daylength
+  )
+Days_df <- pivot_longer(Days_df,cols=c(Sunrise:Daylength))
+
+ggplot(Days_df, aes(JDay, value)) +
+  geom_line(lwd = 1.5) +
+  facet_grid(cols = vars(name)) +
+  ylab("Time of Day / Daylength (Hours)") +
+  theme_bw(base_size = 20)
+
+```
+
+Here, JDay is the so-called Julian Date, which basically means the Day of the Year. January 1^st^ ist JDay 1, and December 31^st^ either JDay 365 (in normal years) or JDay 366 (in leap years). I'm using the [`ggplot2`](https://ggplot2.tidyverse.org/) package, which is a really elegant tool for making attractive plots. We'll get to talk a bit more about how this works. The ideal input for this is a data.frame, so I converted the outputs of the `daylength()` function into a data.frame first. I also had to convert the data.frame, so that the three time series (Sunrise, Sunset and Daylength) were stacked on top of each other. That was accomplished by the `pivot_longer` command of the `tidyr` package.
+
+These daily dynamics are integrated in the `stack_hourly_temps()` function in `chillR`. This function takes as input a dataset of daily minimum and maximum temperatures (must have columns called `Tmin` and `Tmax`, as well as `Year`, `Month` and `Day`). It also needs to be told the latitude of the place of interest. With these inputs, we can apply the various equations we just discussed and calculate hourly temperatures. Optionally, we can also choose to output, in addition, the sunrise and sunset times.
+
+To illustrate how this works, we'll use another dataset that comes with `chillR`: `KA_weather`. This is a `data.frame` that contains temperature data for the experimental station of the University of Bonn at Klein-Altendorf. Here are the first 10 rows of the `KA_weather` dataset:
+
+```{r KA_weather, echo=FALSE}
+
+kable(KA_weather[1:10,])  %>%
+  kable_styling("striped", position = "left",font_size = 10)
+```
+
+
+And this is how we can convert this to hourly temperatures based on the idealized curve:
+
+`stack_hourly_temps(KA_weather, latitude=50.4)`
+
+```{r stack_hourly, echo=FALSE}
+
+KA_hourly <- stack_hourly_temps(KA_weather, latitude = 50.4)
+
+kable(KA_hourly$hourtemps[100:120, ], row.names = FALSE)  %>%
+  kable_styling("striped", position = "left", font_size = 10)
+# add a plot of hourly temperatures
+
+```
+
+And here's a plot of the data:
+
+```{r idealized, out.width="80%", out.height="50%", echo=FALSE}
+
+KA_hourly$hourtemps[, "DATE"] <-
+  ISOdate(
+    KA_hourly$hourtemps$Year,
+    KA_hourly$hourtemps$Month,
+    KA_hourly$hourtemps$Day,
+    KA_hourly$hourtemps$Hour
+  )
+
+ggplot(KA_hourly$hourtemps[20:100, ], aes(DATE, Temp)) +
+  geom_line(lwd = 1.5) +
+  xlab("Date") +
+  ylab("Temperature (°C)") +
+  theme_bw(base_size = 20)
+
+```
+
+
+
+
+### Empirical daily temperature curves
+
+There are some locations where idealized daily temperature curves don't work. For instance, some places where temperate fruit trees are grown feature rugged topography, so that trees may be shaded for part of the day. The pictures below show the region where I first started working on winter chill - the Jabal Al Akhdar (the Green Mountain) region in Oman. We investigated several oases in Wadi Muaydin, a deeply incised canyon. Near the top of the canyon, trees get a lot more sunlight than at the bottom of the valley, about 1000 m below.
+
+![Overview of Wadi Muaydin - the lowest oasis, Masayrat ar Ruwajah, is at the end of the steep, curvy road you can see disappear at the bottom of the image.](pictures/IMG_5403.JPG){width=90%}
+
+![Impression of the oasis of Wadi Bani Habib (a few kilometers away) illustrating the impact that toppgraphic shading can have.](pictures/IMG_5573.JPG){width=90%}
+
+![Terraced oasis fields at Ash Sharayjah. The pomegranates and other temperate tree crops there are already enjoying the morning sun. Trees in the oasis of Qasha', located in the lower left corner of the image, are still hidden in the shadows.](pictures/IMG_8487.JPG){width=90%}
+
+Even without such mountains, it seems quite likely that the temperature curve in an orchard, which may feature its own microclimate, with shaded and sunny spots, with dew-covered grass or bare ground etc., may not closely resemble the curve drawn up by @linvill1990calculating [*(Link)*](https://journals.ashs.org/hortsci/view/journals/hortsci/25/1/article-p14.xml).
+
+In our first study on the Omani oases [@luedeling_climate_2009] [*(Link)*](https://link.springer.com/article/10.1007/s10584-009-9581-7), we didn't address this issue very well (not even with the idealized daily curve yet), but we recently revisited this location, this time committed to doing this better. Here's what we came up with [@buerkert2020revisiting] [*(Link)*](https://link.springer.com/article/10.1007/s10584-020-02862-8): 
+
+1) First we need a dataset of hourly temperature data for the location of interest. This should cover a full year, and ideally multiple years. For the purpose of this exercise, we'll use the `Winters_hours_gaps` dataset, which is included in `chillR`. I collected this dataset in a walnut orchard near Winters, California. The temperature logger was attached directly to a tree branch, so I wouldn't expect the data to precisely mirror the usual daily temperature curve.
+
+2) We now use the `Empirical_daily_temperature_curve()` function to determine the typical pattern of hourly temperatures at this location. This is done separately for each month of the year (there may still be room for improvement here - this could be continuous and not broken down by months).
+
+```{r empirical_temperature_curve, exercise = TRUE, exercise.eval = TRUE }
+
+empi_curve <- Empirical_daily_temperature_curve(Winters_hours_gaps)
+
+```
+
+Let's see what the results look like, in a table and a figure.
+
+```{r empirical_temperatures_output}
+kable(empi_curve[1:48, ])  %>%
+  kable_styling("striped", position = "left", font_size = 10)
+
+ggplot(data = empi_curve[1:96, ], aes(Hour, Prediction_coefficient)) +
+  geom_line(lwd = 1.3, 
+            col = "red") + 
+  facet_grid(rows = vars(Month)) + 
+  xlab("Hour of the day") +
+  ylab("Prediction coefficient") +
+  theme_bw(base_size = 20)
+
+```
+
+3) We can now apply this set of coefficients to a daily dataset from the same location, which should give us a reasonable hourly temperature record for this orchard. For this, we can use the `Empirical_hourly_temperatures` function, which requires as inputs a set of hourly coefficients (such as the one we just made), and a daily temperature record (which includes `Tmin` and `Tmax` columns). Did I mention that you can always use the `?` to get help on how to use a function (e.g. `?Empirical_hourly_temperatures`).
+
+So here's how this works. Note that this also demonstrates use of the `make_all_day_table` function, which can fill gaps in daily or hourly temperature records and - as in this case - summarize hourly records into daily minimum and maximum temperatures:
+
+```{r full_example_empi_temps}
+
+coeffs <- Empirical_daily_temperature_curve(Winters_hours_gaps)
+Winters_daily <-
+  make_all_day_table(Winters_hours_gaps, input_timestep = "hour")
+Winters_hours <- Empirical_hourly_temperatures(Winters_daily, coeffs)
+
+```
+
+This is it really. Let's plot the result to see what it looks like. We can also compare the results to those of the triangular function and the idealized temperature curve. In this example, we also have the actual observed temperatures, so we can use these to validate the results as well.
+
+First, let's simplify the data a bit, so that it gets easier to use:
+
+```{r empi_temps_plots}
+
+require(reshape2)
+
+Winters_hours <- Winters_hours[, c("Year", "Month", "Day", "Hour", "Temp")]
+colnames(Winters_hours)[ncol(Winters_hours)] <- "Temp_empirical"
+Winters_ideal <-
+  stack_hourly_temps(Winters_daily, latitude = 38.5)$hourtemps
+Winters_ideal <- Winters_ideal[, c("Year", "Month", "Day", "Hour", "Temp")]
+colnames(Winters_ideal)[ncol(Winters_ideal)] <- "Temp_ideal"
+```
+
+Now we make the 'triangular' dataset. See if you can understand how this works.
+
+```{r empi_temps_plot_2}
+
+
+Winters_triangle <- Winters_daily
+Winters_triangle[, "Hour"] <- 0
+Winters_triangle$Hour[nrow(Winters_triangle)] <- 23
+Winters_triangle[, "Temp"] <- 0
+Winters_triangle <-
+  make_all_day_table(Winters_triangle, timestep = "hour")
+colnames(Winters_triangle)[ncol(Winters_triangle)] <-
+  "Temp_triangular"
+
+# with the following loop, we fill in the daily Tmin and Tmax values for every
+# hour of the dataset
+
+for (i in 2:nrow(Winters_triangle))
+{
+  if (is.na(Winters_triangle$Tmin[i]))
+    Winters_triangle$Tmin[i] <- Winters_triangle$Tmin[i - 1]
+  if (is.na(Winters_triangle$Tmax[i]))
+    Winters_triangle$Tmax[i] <- Winters_triangle$Tmax[i - 1]
+}
+Winters_triangle$Temp_triangular <- NA
+
+# now we assign the daily Tmin value to the 6th hour of every day
+
+Winters_triangle$Temp_triangular[which(Winters_triangle$Hour == 6)] <-
+  Winters_triangle$Tmin[which(Winters_triangle$Hour == 6)]
+
+# we also assign the daily Tmax value to the 18th hour of every day
+
+Winters_triangle$Temp_triangular[which(Winters_triangle$Hour == 18)] <-
+  Winters_triangle$Tmax[which(Winters_triangle$Hour == 18)]
+
+# in the following step, we use the chillR function "interpolate_gaps"
+# to fill in all the gaps in the hourly record with straight lines
+
+Winters_triangle$Temp_triangular <-
+  interpolate_gaps(Winters_triangle$Temp_triangular)$interp
+Winters_triangle <-
+  Winters_triangle[, c("Year", "Month", "Day", "Hour", "Temp_triangular")]
+
+```
+
+Now we merge all these `data.frames` so that we can easily display them:
+
+```{r empi_temps_plot_3}
+ 
+Winters_temps <-
+  merge(Winters_hours_gaps,
+        Winters_hours,
+        by = c("Year", "Month", "Day", "Hour"))
+Winters_temps <-
+  merge(Winters_temps,
+        Winters_triangle,
+        by = c("Year", "Month", "Day", "Hour"))
+Winters_temps <-
+  merge(Winters_temps,
+        Winters_ideal,
+        by = c("Year", "Month", "Day", "Hour"))
+
+```
+
+Now we have a dataset with the observed temperatures and the three approximations
+(triangular, idealized curve and empirical curve).
+To plot this effectively, let's convert the Year, Month, Day and Hour columns into
+R's date format (using `ISOdate`) and reorganize the `data.frame` a bit.
+
+
+```{r empi_temps_plot_4}
+Winters_temps[, "DATE"] <-
+  ISOdate(Winters_temps$Year,
+          Winters_temps$Month,
+          Winters_temps$Day,
+          Winters_temps$Hour)
+
+
+Winters_temps_to_plot <-
+  Winters_temps[, c("DATE",
+                    "Temp",
+                    "Temp_empirical",
+                    "Temp_triangular",
+                    "Temp_ideal")]
+Winters_temps_to_plot <- Winters_temps_to_plot[100:200, ]
+Winters_temps_to_plot <- pivot_longer(Winters_temps_to_plot, cols=Temp:Temp_ideal)
+colnames(Winters_temps_to_plot) <- c("DATE", "Method", "Temperature")
+
+
+ggplot(data = Winters_temps_to_plot, aes(DATE, Temperature, colour = Method)) +
+  geom_line(lwd = 1.3) + ylab("Temperature (°C)") + xlab("Date")
+
+```
+
+This plots shows that the triangular curve is quite far off the mark. `Temp_empirical` and `Temp_ideal` look pretty similar and are hard to distinguish.
+
+We can compare these curves a bit more thoroughly by computing, for example, the *Root Mean Square Error*, which is useful for quantifying the correspondence between predicted and observed values. `chillR` has a function for this:
+
+```{r RMSE_hourly_curves}
+# here's the RMSE for the triangular method:
+RMSEP(Winters_temps$Temp_triangular, Winters_temps$Temp)
+# here's the RMSE for the idealized-curve method:
+RMSEP(Winters_temps$Temp_ideal, Winters_temps$Temp)
+# and here's the RMSE for the empirical-curve method:
+RMSEP(Winters_temps$Temp_empirical, Winters_temps$Temp)
+
+```
+
+As you see, we get an RMSE of `r round(RMSEP(Winters_temps$Temp_triangular,Winters_temps$Temp),2)` for the triangular method, an RMSE of `r round(RMSEP(Winters_temps$Temp_ideal,Winters_temps$Temp),2)` for the idealized-curve method, and an RMSE of `r round(RMSEP(Winters_temps$Temp_empirical,Winters_temps$Temp),2)` for the empirical-curve method. Since this metric should be low, we see that calibrating the prediction function with observed hourly data brought some advantages, in particular when compared with the triangular method.
+
+You may wonder if this makes much of a difference, when we want to model chill accumulation or something like that. Well, you may be able to test that already (spoiler alert: it often matters quite a bit)! 
+
+## `Exercises` on hourly temperatures {-#exercises_hourly}
+
+Please document all results of the following assignments in your `learning logbook`.
+
+1) Choose a location of interest, find out its latitude and produce plots of daily sunrise, sunset and daylength
+2) Produce an hourly dataset, based on idealized daily curves, for the `KA_weather` dataset (included in `chillR`)
+3) Produce empirical temperature curve parameters for the `Winters_hours_gaps` dataset, and use them to predict hourly values from daily temperatures (this is very similar to the example above, but please make sure you understand what's going on)
+
+

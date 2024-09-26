@@ -1,0 +1,47 @@
+# Climate change and impact projection
+
+Before we get started with `chillR`, I want to give you an overview of climate change, because much of the work that follows will be focused on forecasting how phenology-related metrics will be impacted by global warming.
+
+## The drivers of climate change
+
+To fully appreciate what's currently happening to our planet, we need some basic understanding of the drivers of climate change. This also helps prepare us for misleading claims that the sun, urban heat islands or similar peripheral factors are responsible for the alarming global warming we're currently experiencing - or that this warming can be explained by the natural variation of our climate. Spoiler alert: it's totally uncontroversial by now that anthropogenic emissions of greenhouse gases are warming our planet, and the only way to stop this from happening is a drastic reduction of man-made emissions.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lFtc-Y5OYNs" frameborder="0" allowfullscreen></iframe>
+
+[Here are the slides that belong to this video.](https://uni-bonn.sciebo.de/s/b4iTBE82S1CVNx1)
+
+## What we've already seen
+
+This video presents climatic changes that we've already experienced, or which we have very robust evidence for. Spoiler alert: the planet has been warming dramatically for several decades already, almost everywhere.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sLmfKcvsWow" frameborder="0" allowfullscreen></iframe>
+
+[Here are the slides that belong to this video.](https://uni-bonn.sciebo.de/s/5kLiGT77nZyM21w)
+
+## Future scenarios
+
+When it comes to climate change, the worst is yet to come. This is because the rate of greenhouse gas emissions over the past few decades has been much greater than in the past, and it doesn't look like these emissions will stop very soon. In consequence, the man-made 'forcing' effect on our climate has never been greater than now, which makes it likely that future changes will occur even more rapidly than what we've seen so far. This video introduces the methods that climate scientists use to gain a glimpse of the future. It also introduces climate scenarios produced by climate scientists, which can then be used by researchers from other disciplines to project climate change impacts on ecological or agricultural systems.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PX6fAxBEkCE" frameborder="0" allowfullscreen></iframe>
+
+[Here are the slides that belong to this video.](https://uni-bonn.sciebo.de/s/69LVoQMPWXPFv5I)
+
+## Impact projection approaches
+
+Having good climate scenarios is important, but it only takes us part of the way towards reliable assessments of climate change impacts. A possibly greater challenge is the translation of climate scenarios into biological consequences. For this, we need impact models, or some other way to derive impacts from climate. This video provides an introduction to climate impact projection methods.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3Q8HF4E7rkM" frameborder="0" allowfullscreen></iframe>
+
+[Here are the slides that belong to this video.](https://uni-bonn.sciebo.de/s/IC87QhJb8hqnDhP)
+
+## `Exercises` on climate change {-#exercises_climate_change}
+
+Please document all results of the following assignments in your `learning logbook`.
+
+1) List the main drivers of climate change at the decade to century scale, and briefly explain the mechanism through which the currently most important driver affects our climate.
+
+2) Explain briefly what is special about temperature dynamics of recent decades, and why we have good reasons to be concerned.
+
+3) What does the abbreviation 'RCP' stand for, how are RCPs defined, and what is their role in projecting future climates?
+
+4) Briefly describe the 4 climate impact projection methods described in the fourth video.

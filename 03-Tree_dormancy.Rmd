@@ -1,0 +1,56 @@
+# Tree dormancy
+
+This chapter is brought to you by [Dr. Erica Fadón](https://scholar.google.de/citations?hl=de&user=MTmTnnsAAAAJ), a [researcher at HortiBonn from 2018-2021](http://www.hortibonn.de/author/dr.-erica-fadon-adrian/).
+
+Dormancy in temperate fruit trees is a fascinating topic of which we still have a lot to discover before having a full understanding of the process. The main question on the minds of dormancy researchers is "how do trees know when to flower?" Perhaps the answer seems easy… in spring!!! But there is much more behind this… This chapter will help you understand dormancy and also develop the necessary skills with `chillR` to predict when trees will flower, even under the changing circumstances caused by global warming.
+
+## Learning goals for this lesson:
+
+- Learn about dormancy in temperate fruit trees
+- Be able to identify the phenological stages of a fruit tree and understand phenology data sets
+- Describe and compare the two methodologies (empirical and statistical) to identify the chilling and forcing periods of a certain cultivar
+
+## Introduction to dormancy
+
+First things first! In this introductory video, you will get the basic knowledge of dormancy.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qh9AZDmOm3o" frameborder="0" allowfullscreen></iframe>
+
+## Dormancy physiology
+
+Now I'll give you a general overview of the most important physiological processes that occur during dormancy. Numerous approaches have tried to decipher the physiology of dormancy, but these efforts have usually remained relatively narrowly focused on particular regulatory or metabolic processes, recently integrated and linked by transcriptomic studies. We recently tried to synthesize existing knowledge on dormancy into a general conceptual framework to enhance dormancy comprehension. The proposed conceptual framework covers four physiological processes involved in dormancy progression:
+
+(i) transport at both whole-plant and cellular level
+(ii) phytohormone dynamics
+(iii) genetic and epigenetic regulation
+(iv) dynamics of nonstructural carbohydrates
+
+We merged the regulatory levels into a seasonal framework integrating the environmental signals (i.e., temperature and photoperiod) that trigger each dormancy phase.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HriLSz77QEQ" frameborder="0" allowfullscreen></iframe>
+
+
+Also check out [our paper on the conceptual model of tree dormancy](https://www.mdpi.com/2073-4395/10/2/241/htm) [@fadon2020conceptual]
+
+## Experimental and statistical determination of the chilling and forcing periods 
+
+Dormancy presents two phases during which temperatures have opposite effects on flowering. High chill accumulation *during endodormancy*  advances flowering dates, but similarly cool temperatures *during ecodormancy* may cause flowering delays. So how can we differentiate between these phases that occur while tree buds remain in the same developmental stage? 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hMM27ktlzBM" frameborder="0" allowfullscreen></iframe>
+
+## Phenology record and BBCH scale
+
+In this module, you will eventually work with phenology data sets. We'll mostly focus on just one stage, usually budbreak, but trees go through many more developmental stages over the course of the year. These are usually referred to by a number code. The next video is about what these numbers indicate. It is important to know how to relate these stage numbers to images of trees full of flowers, trees with yellowish leaves, or trees with lots of sweet fruits ready to be eaten! 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ssoe6Ahv88Y" frameborder="0" allowfullscreen></iframe>
+
+## `Exercises` on tree dormancy {-#exercises_dormancy}
+
+Please document all results of the following assignments in your `learning logbook`.
+
+1) Put yourself in the place of a breeder who wants to calculate the temperature requirements of a newly released cultivar. Which method will you use to calculate the chilling and forcing periods? Please justify your answer.   
+2) Which are the advantages (2) of the BBCH scale compared with earlies scales?
+3) Classify the following phenological stages of sweet cherry according to the BBCH scale:
+
+![Phenological stages of cherry](pictures/pheno_stages.png){width=90%}
+

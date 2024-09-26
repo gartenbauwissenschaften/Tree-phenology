@@ -1,0 +1,350 @@
+# Simple phenology analysis {#simple_phenology}
+
+## Learning goals for this lesson {-#goals_simple_phenology}
+
+- Understand why phenology modeling is tricky
+- Appreciate the dangers of p-hacking
+- Appreciate the importance of a causal theory in data analysis
+
+
+```{r echo=FALSE, message=FALSE}
+require(chillR)
+require(ggplot2)
+library(tidyverse)
+require(kableExtra)
+library(downloadthis)
+
+```
+
+## Phenology analysis
+
+Now we've finally reached the point in this module where we seriously start analyzing phenology. We'll use the example of bloom dates of the pear cultivar *Alexander Lucas* that we already worked with in the frost analysis. As you may remember, we have a time series of first, full and last bloom dates recorded at Campus Klein-Altendorf between 1958 and 2019. For this analysis, I'll just use the first bloom dates:
+
+If you want to work with this example on your own computer, you can download the file here:
+
+```{r, echo=FALSE}
+
+Alex <- read.csv("data/Alexander_Lucas_bloom_1958_2019.csv")
+
+Alex %>% download_this(
+    output_name = "Alexander_Lucas_bloom_1958_2019",
+    output_extension = ".csv",
+    button_label = "Download phenology data",
+    button_type = "warning",
+    has_icon = TRUE,
+    icon = "fa fa-save"
+  )
+
+```
+
+I suggest that you save this file in the `data` folder of your home directory: `data/Alexander_Lucas_bloom_1958_2019.csv`. Otherwise, you'll have to adjust the path below. Note that the data are provided as a `.csv` file. To avoid any "comma vs. semicolon"-related problems, I recommend that you open it with the `read_tab` function.
+
+```{r}
+
+Alex <- read_tab("data/Alexander_Lucas_bloom_1958_2019.csv")
+
+Alex <- pivot_longer(Alex,
+                     cols = c(First_bloom:Last_bloom),
+                     names_to = "Stage",
+                     values_to = "YEARMODA")
+
+Alex_first <- Alex %>%
+  mutate(Year = as.numeric(substr(YEARMODA, 1, 4)),
+         Month = as.numeric(substr(YEARMODA, 5, 6)),
+         Day = as.numeric(substr(YEARMODA, 7, 8))) %>%
+  make_JDay() %>%
+  filter(Stage == "First_bloom")
+
+```
+
+## Time series analysis
+
+The first analysis people often do with such a dataset is a simple analysis over time. Let's first plot the data:
+
+
+```{r}
+ggplot(Alex_first,
+       aes(Pheno_year,
+           JDay)) +
+  geom_point() +
+  ylab("First bloom date (day of the year)") +
+  xlab ("Year") +
+  theme_bw(base_size = 15)
+```
+
+It's a bit hard to see a clear pattern here, but let's check if there is a trend over time. We've already encountered the Kendall test in an earlier lesson, and we can also apply this here:
+
+```{r}
+library(Kendall)
+Kendall(x = Alex_first$Pheno_year,
+        y = Alex_first$JDay)
+```
+I'm getting a p-value of `r round(Kendall(x=Alex_first$Pheno_year,y=Alex_first$JDay)$sl,3)`. The tau value is negative, so it seems we have a significant trend towards earlier bloom.
+
+To determine how strong this trend is, many researchers use regression analysis, with model coefficients fitted to data. Let's try this. We first assume a linear relationship between time and bloom dates: $$Bloomdate = a \cdot Phenoyear + b$$
+To make the code easier to read, I'll name the `Pheno_year` `x` and the Bloom date (`JDay`) `y`. I'll also plot the data using `ggplot`:
+
+```{r}
+x <- Alex_first$Pheno_year
+y <- Alex_first$JDay
+
+summary(lm(y ~ x))
+
+ggplot(Alex_first,
+       aes(Year,
+           JDay)) +
+  geom_point() +
+  geom_smooth(method = 'lm',
+              formula = y ~ x) +
+  ylab("First bloom date (day of the year)") +
+  xlab ("Year") +
+  theme_bw(base_size = 15)
+
+```
+
+If you examine the outputs carefully, you'll see that we're getting a best estimate for the slope of `r round(summary(lm(y ~ x))$coefficients[2],2)`. We also get a p-value here, but for a time series we're better off using the one returned by the Kendall test. If you look at the diagram, you'll notice that many of the data points are still pretty far from the regression line, with many of them way outside the confidence interval that is shown.
+
+Maybe we can find another model that better describes the data. Many people would now start on a process of gradually making the model more complex, e.g. by fitting a second-order polynomial, or maybe a third-order polynomial... Let's cut this process short and immediately fit a 25th-order polynomial:
+
+
+```{r}
+summary(lm(y ~ poly(x, 25)))
+
+ggplot(Alex_first,
+       aes(Year,
+           JDay)) +
+  geom_point() +
+  geom_smooth(method='lm',
+              formula = y ~ poly(x, 25)) +
+  ylab("First bloom date (day of the year)") +
+  xlab ("Year") +
+  theme_bw(base_size = 15)
+```
+
+It's a bit hard now of course to make a clear statement about the temporal trend, since there is no single number for the slope. The slope varies over time, but it can be calculated by taking the first derivative of the complex 25th-order polynomial we computed. But we got a stellar p-value, and almost all of the data points are contained in the confidence interval!
+
+It's probably obvious to you that this is not a useful model. If we make the model equation increasingly more complex, we'll eventually find a structure that can perfectly fit all data points. This is not desirable, however, because we have no reason to expect that there is such a perfect relationship between our independent and dependent variables. Each measurement (such as a bloom date recording) comes with an error, and, more importantly, there may also be other factors in addition to time that affect bloom dates. If we make our model more complex than we can reasonably expect the actual relationship to be, we run the risk of **overfitting** our model. This means that we may get a very good fit, but our regression equation isn't very useful for explaining the actual process we're trying to model.
+
+In the case of our 25th-order polynomial, we're obviously looking at an overfit. In many other cases, however, overfits aren't quite so easy to detect. The scientific literature is full of studies where authors took the structure of their regression model far beyond what could be considered a reasonable description of the underlying process. Especially in the field of machine-learning, overfitting is a very serious risk, in particular where the learning engines are basically *black boxes* that the analysts may not even fully understand.
+
+## p-hacking
+
+A concept that is closely related to overfitting and that also often occurs in machine-learning is that of *p-hacking*, also known as a *fishing expedition*. The idea behind these terms is that when you look at a sufficiently large dataset, with lots of variables, you're bound to find correlations somewhere in this dataset, regardless of whether your data involves actual causal relationships. Screening large datasets for 'significant' relationships and then presenting these as meaningful correlations is bad scientific practice [[@nuzzo2014scientific]](https://www.nature.com/news/scientific-method-statistical-errors-1.14700)! Possibly, such screening can lead to hypotheses that can then be tested through further studies, but we should not rely on this to generate 'facts'.
+
+## The process that generates the data
+
+Many researchers are focused on finding structure in the datasets they work with. While this can often produce useful insights, it can also lead to us neglecting an arguably more important objective of science - to find out how things work! What we really want to understand is ***the process that generates the data***, rather than the data themselves.
+
+While this argument may seem like semantics, it involves a change in perspective that can have important implications for how we do research. Rather than digging straight into the numbers, we first need to sit back and think about what may actually be going on in the system we're analyzing. We can then use causal diagrams to sketch out how we think our system works:
+
+$$A \to B$$
+With this realization, we quickly come to the conclusion that our analysis so far has been a bit beside the point.
+
+Up to now, we were looking for the following relationship:
+
+$$Time \to Phenology$$
+Can this possibly be what's going on here? Can time drive phenology? While I won't completely rule out that trees are somehow able to track the passage of time within their annual cycle, I'm pretty sure they have no idea what the current year is...
+
+## An ecological theory to guide our analysis
+
+Before we start on an analysis of the kind we're dealing with here, we should have a theory of what's going on. In this case, this would be an ecological theory about what drives tree phenology. Let's start with a very simple theory: Temperature drives phenology. I guess we already knew this, but it may still be useful to state it explicitly:
+
+$$Temperature \to Phenology$$
+As you can see, this theory doesn't involve time. The reason why we were able to find statistical relationships earlier is not that time (as in the calendar year) actually affects phenology - it is that temperatures have been rising over the years, mainly in response to anthropogenic global warming.
+
+$$Time \to Temperature$$
+Well, actually this is $$Time \to GreenhouseGasEmissions \to ClimateForcing \to Temperature$$
+Since temperature, especially at the local scale, is subject to considerable random variation, this relationship may not be particularly strong. The noise in this relationship can easily keep us from detecting the actual response of tree phenology during our time series.
+
+The full causal diagram of these three variables (without the greenhouse effect part) is $$Time \to Temperature \to Phenology$$
+
+Sometimes we have no data on the intermediate steps in such a diagram. In such cases, we either have to live with a model that doesn't actually get to the direct causal mechanisms in play, or we have to get a bit more creative with our analysis. Fortunately, here we actually do have data on temperature, so we can focus on the direct causal relationship between temperature and phenology.
+
+## Temperature correlations
+
+Now that we clarified that it would make more sense to narrow in on the temperature-phenology relationship, we gained some conceptual clarity, but we are faced with a much greater statistical challenge. In correlating years with bloom dates, we had just two series of numbers to look at, since we had exactly one bloom date per year. Temperature, in contrast, is a variable we can measure at different temporal scales. If we just look at the average annual temperature, the statistical challenge is similar to using just the year number. Let's see if we can find a correlation for this. You may have to click the button to download weather data first. I'd suggest you save it then under `data/TMaxTMin1958-2019_patched.csv`. 
+
+```{r, echo=FALSE}
+temperature <- read_tab("data/TMaxTMin1958-2019_patched.csv")
+
+temperature %>% download_this(
+    output_name = "TMaxTMin1958-2019_patched",
+    output_extension = ".csv",
+    button_label = "Download long-term weather data",
+    button_type = "warning",
+    has_icon = TRUE,
+    icon = "fa fa-save"
+  )
+
+```
+
+
+```{r}
+
+temperature <- read_tab("data/TMaxTMin1958-2019_patched.csv")
+
+Tmin <- temperature %>%
+  group_by(Year) %>%
+  summarise(Tmin = mean(Tmin))
+
+Tmax <- temperature %>%
+  group_by(Year) %>% 
+  summarise(Tmax = mean(Tmax))
+
+Annual_means <- Tmin %>%
+  cbind(Tmax[,2]) %>%
+  mutate(Tmean = (Tmin + Tmax)/2)
+
+Annual_means <- merge(Annual_means,
+                      Alex_first)
+
+Annual_means_longer <- Annual_means[,c(1:4,10)] %>%
+  pivot_longer(cols = c(Tmin:Tmean),
+               names_to = "Variable",
+               values_to = "Temp")
+
+ggplot(Annual_means_longer,
+       aes(x=Temp,
+           y=JDay)) + 
+  geom_point() +
+  geom_smooth(method="lm",
+              formula=y~x) + 
+  facet_wrap("Variable")
+
+summary(lm(Annual_means$JDay ~ Annual_means$Tmin))
+summary(lm(Annual_means$JDay ~ Annual_means$Tmax))
+summary(lm(Annual_means$JDay ~ Annual_means$Tmean))
+```
+There's a relationship here, but this is still not really a convincing analysis. The main reason is that the time period we're calculating the mean temperatures for is the whole year, even though bloom already occurs in spring. Temperatures after this can't possibly affect the bloom date in the year of interest! Then why did we get such convincing results, with exceptionally low `p` values? Again, the reason is climate change. Temperatures have been rising over time, and phenology has advanced over time, so later years generally feature earlier bloom dates. To get to an analysis that has a chance of actually reflecting a causal relationship, however, we need to restrict the analysis to a range of dates that can plausibly affect bloom dates.
+
+Let's write a quick function to screen for such correlations. To facilitate this, we'll use `JDay`, i.e. the day of the year, to express the date.
+
+```{r}
+
+temps_JDays <-
+  make_JDay(temperature)
+
+corr_temp_pheno <- function(start_JDay, # the start JDay of the period
+                            end_JDay, # the start JDay of the period
+                            temps_JDay = temps_JDays, # the temperature dataset
+                            bloom = Alex_first) # a data.frame with bloom dates
+{
+  temps_JDay <- temps_JDay %>%
+    mutate(Season = Year)
+  
+  if(start_JDay > end_JDay)
+    temps_JDay$Season[temps_JDay$JDay >= start_JDay]<-
+      temps_JDay$Year[temps_JDay$JDay >= start_JDay]+1
+  
+  if(start_JDay > end_JDay)
+    sub_temps <- subset(temps_JDay,
+                        JDay <= end_JDay | JDay >= start_JDay)
+  
+  if(start_JDay <= end_JDay) 
+    sub_temps <- subset(temps_JDay,
+                        JDay <= end_JDay & JDay >= start_JDay)
+  
+  mean_temps <- sub_temps %>%
+    group_by(Season) %>%
+    summarise(Tmin = mean(Tmin),
+              Tmax = mean(Tmax)) %>%
+    mutate(Tmean = (Tmin + Tmax)/2)
+  
+  colnames(mean_temps)[1] <- c("Pheno_year")
+  
+  temps_bloom <- merge(mean_temps,
+                       bloom[c("Pheno_year",
+                               "JDay")])
+  
+  # Let's just extract the slopes of the regression model for now
+  slope_Tmin <- summary(lm(temps_bloom$JDay~temps_bloom$Tmin))$coefficients[2,1]
+  slope_Tmean <- summary(lm(temps_bloom$JDay~temps_bloom$Tmean))$coefficients[2,1]
+  slope_Tmax <- summary(lm(temps_bloom$JDay~temps_bloom$Tmax))$coefficients[2,1]
+  
+  c(start_JDay = start_JDay,
+    end_JDay = end_JDay,
+    length = length(unique(sub_temps$JDay)),
+    slope_Tmin = slope_Tmin,
+    slope_Tmean = slope_Tmean,
+    slope_Tmax = slope_Tmax)
+}
+
+corr_temp_pheno(start_JDay = 305,
+                end_JDay = 29,
+                temps_JDay = temps_JDays,
+                bloom = Alex_first)
+
+corr_temp_pheno(start_JDay = 305,
+                end_JDay = 45,
+                temps_JDay = temps_JDays,
+                bloom = Alex_first)
+
+```
+
+Now we can apply this function to all combinations of days we we find reasonable. Rather than trying all possible values, I'll only use every 5th possible start and end date (that's already enough computing work).
+
+```{r}
+library(colorRamps) # for the color scheme we'll use in the plot
+
+stJDs <- seq(from = 1,
+             to = 366,
+             by = 10)
+
+eJDs <- seq(from = 1,
+            to = 366,
+            by = 10)
+
+for(stJD in stJDs)
+  for(eJD in eJDs)
+    {correlations <- corr_temp_pheno(stJD,
+                                     eJD)
+    
+    if(stJD == 1 & eJD == 1)
+      corrs <- correlations else
+        corrs <- rbind(corrs, correlations)
+}
+
+
+slopes <- as.data.frame(corrs) %>%
+  rename(Tmin = slope_Tmin,
+         Tmax = slope_Tmax,
+         Tmean = slope_Tmean) %>%
+  pivot_longer(cols = c(Tmin : Tmax),
+               values_to = "Slope",
+               names_to = "Variable")
+
+ggplot(data = slopes,
+       aes(x = start_JDay,
+           y = length,
+           fill = Slope)) +
+  geom_tile() +
+  facet_wrap(vars(Variable)) +
+  scale_fill_gradientn(colours = matlab.like(15)) +
+  ylab("Interval duration (days)") + 
+  xlab("Start date of temperature summary interval (Day of year)") +
+  theme_bw(base_size = 15)
+
+```
+
+While this plot can give us an idea about the periods during which temperatures are strongly related to bloom dates, we've actually veered slightly off track again. First, if we now went for the strongest possible influence and declared this as the main driver of bloom dates, we'd be p-hacking again. More importantly, we're again looking for something that's a bit different from what we should actually expect based on our ecological knowledge.
+
+We learned earlier that bloom dates are determined by two separate temperature-dependent processes: chilling and forcing. So we need more than one temperature period! We could now expand our p-hacking exercise to include multiple temperature summary variables. We could then also apply multiple regression, which can automatically identify variables that are correlated with bloom dates.
+
+Such fishing for correlations is a tedious and unsatisfying exercise, and it wouldn't seem particularly enlightened. It's likely to lead to overfits, and it can easily miss important temperature response periods by narrowing in on the phases that are *most strongly* correlated to the outcome variable. So let's not do this and instead take a step back again to think about the theory. Here's what we should actually expect:
+
+$$\substack{Temp_{chilling} \to chill \to\\ Temp_{forcing} \to heat \to} BloomDate$$
+We could now start developing equations that describe what we think we know about chilling and forcing. Many colleagues have done this and then fitted the equations they came up with to observed phenology data. I don't want to go into the details here, but I want to point out that most of the chill models we compared in the last lesson come from such exercises. Some of these are clearly way off the mark - and I assume the phenology models they were a part of still did pretty well. This is possible, because most phenology models have quite a few parameters, e.g. the start and end dates of chilling and forcing periods, the chilling and forcing requirements and the specifications of the temperature response curves during both phases. It's easy for these parameters to compensate for each other, so that we get the right result for the wrong reasons. Such models have also often been fitted through trial and error or through less-than-convincing machine learning algorithms.
+
+So before we build a model, let's see if we can find a bit more information to work with. In the next lesson, we'll combine our ecological knowledge with a machine learning technique to figure out when trees are responsive to temperature.
+
+
+## `Exercises` on simple phenology analysis {-#exercises_simple_analysis}
+
+Please document all results of the following assignments in your `learning logbook`.
+
+We're not going to practice any of the analyses we've seen in this lesson, because I don't find them particularly useful...
+
+1) Provide a brief narrative describing what p-hacking is, and why this is a problematic approach to data analysis.
+2) Provide a sketch of your causal understanding of the relationship between temperature and bloom dates.
+3) What do we need to know to build a process-based model from this?
+

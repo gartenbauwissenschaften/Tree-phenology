@@ -1,0 +1,141 @@
+# Major concepts {#major_concepts}
+
+## Learning goals for this lesson {-#goals_major_concepts}
+
+- Reflect on what we've learned in this module
+- Revisit major concepts we've encountered along the way
+
+## Key insights
+
+### Tree dormancy
+
+- Most woody perennials that evolved in cold-winter climates fall dormant in winter
+- To resume active growth, they need to fulfill a chill and a heat requirement
+- The chill accumulation period is called *endodormancy*, the heat accumulation phase *ecodormancy*
+- Many factors appear to be involved in dormancy release, including intercellular communication, carbohydrate storage and transport, plant hormones and up- and downregulation of genes
+- We don't currently have full understanding of all this, and there are no convincing process-based models.
+
+### Climate change
+
+- Our planet is warming, and this will change temperature and (probably) precipitation regimes everywhere
+- We don't know exactly what will happen, but climate scientists have a good enough understanding to make process-based models of the global climate system
+- Global climate models differ, so we should use outputs of multiple models to project future conditions
+- The intensity of future warming will depend on atmospheric greenhouse gas concentrations. Since these can't be known in advance, we use distinct scenarios - Shared Socioeconomic Pathways (SSPs) at present - to cover the range of possibilities
+- To mitigate climate change, we must cut our greenhouse gas emissions, particularly in the energy sector!
+
+### Phenology modeling
+
+- Phenology modeling is difficult, because there's still a lot we don't understand
+- There are a number of chill and heat accumulation models, which (especially the chill models) deliver dramatically different estimates of temperature effects on phenology
+- The frontrunners among models are the Dynamic Model for chill accumulation and the Growing Degree Hour Model for heat accumulation
+- There are some full modeling frameworks that predict future phenology from temperature data, but these have severe shortcomings and typically ignore uncertainties.
+
+### Phenology responses to global warming
+
+- So far, most plant species in most places have responded to increasing temperatures with phenology advances
+- Given what we've learned about tree dormancy, this trend may not continue unabated in a progressively warming future
+- Where temperatures are high enough to compromise chill accumulation during endodormancy, phenology advances may be slowed, halted or even reversed
+- This hypothesis makes sense based on first principles, and it appears to be supported by some data, but it needs to be validated further
+
+### The `PhenoFlex` modeling framework
+
+- The `PhenoFlex` model combines the best available chill and heat models into a comprehensive framework that allows predicting the timing of spring phases
+- `PhenoFlex` can be parameterized based on long-term phenology data
+- Parameterization is achieved through use of an empirical fitting algorithm (*Simulated Annealing*)
+- The model allows characterizing cultivar-specific temperature response functions
+- First results are very promising
+- Among the limitations of `PhenoFlex` are the difficulty to generalize results across multiple species, and the risk of the fitting procedure returning poor parameter sets
+
+## Major concepts we've encountered
+
+### Reproducibility and transparency
+
+Science should be reproducible and transparent. This is often not fully achievable when we run experiments in the real world, but it is usually possible in modeling studies. We should try to document precisely what we've done, and we should make reproducible code available to our colleagues, together with the raw data we used.
+
+### Tools
+
+We recommended using Github, R and RStudio. Within R, we used a number of add-on packages to improve our workflow. To communicate among the participants within this module, and between instructor and participants, we used Slack. I don't know if these will be the tools for you later in your career, but I'm sure you'll benefit from adopting certain tools. Keep looking out for ways to optimize your workflows and become more efficient.
+
+### Automate and move on
+
+Especially in the kind of research we talked about in this module, but also in many other places in science and business, we keep doing the same tasks over and over again. This is repetitive and boring, and it tends to steal time we could be using for other, more interesting tasks. Learn how to automate repetitive steps, so that you can free up time for creative work. This can also allow you to easily generate similar results from lots of contexts, which might lead to insights that isolated case studies don't offer.
+
+### The power of R
+
+I hope this module made you curious about the vast array of methods and tools that R and the associated packages have to offer. Advanced statistics, spatial analysis, animated figures, interactive apps, websites, blogs - all these can be produced with R. This is so much more than just the statistics program it often gets introduced as! And all these functions are free! In my opinion, learning R is one of the most rewarding investments you can make on your path to a scientific career.
+
+### Curiosity and interdisciplinarity
+
+Spending your whole career in a narrow sub-field of a field may make you an expert in the thing you learned, but it may not put you in a great position to introduce new ideas that may propel your field forward. Of course this can still happen, but there's lots of evidence that experience outside your field of specialization can provide the necessary inspiration that allows you to make a major contribution. So remain curious and retain the freedom to roam outside your field whenever you find something else interesting. Don't specialize too strongly too early, or you may miss out on many rewarding experiences!
+
+### Uncertainty
+
+Uncertainty is an integral part of every real-life issue. All our equations and models are just approximation of what's really going on out there. We shouldn't ignore this uncertainty, but try to embrace it, try to quantify it and communicate it whenever we can. This is still quite rarely done in science, constituting a major limitation to the use of most studies for supporting actual real-world decisions.
+
+#### Ensembles
+
+Sometimes, as in the case of climate change, uncertainty arises from us not precisely knowing which of a set of scenarios will come true, which analysis method works best, or which of a number of models describes our system most accurately. In such cases, we can consider doing *ensemble* analyses, i.e. we use all of the options and present the population of results that emerges. This often requires quite a bit of computation, and it isn't always realistic, but we should try whenever we can (and the ability to automate processes makes this *a lot* easier).
+
+#### Remaining uncertainties
+
+In addition to the type of uncertainty that can be addressed by an ensemble approach, there is a good deal of additional uncertainty that is related to the real world being more complicated than models can ever be. Figuring out these uncertainties isn't about calculating standard deviations etc. - it is about taking a hard look at the system of interest, recalling everything we've learned about the system, and looking for risks and uncertainties we haven't captured yet. And it is about figuring out how to improve our study to capture as much of this as possible (or *reasonable*).
+
+### p-hacking
+
+p-hacking refers to the systematic analysis of lots of variables in large datasets, looking for relationships that happen to be 'significant'. This process can easily produce significant results by accident, turning up relationships that aren't meaningful or generally valid. The p-hacking approach is usually devoid of any real systems understanding, but based exclusively on number-crunching. If often involves no serious thoughts about which hypotheses are worth testing, and it is therefore unlikely to lead to real insights into the way the system works.
+
+### The dangers of machine learning
+
+Machine-learning is particularly prone to p-hacking, because the machine that is doing the learning usually lacks proper training in agriculture, ecology or whatever field it is applied to. It also often involves learning algorithms that model users may not fully understand, so that the 'learning' can easily go wrong. There are of course also real machine-learning experts, who know exactly what they're doing, but I often get the impression that many researchers who use machine-learning techniques simply learned how to use the tools, but are unaware of what can go wrong.
+
+### Rationalizing
+
+An unfortunate practice in science is the production of statistics based on data, followed by the conjuring up of stories that explain the results. A creative mind can invent narratives to support whatever statistics throw our way. Whether such arguments are actually valid is usually hard to tell. This practice is called *rationalizing*, as in 'making something (appear) rational', when it really isn't, and we would have been able to produce just as compelling explanations for the opposite results.
+
+### Overfitting
+
+One thing that can easily go wrong with p-hacking and machine-learning, but also when fitting functions to a dataset, is overfitting. This happens when we use models to describe a process that are much more complex, and have many more degrees of freedom, than the actual process. This allows making models that fit nicely (or even perfectly) to our data, but do not have anything to do with the process we're trying to study.
+
+### The process that generated the data
+
+When building models in science, we should not strive to make models that describe our data. We should make models that describe *the process that generated the data*. This is the biological or ecological process we're studying, and we should use all our knowledge of that process to generate the model. If the model then fits poorly, we should think about what's wrong with our understanding, rather than adopting a different type of equation just because it fits better. If we can't think of an ecological explanation for a model's functional form, we should drop that model!
+
+### The importance of theory
+
+All research should be guided by a theory of what's going on. This is critical for orienting our work and our results in the larger universe of our discipline. Without a theory, statistical analyses are like poking around in the dark without knowing what to look for. With a proper theory, we can formulate hypotheses and expectations, and we can evaluate our results against these. If results are aligned with what we expected to see, we can take them as support of our conceptual understanding. If not, we get valuable food for thought that allows us to refine our hypothesis. This is what the scientific process is all about. The scientific method doesn't work without a guiding theory.
+
+### Conceptual modeling
+
+Research should start with a conceptual model that expresses our understanding of the target system and our expectation of what should happen in a particular experiment or situation. This is our representation of the theory that guides our research. It can be expressed in graphical form or in writing, but it should spell out, as explicitly as possible, what we believe going into the experiment, what assumptions we are making, and what we expect the results of our research to be. This concept should then be updated, if necessary, after we've concluded our experiments or analyses.
+
+### Consistency with existing theory and prior knowledge
+
+Each study produces certain results, and researchers have often been tempted to draw sweeping conclusions from the results of isolated studies. Never forget to consider the body of research that has already been compiled when you draw your conclusions. A single study with unusual results cannot easily overturn decades of research that produced different findings. It is still possible, of course, to overturn the established state of knowledge, but this will require strong reasoning and careful consideration of contradictory findings, rather than just one additional datapoint that doesn't fit the big picture.
+
+### Model validity and model validation
+
+Whenever we generate a model, we should take steps to validate it. To do this properly, we should be aware of several key concepts.  
+
+#### Output vs. process validation
+
+Most often when models are validated, we are only presented with the models' predictions, which are compared to what has been observed in reality. It is certainly important for models to pass this test - models that cannot explain reality at all are not useful. However, in addition to this *output validation*, we should also undertake *process validation* whenever we can. This involves producing a conceptual model of our system and then looking at whether the processes we find important are actually implemented in the model. We can of course use what's in the model to update our own ideas about system processes - we are always allowed to learn from anyone and anything that can teach us something - but we should not give up our idea of what's important too easily. If we get the impression that a model produces accurate results for the wrong reasons, e.g. despite something really important not being in the model, we should consider rejecting it, even if predictions are closely aligned with observations.
+
+#### Validity domains
+
+When using a model for predictions, we need to make ourselves aware first, under what conditions we can expect predictions to be valid. Most often, this will be directly determined by the conditions that were used to produce the model. If a model is developed in a certain range of climate conditions, we should be very hesitant when using it in a different climate. The same applies to strong differences in socioeconomic or cultural settings between training and application conditions. To appreciate the range of conditions the model can be applied in, we should attempt to map the model's *validity domain*. It may often be unrealistic to expect a model to have been calibrated under exactly the right conditions. In such situations, we shouldn't be too hard on modelers who slightly stretch the validity domain. But we should always ask ourselves whether we've stretched it too far, and whether we can still trust our predictions. And we may sometimes have to reject the use of models in particular circumstances (even though others may have used them in such a context before).
+
+#### Validation for purpose
+
+In validating models, we need to keep in mind the context of the prediction we're hoping to make, and we should try to validate the model in a situation that resembles that context. E.g. if we aim to make climate change impact assessments, we shouldn't just test our model based on data from the past, but try to find a validation dataset that was collected under warmer conditions. If we want to predict yield of the next year, we should validate our model by predicting yields for years that we have no other data for. In general, we should choose our validation dataset in such a way that it truly resembles the prediction challenge we're planning to take on.
+
+### Our role in research
+
+The concepts of theories, hypotheses, predictions etc. are core ingredients of science. They are the basis of the scientific method. Yet many researchers believe that our prior knowledge, beliefs and expectations shouldn't be allowed to interfere with the scientific process. Scientists, they may say, are supposed to be strictly *objective*, rather than using their *subjective* judgment. This is a major debate in science that has been going on for centuries. Personally, I am convinced that injecting science with a researcher's subjective knowledge, a.k.a. expertise or professional judgment, usually makes science better, not worse. This should at least be the case where scientists remain critical of their own knowledge, strive to make all their assumptions explicit and continually question what they firmly believe to be true. Developing a mindset that allows us to consistently apply such behavior may be a more important step to becoming a mature researcher than staying abreast with all the fancy analysis methods our field has to offer.
+
+## `Exercises` on major concepts {-#ex_majorconcepts}
+
+None... you're done!
+
+If you're a student entitled to getting credit for this course, let me have your learning logbook.
+
+***Thanks for staying with the program to the very end!***

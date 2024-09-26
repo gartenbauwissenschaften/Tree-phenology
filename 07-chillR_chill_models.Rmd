@@ -1,0 +1,97 @@
+# Chill models
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+require(tidyr)
+require(reshape2)
+require(dplyr)
+require(kableExtra)
+```
+
+## Learning goals for this lesson {-#goals_chill_models}
+
+- Learn how to run chill models using `chillR`
+- Learn how to produce your own temperature response model in `chillR`
+
+## Chill models in `chillR`
+
+We already learned how to write a function to calculate Chilling Hours. Unfortunately, you may never have to do that, because `chillR` already contains such a function. It's called `Chilling_Hours()`, and here's what it looks like:
+
+```{r Chilling_Hours}
+library(chillR)
+Chilling_Hours
+
+```
+This is a pretty basic function that takes an hourly temperature dataset (`HourTemp`) as input and determines for each hour if temperatures are below 7.2°C and above 0°C. If the argument `summ` is `TRUE`, the function returns the cumulative Chilling Hours that have accumulated by every hour of the record. If this argument is `FALSE`, we just get a list of 1s and 0s to indicate which hours are Chilling Hours and which ones aren't. The default version of the function is to run it with `summ==TRUE`, as you can see in the first line of the function. So if you don't specify anything for the `summ` argument, it will return the cumulative sum of Chilling Hours.
+
+We can easily apply this now to our `Winters_hours_gap` dataset:
+
+```{r Chilling_Hours_Winters}
+Chilling_Hours(Winters_hours_gaps$Temp)[1:100]
+```
+
+I only returned the first 100 values. The dataset contains 5974 more. The last number in this entire series is `r  Chilling_Hours(Winters_hours_gaps$Temp)[nrow(Winters_hours_gaps)]`.
+
+Chilling Hours are great for an entry-level tutorial on chill modeling, but they're not a particularly credible metric, so I suggest you forget them right away. Let's turn our eyes towards more credible models.
+
+The Utah Model [@richardson1974model] is somewhat more credible, since it assumes different weights for different temperatures. This model is also implemented in `chillR`:
+
+```{r Utah_Model}
+Utah_Model
+
+Utah_Model(Winters_hours_gaps$Temp)[1:100]
+```
+
+In the definition of this model, you see another function called `step_model()`. This is also a `chillR` function, which allows you to define your own model, based on temperature thresholds and weights. You could, for example, use this function to implement various variations of the Utah Model that have been developed for different locations. The function takes as input a `data.frame` that contains the weights you want to apply to different temperature ranges.
+
+Here's an example of such a `data.frame`, a function called `custom()` that implements a chill model based on this, and the application of this function to the `Winters_hours_gaps` dataset:
+
+```{r step_model}
+df<-data.frame(
+  lower= c(-1000, 1, 2, 3, 4, 5,    6),
+  upper= c(    1, 2, 3, 4, 5, 6, 1000),
+  weight=c(    0, 1, 2, 3, 2, 1,    0))
+
+kable(df) %>%
+  kable_styling("striped", position = "left", font_size = 10)
+
+custom<-function(x) step_model(x,df)
+
+custom(Winters_hours_gaps$Temp)[1:100]
+
+```
+
+The Chilling Hours and Utah Models are fairly straightforward. We could probably have calculated these metrics without these functions, though of course the process gets easier with them. What has long been a much greater challenge to dormancy modelers is implementing the 'Dynamic Model', which involves pretty complicated equations. The original papers on this model were rather heavy on maths, leaving many horticultural researchers a bit lost. For a long time, the only version of the model that people could easily use was an Excel sheet that was put together a few decades ago. For `chillR`, I extracted all the equations from this Excel sheet, to make the `Dynamic_Model()` function. This is pretty complicated, and a bit of effort was needed to get this right. But the effort was worth it - now we'll never have to deal with these equations again, because we have a function that does all the calculations for us.
+
+```{r Dynamic_Model}
+Dynamic_Model(Winters_hours_gaps$Temp)[1:100]
+```
+
+So `chillR` has a few functions that can be applied to hourly temperature data. It also has wrapper functions that allow computing chill between specific start and end dates. The `chilling()` function automatically calculates a few basic metrics for us. Note that we have to use the `chillR` function `make_JDay()` here to add the Julian dates (counts the days of the year) to the dataset for this to work.
+
+```{r chilling}
+output<-chilling(make_JDay(Winters_hours_gaps),Start_JDay = 90, End_JDay = 100)
+
+kable(output) %>%
+  kable_styling("striped", position = "left", font_size = 10)
+
+```
+
+So the `chilling()` function implements the Chilling Hours, Utah and Dynamic Models, and it also calculates Growing Degree Days (GDH). But maybe we don't want all of these, or we want other metrics. In that case, we can make use of the `tempResponse` function, which is somewhat similar to `chilling()`, but it takes as input a list of temperature models to be computed.
+
+```{r tempResponse}
+output<-tempResponse(make_JDay(Winters_hours_gaps),
+                     Start_JDay = 90, End_JDay = 100,
+                     models=list(Chill_Portions=Dynamic_Model, GDH=GDH))
+
+kable(output) %>%
+  kable_styling("striped", position = "left", font_size = 10)
+```
+
+## `Exercises` on chill models {-#exercises_chill_models}
+
+Please document all results of the following assignments in your `learning logbook`.
+
+1) Run the `chilling()` function on the `Winters_hours_gap` dataset
+2) Create your own temperature-weighting chill model using the `step_model()` function
+3) Run this model on the `Winters_hours_gaps` dataset using the `tempResponse()` function.
+

@@ -1,0 +1,121 @@
+# Saving and loading data (and hiding this in markdown)
+
+## Learning Goals for this lesson:
+
+- Learn how to write and read tables
+- Learn how to save and load lists of (not-too-complicated) objects
+- Learn how to hide such writing and saving from the readers of your markdown document
+
+```{r setupwriteload, echo=FALSE}
+library(chillR)
+library(ggplot2)
+library(tidyverse)
+library(kableExtra)
+Temperatures<-read_tab("data/Temperatures.csv")
+```
+
+By now you may have noticed that your `learning logbook` is starting to take a bit longer to knit, as you add more code chunks to the file. You may also have noticed that some of the data processing steps we've done took a noticeable length of time. This is because we're now handling quite a bit of data already. In the last lesson we generated 100 years of synthetic hourly weather data. This dataset consisted of approximately 876,000 hours. To get to each hourly temperature, we computed sunrise and sunset times and daylength, we applied the daily temperature curve function, and we computed various chill metrics, including the somewhat complicated Dynamic Model function. All of this adds up!
+
+Maybe up to now we've been patient enough to wait for these results to be calculated each time we knit our `learning logbook`. We may lose our patience, however, when we venture into climate change scenarios, which means that we have to process many times as much data. Calculations can then easily take an hour or so, and we probably won't want to repeat this too many times.
+
+So let's now look at how we can save our results and reload them later.
+
+## Saving and loading data
+
+`R` has functions called `save` and `load`, which can (probably, I haven't really tried this) help you save and load data. I don't use these, however, because I prefer really simple data formats that allow me to manually open the file for inspection outside R.
+
+For simple `data.frames` saving can simply be done using the `write.csv` function. Here's an example for the `Temperatures` dataset that we generated in the last lesson:
+
+
+```{r , eval=FALSE}
+head(Temperatures)
+```
+
+
+```{r write.csvTemperatures_table, echo=FALSE}
+kable(head(Temperatures))  %>%
+  kable_styling("striped", position = "left",font_size = 10)
+```
+
+```{r write.csvTemperatures, eval=FALSE}
+write.csv(Temperatures, file="data/Temperatures.csv", row.names = FALSE)
+```
+
+I set `row.names=FALSE`, because I don't want the rows to be numbered.
+
+We can load this dataset again by typing the following:
+
+```{r read.csvTemperatures, eval=FALSE}
+Temperatures <- read_tab("data/Temperatures.csv")
+head(Temperatures)
+```
+
+```{r read.csvTemperatures_table, echo=FALSE}
+kable(head(Temperatures)) %>%
+  kable_styling("striped", position = "left",font_size = 10)
+```
+
+Note that in this last call, I didn't use `R`'s inbuilt `read.csv` function, but a `chillR` function called `read_tab`. Most likely it did the same thing that `read.csv` would have done, which is read the comma-separated-values file we just saved. There's a little problem, however, that can easily arise with the `.csv` format, which uses a comma to separate the values stored in the file. Using `.csv` files is easy and safe, when you're in an English-typing environment, where people use the `.` as the decimal symbol. Unfortunately, some of my collaborations involved colleagues from French or Spanish-speaking countries, and even some from Germany, where most local computers use the comma as a decimal symbol. This regularly caused trouble, because on such computers, values in `.csv` files are - contrary to the name - not separated by commas but by semicolons. `R` can deal with this, but problems can easily arise when you transfer files between computers with different language settings. The `read_tab` function recognizes this (based on the frequency of commas and semicolons in the file), so it should be able to correctly read files from different language regions.
+
+Still, this was relatively easy. Things get a bit more complicated when we want to save objects that are more complex than simple `data.frames`. We'll be dealing a bit with lists of multiple `data.frames` soon, so it would be nice to have an option to save such objects. To handle this task, `chillR` includes functions for writing and reading lists that consist of numbers, character strings and/or data.frames. Let's make a simple list and save it in our `data` folder:
+
+```{r save.csvList, eval=FALSE}
+test_list <- list(Number = 1,
+                  String = "Thanks for using chillR!",
+                  DataFrame = data.frame(a = c(1,2,3),
+                                         b = c(3,2,1),
+                                         c = c(5,4,3)))
+
+save_temperature_scenarios(test_list,
+                           path = "data",
+                           prefix = "test_list")
+
+```
+
+In our data folder, we now have three new files:
+
+- test_list_1_Number.csv
+- test_list_2_String.csv
+- test_list_3_DataFrame.csv
+
+Each file contains one of the list elements. We can easily retrieve this information using another `chillR` function:
+
+```{r read.csvList, eval=FALSE}
+test_list <- load_temperature_scenarios(path = "data",
+                                        prefix = "test_list")
+
+```
+
+You may have noticed that the name of this function contains 'temperature_scenarios'. This is because the main motivation for writing this function was to not have to repeat the generation of temperature scenarios, which is one of the most time-consuming steps in various `chillR` workflows. The functions work with other lists as well (except that they currently convert elements consisting of single strings and numbers into mini-data.frames - needs to be fixed).
+
+## Hiding all this from the readers of our markdown file
+
+After all the lessons we've been through, the calculations in this document already add up to quite a bit of processing time, and we're only getting started with the real calculations. We wouldn't want to re-run all this every time we build the document. So in many cases I only ran the code that you're seeing once and saved the results. When the document is knitted, I simply load the saved files. So why is the code still visible, and why don't you see the instructions for loading data?
+
+The answer is that you can have code in a markdown document that is invisible in the end product but runs anyway. Similarly, you can have code appear in the end product that isn't actually run. You can specify this by using certain options that are added to the header line of a code chunk.
+
+Normal code chunks start with " ```{r} ". Options can be added after the r, separated by a comma. I'll only talk about two of them here, but there are [a few more that may also become useful at some point](https://rmarkdown.rstudio.com/lesson-3.html).
+
+- option "echo=FALSE" means that our code block will be run, but we don't see the code or the output in the final document. We'll still see 'side effects', such as figures that are produced
+- option "eval=FALSE" means that the code will be shown in the final document, but it will not be run
+
+So when you've saved your results and  don't want to run your code again, you can do the following:
+
+. ```{r, echo=FALSE}
+ 
+. load the datasets you want, load packages that you don't want people to know about etc.
+ 
+. ```
+
+. ```{r, eval=FALSE}
+ 
+. run all kinds of complicated operations that allegedly produced the dataset you just loaded.
+ 
+. ```
+
+Never mind the leading dots here. They are needed to prevent `R` from recognizing these as code chunks - then I wouldn't be able to show this to you here. Note that of course when you apply this *saving and loading strategy*, you have to make sure that all required inputs for later code chunks are actually available.
+
+## `Exercises` on saving and loading data {-#exercises_saveLoad}
+
+We don't have to do any exercises on this, but make sure you apply this in your `learning logbook`. Otherwise the lessons of the next few sessions will make it very difficult to work with the markdown file.
+

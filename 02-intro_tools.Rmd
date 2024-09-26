@@ -1,0 +1,27 @@
+# The tools we use
+
+This course not only aims to teach you things about tree phenology, climate change and related topics - it also provides hands-on exercises to illustrate the functions of the `chillR` package. You should also document everything you learn in a `learning logbook`. For all of these practical components, we need tools. `chillR` is an R package, so we'll need [R](https://www.r-project.org/), which is most comfortably operated through the [RStudio](https://rstudio.com/) interface.
+
+We could simply start running [RStudio](https://rstudio.com/) on our local computer, save our files somewhere on our hard drive and generally operate the way we usually work with our computer. But this is not how real programmers work, and since this is what we're trying to be, we should familiarize ourselves with some code development tools that such people use. We'll therefore introduce you to [git](https://git-scm.com/) and [github](https://github.com/), which are very useful for keeping code organized and secure (and to share it with the world, if that's what you want to do). Finally, we want to show you how to properly document what you do in R, and how to compile professional-looking reports of your work. This is what [Rmarkdown](https://rmarkdown.rstudio.com/) helps us do. Some of this may be a bit confusing in the beginning, but you'll probably learn to appreciate the value of these tools, as we keep using them in this module.
+
+[Dr. Cory Whitney](http://www.hortibonn.de/author/dr.-cory-whitney/) was volunteered to produce some nice tutorial videos to introduce you to all these tools. You'll find these below.
+
+## R and RStudio
+
+The first video shows you how to install and run [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WT3tKlzCZgo" frameborder="0" allowfullscreen></iframe>
+
+## git and github
+
+Now we look at the programming version control environment [git](https://git-scm.com/) and the interface [github](https://github.com/), which we use to access these features.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/S98XJTyIVaY" frameborder="0" allowfullscreen></iframe>
+
+## Rmarkdown
+
+Now let's check out [Rmarkdown](https://rmarkdown.rstudio.com/), a powerful tool that allows making fancy reports, websites etc. out of our R code. You're already looking at an example, by the way. This website was produced with Rmarkdown (and it wasn't hard at all)!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hh4wyP8tvkI" frameborder="0" allowfullscreen></iframe>
+
+Now we're equipped with all the basic tools for this course. We'll start using them pretty soon. Below you'll find occasional references to your `learning logbook`. This is supposed to be produced with Rmarkdown, with subsequent versions of it stored on github.

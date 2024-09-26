@@ -1,0 +1,44 @@
+# Introduction
+
+![](chillR_hexSticker.png){width=90%}
+
+***Welcome to Tree Phenology Analysis with R!***
+
+My name is [Eike Luedeling](http://www.hortibonn.de/author/prof.-dr.-eike-luedeling/), and I lead the [HortiBonn research group](http://www.hortibonn.de) within the [Institute of Crop Science and Resource Conservation (INRES)](https://www.inres.uni-bonn.de/) at the [University of Bonn](https://www.uni-bonn.de/en).
+
+In this course/module/book, I will provide an overview of methods we can use to study the impact of climate - and climate change - on tree phenology. If you don't know what phenology is and you have no idea how to analyze climate change impacts, you've come to the right place. If you already know a bit about these topics, I hope you'll still be able to learn a few new things here. This course was developed for M.Sc. students in [Crop Science](https://www.lf.uni-bonn.de/en/studying/master/npw) and [Agricultural Science and Resource Management in the Tropics and Subtropics (ARTS)](https://www.lf.uni-bonn.de/en/studying/master/arts2020) at the [University of Bonn](https://www.uni-bonn.de/en), but you're welcome to go through the materials even if you're not a member of this illustrious circle.
+
+After some introduction of the subject matter, i.e. phenology (with special focus on dormancy) and climate change, much of this course will consist of practical application of the [`chillR`](https://cran.r-project.org/web/packages/chillR/index.html) package for [R](https://www.r-project.org/), which I have been developing since 2013 to facilitate this kind of analysis.
+
+Some people have started using this package. Here are some statistics on package downloads directly from CRAN, the main server that hosts R packages:
+
+![CRAN Status](http://www.r-pkg.org/badges/version/chillR?color=green){width=33%}![total downloads](http://cranlogs.r-pkg.org/badges/grand-total/chillR?color=orange){width=33%}
+
+![downloads last month](http://cranlogs.r-pkg.org/badges/last-month/chillR?color=blue){width=33%}![downloads last week](http://cranlogs.r-pkg.org/badges/last-week/chillR?color=yellow){width=33%}
+
+
+## Objectives
+
+In this course, I aim to provide you with the following skills and experiences:
+
+* Knowledge about phenology
+* Knowledge about tree dormancy
+* Understanding of climate change impact projection methods
+* Appreciation for the importance of risks and uncertainty in climate change projection
+* Understanding of how to use some staple tools of R code development
+* Ability to use `chillR` functions for climate change impact projection
+* Ability to use `chillR` functions for tree phenology analysis
+* Understanding and ability to use the PhenoFlex dormancy analysis framework
+
+
+## Performance assessment
+
+In this module, there will be no exam, but you'll still have to put in a bit of effort to pass and get a good grade here. Over the course of the semester, we'll be developing a `learning logbook`. This will be an [Rmarkdown](https://rmarkdown.rstudio.com/) document ([here's an example of what this is](https://static-content.springer.com/esm/art%3A10.1007%2Fs10584-020-02862-8/MediaObjects/10584_2020_2862_MOESM1_ESM.pdf)), where you'll record your learning and your coding work. This document will contain short thematic chapters on the lecture contents, as well as the code you'll produce and the outputs you'll generate. The final chapters will contain some discussion of the results you'll have obtained. This document will be evaluated, and it will be the major determinant of your final grade (participation in class will also count for some of the grade).
+
+To help you stay on track with the development of your logbook, we'll occasionally take a look at your draft during the semester.
+
+## House rules
+
+In this course, we'll gradually work our way into the `chillR` package. At the end of the semester, you should be able to do some state-of-the-art analyses in this space. Yet even if it's not your ambition to become a phenology analyst, you'll have picked up a bunch of useful skills along the way. I'll try to teach you how to use some staple programming tools and techniques that can be used for all kinds of programming challenges. These will include the use of github and Rmarkdown, as well the the ability to create, manipulate and use R functions and packages. You'll also gain familiarity with the challenges of modeling tree dormancy and making state-of-the-art climate change impact projections. For impacts that depend entirely on temperature, you'll learn how to use tools that can produce projections that (as far as I'm aware) are robust enough to be acceptable by an academic journal - even one specialized on the study of climate change impacts.
+
+What is expected of you is to be engaged in this class, and to diligently complete the assignments you receive. Learning things in R requires practice, through which many things that seem cumbersome at first eventually become almost automatic. I'm absolutely convinced that the things you'll get exposed to in this class can be great assets in your scientific (or other) career. So please take the materials seriously!

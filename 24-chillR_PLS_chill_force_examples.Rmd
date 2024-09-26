@@ -1,0 +1,97 @@
+# Examples of PLS regression with agroclimatic metrics  {#pls_chillforce_ex}
+
+## Learning goals for this lesson {-#goals_PLS_chillforce_ex}
+
+- Get an overview of studies where the PLS approach has been used with agroclimatic metrics
+- Get a feeling for the effectiveness of the approach across locations and species
+- Start thinking about possible limitations of this approach in delineating temperature response phases
+
+## PLS regression across species and agroclimatic contexts
+
+Since 2012, PLS regression using agroclimatic metrics (chill and heat) as inputs has been applied in a bunch of different contexts. The method has been adopted by a few other researchers as well, but I'll restrict the examples for this chapter to the studies that I was involved in.
+
+### Chestnut, jujube and apricot in Beijing
+
+One of the coldest locations we've used this approach in is Beijing, where, led by Guo Liang we worked with bloom data for [Chinese chestnut (*Castanea mollissima*)](https://en.wikipedia.org/wiki/Castanea_mollissima) and [jujube (*Ziziphus jujuba*)](https://en.wikipedia.org/wiki/Jujube) to delineate chilling and forcing periods [@guo2014chilling]. In another study, we also examined datasets for [apricot (*Prunus armeniaca*)](https://en.wikipedia.org/wiki/Prunus_armeniaca) and [mountain peach (*Prunus davidiana*)](https://en.wikipedia.org/wiki/Prunus_davidiana). Here are the results:
+
+![Results of a PLS analysis based on the relationship between daily chill (quantified with the Dynamic Model) and heat (quantified with the GDH model) accumulation and bloom of [**Chinese chestnut** (***Castanea mollissima***)](https://en.wikipedia.org/wiki/Castanea_mollissima) in Beijing, China [[@guo2014chilling]](https://link.springer.com/article/10.1007/s00484-013-0714-3) ](pictures/PLS_chill_force_chestnut.png)
+
+![Results of a PLS analysis based on the relationship between daily chill (quantified with the Dynamic Model) and heat (quantified with the GDH model) accumulation and bloom of [**jujube** (***Ziziphus jujuba***)](https://en.wikipedia.org/wiki/Jujube) in Beijing, China [[@guo2014chilling]](https://link.springer.com/article/10.1007/s00484-013-0714-3) ](pictures/PLS_chill_force_jujube.png)
+
+![Results of a PLS analysis based on the relationship between daily chill (quantified with the Dynamic Model) and heat (quantified with the GDH model) accumulation and bloom of [**mountain peach** (***Prunus davidiana***)](https://en.wikipedia.org/wiki/Prunus_davidiana) in Beijing, China [[@guo2014differences]](https://journal.kib.ac.cn/EN/volumn/volumn_1319.shtml#1) ](pictures/PLS_chill_force_mountain_peach_Beijing.png)
+
+![Results of a PLS analysis based on the relationship between daily chill (quantified with the Dynamic Model) and heat (quantified with the GDH model) accumulation and bloom of [**apricot** (***Prunus armeniaca***)](https://en.wikipedia.org/wiki/Prunus_armeniaca) in Beijing, China [[@guo2014differences]](https://journal.kib.ac.cn/EN/volumn/volumn_1319.shtml#1) ](pictures/PLS_chill_force_apricot_Beijing.png)
+
+
+
+For apricots, we also ran PLS regressions with multiple chill metrics, i.e. Chilling Hours, the Utah Model (Chill Units) and the Dynamic Model (Chill Portions):
+
+
+![Results of a PLS analysis based on the relationship between daily chill and heat accumulation and bloom of [**apricot** (***Prunus armeniaca***)](https://en.wikipedia.org/wiki/Prunus_armeniaca) in Beijing, China. Coefficients for heat are not shown here (they are similar to what's shown in the previous figure). Chill accumulation was quantified with the Chilling Hours Model (left), the Utah Model (middle) and the Dynamic Model (right)  [[@guo2015statistical]](https://www.sciencedirect.com/science/article/abs/pii/S0304423815301710)](pictures/PLS_chill_force_apricot_3chillmodels.png)
+
+In all analyses of phenology records from Beijing, the forcing period was easy to delineate, but the chilling period was difficult to see.
+
+### Apples in Shaanxi Province, China
+
+Guo Liang also led a study on apple phenology in Shaanxi, one of China's main apple growing provinces:
+
+![Results of a PLS analysis of the relationship between chill (in Chill Portions) and heat (in GDH) and bloom dates of ***apple*** in Shaanxi, China [[@guo2019distribution]](https://www.sciencedirect.com/science/article/abs/pii/S0168192319300462?casa_token=FxJzdv0_vDsAAAAA:ZPkcZPW3L6Y2pPEnVHGnwj--22CdA-N0jhUUhH_FfHgNok50k8BVw6TtQ7MzZ79_tlMaI_aoGiAD)](pictures/PLS_chill_force_apple_China.png)
+
+Also here the chilling phase was visible but difficult to delineate.
+
+### Cherries in Klein-Altendorf
+
+Winters in Beijing and Shaanxi are rather cold. Let's look at a slightly warmer location - cherries in Klein-Altendorf.
+
+![Results of a PLS analysis of bloom dates of ***cherries*** 'Schneiders späte Knorpelkirsche' in Klein-Altendorf, Germany, based on chill (in Chill Portions) and heat (in GDH) accumulation  [[@luedeling2013differential]](https://www.sciencedirect.com/science/article/pii/S0168192313001780)](pictures/PLS_chill_force_cherry_KA.png)
+
+Again, it's pretty difficult to see the chilling period.
+
+### Apricots in the UK
+
+For apricots in the [UK National Fruit Collection at Brogdale Farm](http://www.nationalfruitcollection.org.uk/) in Faversham, southern England, we can see a clear chill response phase in January and February, but this period is quite a bit later than we would normally expect chill accumulation to start: 
+
+![Results of a PLS analysis of ***apricot*** bloom in the southern UK, based on chill accumulation (in Chill Portions) and heat accumulation (in GDH) [[@martinez2017delayed]](https://www.sciencedirect.com/science/article/abs/pii/S0168192317300503) ](pictures/PLS_chill_force_apricot_UK.png)
+
+
+### Grapevine in Croatia
+
+Grapes also have chilling requirements, so [Johann Martínez-Lüscher](https://scholar.google.es/citations?user=kpIpSXkAAAAJ&hl), who also led the UK apricot study, looked into the temperature response of grapes grown in Croatia:
+
+![Results of a PLS analysis of flowering dates of ***grapevine*** (cv. ‘Riesling Italico’) in Mandicevac, Croatia. Chill was quantified with the Dynamic Model, heat with the Growing Degree Hours Model [[@martinez2016sensitivity]](https://www.frontiersin.org/articles/10.3389/fenvs.2016.00048/full)  ](pictures/PLS_chill_force_grapevine_Croatia.png)
+
+Here in Croatia, where winters are warmer than in the earlier locations and chill accumulation rates are more variable, we see the chilling period emerge more clearly, with a particularly pronounced bloom response to chill accumulation in December and January. If we choose to be a bit more generous in our interpretation, we can see a chilling period extending from late September to February.
+
+### Walnuts in California
+
+Let's look at a location with an even warmer winter. For walnuts in California, we could already see the chilling period when working with raw temperatures, and we can also see it clearly when we use agroclimatic metrics:
+
+![Results of a PLS analysis of leaf emergence dates of ***walnuts*** (cv. 'Payne') in Davis, California. Chill was quantified with the Dynamic Model, heat with the Growing Degree Hours Model [[@luedeling2013differential]](https://www.sciencedirect.com/science/article/pii/S0168192313001780) ](pictures/PLS_chill_force_walnut_CA.png)
+
+Once again, we can see the chilling period pretty clearly in this analysis. As we've seen before, it appears to consist of two parts (what could be the reason for this? May be worth looking into at some point), but we can easily spot a period between mid-October and the end of December, during which bloom dates respond to high chill accumulation rates.
+
+### Almonds in Tunisia
+
+Sfax in Central Tunisia is an even warmer location - close to the cultivation margin of temperate nut trees. In a study led by [Haïfa Benmoussa](https://scholar.google.com/citations?user=DdV9jsAAAAAJ&hl), we evaluated bloom data of a total of 37 almond cultivars. In virtually all cases, we could clearly delineate both the chilling phase and the forcing period. The following three figures show the results.
+
+![PLS results for ***almond*** cultivars near Sfax, Tunisia - part 1 [[@benmoussa2017chilling]](https://www.sciencedirect.com/science/article/abs/pii/S0168192317300734)](pictures/PLS_chill_force_almonds1_Tunisia.png)
+
+![PLS results for ***almond*** cultivars near Sfax, Tunisia - part 2 [[@benmoussa2017chilling]](https://www.sciencedirect.com/science/article/abs/pii/S0168192317300734)](pictures/PLS_chill_force_almonds2_Tunisia.png)
+
+![PLS results for ***almond*** cultivars near Sfax, Tunisia - part 3 [[@benmoussa2017chilling]](https://www.sciencedirect.com/science/article/abs/pii/S0168192317300734)](pictures/PLS_chill_force_almonds3_Tunisia.png)
+
+
+### Pistachios in Tunisia
+
+We also evaluated data for pistachios from the same experimental station in the Sfax region of Tunisia. For this crop, we found a long chilling period, with very clear responses to chill accumulation rates. Interestingly, the forcing period was now hard to see:
+
+
+![PLS results for ***pistachios*** near Sfax, Tunisia [[@benmoussa_performance_2017]](https://www.sciencedirect.com/science/article/abs/pii/S0098847217301119)](pictures/PLS_chill_force_pistachio_Tunisia.png)
+
+
+## `Exercises` on examples of PLS regression with agroclimatic metrics {-#exercises_PLS_chill_force_ex}
+
+Please document all results of the following assignments in your `learning logbook`.
+
+1) Look across all the PLS results presented above. Can you detect a pattern in where chilling and forcing periods could be delineated clearly, and where this attempt failed?
+2) Think about possible reasons for the success or failure of PLS analysis based on agroclimatic metrics. Write down your thoughts.

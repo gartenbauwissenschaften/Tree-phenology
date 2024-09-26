@@ -1,0 +1,310 @@
+# Some useful tools in R
+
+```{r load_packages_tools, echo=FALSE, message=FALSE, warning=FALSE}
+require(chillR)
+require(tidyverse)
+#require(kableExtra)
+
+```
+
+## Learning goals for this lesson {-#goals_R_tools}
+
+- Get to know some neat tools in R that can make coding more elegant - and easier
+- Get introduced to the `tidyverse`
+- Learn about loops
+- Get to know the `apply` function family
+
+## An evolving language - and a lifelong learning process
+
+The R universe is a very active space, with lots of improvements being made all the time in various places. Through these improvements, the language has evolved far beyond the relatively basic capabilities of `base R`. When I started learning R around 2010, I solved most of my problems with `base R` functions. This often resulted in convoluted code and ugly plots... I'd like to believe this was because the more advanced functions weren't available yet, but the real reason is that my personal learning curve hadn't caught up (and still hasn't caught up) with the true state of the art in R programming.
+
+Over the years, I have gradually come around to adopting some of these more modern tools and more elegant programming styles. Since we'll be using some of these throughout the remaining chapters, it's now time for an introduction. For all the tools in this chapter, there are much better and more comprehensive instruction materials elsewhere on the web (I'll provide pointers), but I'll try to give you the basics you need in order to follow the materials in this book.
+
+## The `tidyverse`
+
+Many of the specific tools I want to introduce to you are part of the [`tidyverse`](https://www.tidyverse.org/), a set of packages developed by [Hadley Wickham](https://en.wikipedia.org/wiki/Hadley_Wickham) and his team. The whole collection is described [here](https://www.tidyverse.org/). I have only scratched the surface of this, but I encourage you to delve into this treasure chest to look for ways to improve your programming capabilities. Here, I'll only highlight the functions that are used in this book. A nice feature of the `tidyverse` is that we only have to load a single *package* to access all the `tidyverse` capabilities: `library(tidyverse)` does the trick.
+
+
+## The `ggplot2` package
+
+We've already encountered `ggplot2`, so I'm just listing this here for completeness. Initially released in 2007 by [Hadley Wickham](https://en.wikipedia.org/wiki/Hadley_Wickham), `ggplot2` has become one of the most popular R packages, because it greatly facilitates making attractive figures. You can read up on the history of the package [here](https://en.wikipedia.org/wiki/Ggplot2).
+
+A great introduction to `ggplot2` and links to various tutorials etc. can be accessed [here](https://ggplot2.tidyverse.org/).
+
+## The `tibble` package
+
+A `tibble` is an advanced version of a `data.frame`, which includes several improvements. These are described [here](https://tibble.tidyverse.org/). The most relevant improvement in my view is that `tibbles` don't follow the classic `data.frame` habit of converting strings to factors at times when you don't expect it. I'm fairly new to `tibbles` myself, but I'll try to use them throughout the remainder of this book.
+
+You can easily create a `tibble` from a normal `data.frame` (or a similar structure) by using the `as_tibble` command.
+
+```{r}
+library(tidyverse)
+
+dat <- data.frame(a=c(1,2,3),b=c(4,5,6))
+d <- as_tibble(dat)
+d
+```
+
+## The `magrittr` package - pipes
+
+The main thing `magrittr` adds is a structure to organize workflows that are applied to the same dataset. A data structure such as a `tibble` can be subjected to one or multiple operations organized in a pipe. The notation for such a pipe is `%>%`. 
+
+For instance, we can calculate the sum of all numbers in the `tibble` `d` we created above by the following operation.
+
+```{r}
+d %>% sum()
+
+```
+
+Note that we didn't have to pass the `d` to the `sum` command as an input. After a pipe, the following function always assumes that the first input to the function is the product received through the pipe. You can add more commands by adding another pipe after the first one. We'll get to some more complex - and more useful - examples below.
+
+## The `tidyr` package
+
+`tidyr` provides useful functions for organizing your data. I'll use the `KA_weather` dataset from `chillR` to demonstrate how some of these work.
+
+```{r}
+library(chillR)
+
+KAw<-as_tibble(KA_weather[1:10,])
+KAw
+```
+
+### `pivot_longer`
+
+We already encountered the `pivot_longer` function in the previous lesson. We can use this to transfer data from separate columns (e.g. `Tmin` and `Tmax` in this case) into distinct rows. In this example, we'll have one row containing `Tmin` and one row for `Tmax` for each day of the record. We'll often have to do this, for instance, when we want to use the `ggplot2` package for plotting our data. Here's how this works (with a pipe).
+
+```{r}
+KAwlong <- KAw %>% pivot_longer(cols=Tmax:Tmin)
+KAwlong
+
+```
+
+As you can see, we had to specify the columns that we wanted to *stack up*. Note that `pivot_longer` fulfills a similar function to the `melt` function of the `reshape2` package, which I used until recently (and in earlier versions of this book). I find `pivot_longer` more intuitive, so I'll be using this throughout the remaining chapters.
+
+### `pivot_wider`
+
+We can also do an opposite conversion to the one implemented by `pivot_longer` by using the `pivot_wider` command.
+
+```{r}
+KAwwide <- KAwlong %>% pivot_wider(names_from=name) 
+KAwwide
+```
+
+The `names_from` argument specified the column that contains the new column headers. In this example, the call would also have worked without this argument, but that may not always be the case.
+
+### `select`
+
+With the `select` function, we can pick out a subset of the columns of a `data.frame` or `tibble`.
+
+```{r}
+
+KAw %>% select(c(Month, Day, Tmax))
+```
+
+### `filter`
+
+The `filter` function reduces a `data.frame` or `tibble` to just the rows that fulfill certain conditions.
+
+```{r}
+KAw %>% filter(Tmax>10)
+
+```
+
+### `mutate`
+
+The `mutate` function is a work horse for creating, modifying, and deleting columns from a `data.frame` or `tibble`.
+
+Let's first create new columns, e.g. two columns that contain `Tmin` and `Tmax` in Kelvin.
+
+```{r}
+
+KAw_K <- KAw %>% mutate(Tmax_K = Tmax + 273.15, Tmin_K = Tmin + 273.15)
+KAw_K
+```
+
+Now we delete these columns again, by setting them to `NULL`.
+
+```{r}
+KAw_K %>% mutate(Tmin_K = NULL, Tmax_K = NULL)
+
+```
+
+Now I'll replace the original temperature values directly with the Fahrenheit values. The following code modifies these columns accordingly.
+
+```{r}
+KAw %>% mutate(Tmin = Tmin + 273.15, Tmax = Tmax + 273.15)
+
+```
+
+There are many other interesting things you can do with `mutate`, so please check out the [help file](https://dplyr.tidyverse.org/reference/mutate.html) for more options.
+
+### `arrange`
+
+`arrange` is a function to sort data in `data.frames` or `tibbles`.
+
+```{r}
+KAw %>% arrange(Tmax, Tmin)
+
+```
+
+You can also sort in descending order.
+
+```{r}
+KAw %>% arrange(desc(Tmax), Tmin)
+
+```
+
+## Loops
+
+In addition to the `tidyverse` functions, we have to talk about an important code structure that will allow us to get a lot of work done in an efficient manner: **loops**. A loop allows us to repeat the same operation many times without having to explicitly retype (or copy and paste) the code. More importantly, it allows us to run the same code while introducing certain modifications in every run. You can read detailed explanations on loops [here](https://intro2r.com/loops.html), but I'll give you the basics in this chapter.
+
+There are two basic types of loops: **for** loops and **while** loops. For both of them, we have to provide instructions that regulate the number of runs, as well as instructions on what to do in each of the runs.
+
+### *For* loops
+
+In a *for* loop, we provide explicit instructions on how many times the code within the loop should be run. This is usually specified by providing a vector or list of elements and instructing R to run the code for each of these elements. This means that the number of times the code is run equals the number of elements in the vector or list. We need a counter (often called `i` but can also be any other variable name) to keep track of which run we're in.
+
+```{r}
+for (i in 1:3) print("Hello")
+
+```
+This command ran the code three times, plotting the same output each time. We can make this structure more complex by providing multiple lines of code within winged brackets.
+
+```{r}
+addition <- 1
+
+for (i in 1:3)
+{
+  addition <- addition + 1
+  print(addition)
+}
+
+```
+The code in this loop added 1 to the element `addition` (with an initial value of 1) in each iteration, and it printed the resulting value (note that you may have to explicitly instruct R to `print` such values, when the operation is embedded within a loop).
+
+We can add more flexibility to the operations by using the index `i` within the code block.
+
+```{r}
+addition <- 1
+
+for (i in 1:3)
+{
+  addition <- addition + i
+  print(addition)
+}
+
+```
+
+Now we added the respective value of `i` to the `addition` element in each of the runs. We can also use `i` in more creative ways.
+
+```{r}
+names <- c("Paul", "Mary", "John")
+
+for (i in 1:3)
+{
+  print(paste("Hello", names[i]))
+}
+
+```
+The *counter* doesn't have to be numeric, but it can assume many other shapes, e.g. that of a string. We can therefore generate the same output as from the last code block by formulating this as follows:
+
+```{r}
+for (i in c("Paul", "Mary", "John"))
+{
+  print(paste("Hello", i))
+}
+
+```
+### *While* loops
+
+We can also specify the decision on whether to run a loop with a `while` statement. The code is then run, until the specified condition is no longer fulfilled. This only makes sense, of course, if the condition can change as a result of what happens inside the loop.
+
+```{r}
+cond <- 5
+
+while (cond>0)
+{
+  print(cond)
+  cond <- cond - 1
+}
+
+```
+
+As soon as `cond` reaches 0, the starting condition is no longer fulfilled, so that the code isn't run again. Note that `while` loops can easily cause problems if the condition remains fulfilled regardless of what happens in the code block. Your code will then get hung up and needs to be cancelled manually.
+
+## `apply` functions
+
+In addition to loops, R has another elegant method for applying certain operations to multiple elements at the same time. Don't ask me why, but this is often a much faster way of getting things done. Such operations are implemented by the functions from the `apply` family: `apply`, `lapply` and `sapply`. The two central arguments that need to be provided to these functions are the list of items to apply the operation to, and the operation itself.
+
+### `sapply`
+
+When you just want to apply an operation to a vector of elements, the easiest function to use is `sapply`. It only needs two arguments: the vector (`X`), and the function to be applied (`FUN`). To illustrate this, I'll create a simple function, `func`, which just adds 1 to an object.
+
+```{r}
+
+func <- function(x)
+  x + 1
+
+sapply(1:5, func)
+
+```
+As you can see, the output is a vector of numbers that are 1 greater than the input vector. If we apply this function to a list of numbers, the output is a matrix (but the values are the same).
+
+```{r}
+
+sapply(list(1:5), func)
+
+```
+### `lapply`
+
+If we want the output to be a list, we can use the `lapply` function. It interprets the input element `X` as a list and returns a list with as many elements as were provided in that list, with each one containing the output of applying `FUN` to the respective element.
+
+```{r}
+
+lapply(1:5, func)
+
+```
+
+Note that if the input element `X` is itself a list, this list is treated as one input element, with `FUN` applied to the entire list and the result returned as a single list element. It may be easier to look at an example to understand this.
+
+```{r}
+
+lapply(list(1:5), func)
+
+```
+
+### `apply`
+
+The basic `apply` function is for applying functions to arrays, where we can operate either on the rows (`MARGIN = 1`) or on the columns (`MARGIN = 1`) of the array. We probably won't use this much, so here are just some simple examples of what this function does. Feel free to look through the help file (or google - lots of helpful materials out there) to learn more about this.
+
+```{r}
+
+mat <- matrix(c(1,1,1,2,2,2,3,3,3),c(3,3))
+
+mat
+
+apply(mat, MARGIN=1, sum) # adding up all the data in each row
+
+apply(mat, MARGIN=2, sum) # adding up all the data in each column
+
+```
+
+
+## `Exercises` on useful R tools {-#exercises_R_tools}
+
+Please document all results of the following assignments in your `learning logbook`.
+
+1) Based on the `Winters_hours_gaps` dataset, use `magrittr` pipes and functions of the `tidyverse` to accomplish the following:
+  - a) Convert the dataset into a `tibble`
+  - b) Select only the top 10 rows of the dataset
+  - c) Convert the `tibble` to a `long` format, with separate rows for `Temp_gaps` and `Temp`
+  - d) Use `ggplot2` to plot `Temp_gaps` and `Temp` as facets (point or line plot)
+  - e) Convert the dataset back to the `wide` format
+  - f) Select only the following columns: `Year`, `Month`, `Day` and `Temp`
+  - g) Sort the dataset by the `Temp` column, in descending order
+2) For the `Winter_hours_gaps` dataset, write a `for` loop to convert all temperatures (`Temp` column) to degrees Fahrenheit
+3) Execute the same operation with a function from the `apply` family
+4) Now use the `tidyverse` function `mutate` to achieve the same outcome
+5) Voluntary: consider taking a look at the instruction materials on all these functions, which I linked above, as well as at other sources on the internet. There's a lot more to discover here, with lots of potential for making your coding more elegant and easier - and possibly even more fun!
+
+

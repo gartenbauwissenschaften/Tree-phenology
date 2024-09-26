@@ -1,0 +1,129 @@
+# Getting temperature data {#get_temp_data}
+
+## Learning goals for this lesson {-#goals_get_temps}
+
+- Appreciate the need for daily temperature data
+- Know how to get a list of promising weather stations contained in an international database
+- Be able to download weather data using `chillR` functions
+- Know how to convert downloaded data into `chillR` format
+
+## Temperature data needs
+
+Obviously, without temperature data we can't do much phenology and chill modeling. This is a pretty critical input to all models we can make or may want to run. It also seems like an easy-to-find resource, doesn't it? Well, you may be surprised by how difficult it is to get such data. While all countries in the world have official weather stations that record precisely the type of information we need, many are very protective of these data. Many national weather services sell such information (the collection of which was likely funded by taxpayer money) at rather high prices. If you only want to do a study on one location, you may be able to shell out that money, but this quickly becomes unrealistic, when you're targeting a larger-scale analysis.
+
+On a personal note, I must say that I find it pretty outrageous that at a time where we should be making every effort to understand the impacts of climate change on our world and to find ways to adapt, weather services are putting up such access barriers. I really wonder how many climate-related studies that have been done turned out less useful than they could have been, had more data been easily and freely available. Well, back to the main story...
+
+To be clear, it's of course preferable to have a high-quality dataset collected in the exact place that you want to analyze. If we don't have such data, however, there are a few databases out there that we can draw on as an alternative option. `chillR` currently has the capability to access one global database, as well as one for California. There is certainly scope for expanding this capability, but let's start working with what's available now.
+
+## The Global Summary of the Day database
+
+An invaluable source of temperature data is the [National Centers for Environmental Information (NCEI)](https://www.ncei.noaa.gov/), formerly the National Climatic Data Center (NCDC) of the [United States National Oceanic and Atmospheric Administration (NOAA)](https://www.noaa.gov/), in particular their [Global Summary of the Day (GSOD) database](https://www.ncei.noaa.gov/access/search/data-search/global-summary-of-the-day). That was a pretty long name, so let's stick with the abbreviation `GSOD`.
+
+Check out the [GSOD website](https://www.ncei.noaa.gov/access/search/data-search/global-summary-of-the-day) to take a look at the interface: https://www.ncei.noaa.gov/access/search/data-search/global-summary-of-the-day. This interface used to be pretty confusing in the past - and I almost find it more confusing now. Fortunately, if you click on the `Bulk downloads` button, you can get to a place where you can directly access the weather data: https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/. What we find here is, at first glance, even more inaccessible than the web interface, but at least we can recognize some structure now: All records are stored in separate files for each station and year, with the files named according to a code assigned to the weather stations. You could now download these records by hand, if you wanted to, but this would take a long time (if you want data for many years), and you'd first have to find out what station is of interest to you.
+
+Fortunately, I found a list of all the weather stations somewhere on NOAA's website: ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv, and I automated the tedious data download and assembling process in `chillR`. My attempt resulted in a reliable but fairly slow procedure, but a former participant of this module, Adrian Fülle, found a much more elegant - and much faster - way to achieve this.
+
+Let's see how this works:
+
+There's a single `chillR` function, `handle_gsod()`, that can take care of all data retrieval steps. Since there are multiple steps involved, we have to use the function's `action` parameter to tell it what to do:
+
+### `action=list_stations`
+
+When used with this action, `handle_gsod()` retrieves the station list and sorts the stations based on their proximity to a set of coordinates we specify. Let's look for stations around Bonn (Latitude= 50.73; Longitude= 7.10). I'll also add a time interval of interest (1990-2020) to narrow the search.
+
+```{r list_stations, eval=FALSE}
+library(chillR)
+station_list<-handle_gsod(action="list_stations",
+                          location=c(7.10,50.73),
+                          time_interval=c(1990,2020))
+```
+
+```{r load_actual_weather_files, echo=FALSE, message=FALSE}
+station_list<-read.csv("data/station_list.csv")
+weather<-list(`KOLN BONN`=read.csv("data/Bonn_weather.csv"))
+cleaned_weather<-list(`KOLN BONN`=read.csv("data/Bonn_chillR_weather.csv"))
+```
+
+```{r print_station_list}
+require(kableExtra)
+
+kable(station_list) %>%
+  kable_styling("striped", position = "left", font_size = 8)
+
+```
+
+This list contains the 25 closest stations to the location we entered, ordered by their distance to the target coordinates. This distance is shown in the `distance` column. The `Overlap_years` column shows the number of years that are available, and the `Perc_interval_covered` column the percentage of the target interval that is covered. Note that this is only based on the `BEGIN` and `END` dates in the table - it's quite possible (and usually the case) that the dataset contains gaps, which sometimes cover almost the entire record.
+
+### `action="download_weather"`
+
+When used with this option, the `handle_gsod()` function downloads the weather data for a particular station, based on a station-specific `chillR_code` (shown in the respective column of the table above). Rather than typing the code manually, we can refer to the code in the station_list. Let's download the data for the 4^th^ entry in the list, which looks like it covers most of the period we're interested in.
+
+```{r download_weather, eval=FALSE}
+weather<-handle_gsod(action="download_weather",
+                     location=station_list$chillR_code[4],
+                     time_interval=c(1990,2020))
+```
+
+The result of this operation is a list with two elements. Element 1 (`weather[[1]]`) is an indication of the database the data come from. Element 2 (`weather[[2]]`) is the actual dataset, which we can see here:
+
+```{r, eval=FALSE}
+weather[[1]][1:20,]
+```
+
+```{r downloaded_weather, echo=FALSE}
+kable(weather[[1]][1:20,]) %>%
+  kable_styling("striped", position = "left", font_size = 8)
+
+```
+
+This still looks pretty complicated, and it contains a lot of information we don't need. `chillR` therefore contains a function to simplify this record. Note, however, that this removes a lot of variables you may be interested in. More importantly, this also removes quality flags, which may indicate that particular records aren't reliable. I've generously ignored this so far, but there's room for improvement here.
+
+### downloaded weather as `action` argument
+
+This way of calling `handle_gsod()` serves to clean the dataset and convert it into a format that `chillR` can easily handle
+
+```{r clean_weather,eval=FALSE}
+cleaned_weather<-handle_gsod(weather)
+```
+
+```{r, eval=FALSE}
+cleaned_weather[[1]][1:20,]
+
+```
+
+```{r output_cleaned_weather, echo=FALSE}
+kable(cleaned_weather[[1]][1:20,]) %>%
+  kable_styling("striped", position = "left", font_size = 8)
+
+```
+
+Note that the reason for many of the strange numbers in these records is that the original database stores them in degrees Fahrenheit, so that they had to be converted to degrees Celsius. That often creates ugly numbers, but it's not hard:
+
+$Temperature[°C]=(Temperature[°F]-32)\cdot\frac{5}{9}$
+
+We now have a temperature record in a format that we can easily work with in `chillR`.
+
+Upon closer inspection, however, you'll notice that this dataset has pretty substantial gaps, including several entire years of missing data. How can we deal with this? Let's find out in the lesson on [Filling gaps in temperature records].
+
+Note that `chillR` has a pretty similar function to download data from the [California Irrigation Management Information System (CIMIS)](https://cimis.water.ca.gov/).
+
+There's surely room for improvement here. There's a lot more data out there that `chillR` could have a download function for.
+
+Now let's save the files we generated here, so that we can use them in the upcoming chapters:
+
+```{r save_downloaded_weather, eval=FALSE}
+write.csv(station_list,"data/station_list.csv",row.names=FALSE)
+write.csv(weather[[1]],"data/Bonn_raw_weather.csv",row.names=FALSE)
+write.csv(cleaned_weather[[1]],"data/Bonn_chillR_weather.csv",row.names=FALSE)
+
+```
+
+
+
+## `Exercises` on getting temperature data {-#exercises_getting}
+
+Please document all results of the following assignments in your `learning logbook`.
+
+1) Choose a location of interest and find the 25 closest weather stations using the `handle_gsod` function
+2) Download weather data for the most promising station on the list
+3) Convert the weather data into `chillR` format

@@ -1,0 +1,44 @@
+book_filename: "Book"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
+
+rmd_files:
+- index.Rmd
+# - 01-intro.Rmd
+# - 02-intro_tools.Rmd
+# - 03-Tree_dormancy.Rmd
+# - 04-Climate_change_and_impact_projection.Rmd
+# - 05-CC_Chill_examples.Rmd
+# - 06-Manual_chill_analysis.Rmd
+# - 07-chillR_chill_models.Rmd
+# - 08-chillR_hourly_temps_and_chill.Rmd
+# - 09-chillR_some_R_tools.Rmd
+# - 10-chillR_getting_temperature_data.Rmd
+# - 11-chillR_filling_gaps.Rmd
+# - 12-chillR_weather_generation.Rmd
+# - 13-chillR_saving_loading.Rmd
+# - 14-chillR_historic_temp_scenarios.Rmd
+# - 15-chillR_future_temp_scenarios.Rmd
+# - 16-chillR_future_temp_scenarios_CMIP6.Rmd
+# - 17-chillR_future_temp_scenarios_ClimateWizard.Rmd
+# - 18-chillR_future_plots.Rmd
+# - 19-chillR_chill_model_comparison.Rmd
+# - 20-chillR_simple_phenology_analysis.Rmd
+# - 21-chillR_PLS_intro.Rmd
+# - 22-chillR_PLS_examples.Rmd
+# - 23-chillR_PLS_chill_force.Rmd
+# - 24-chillR_PLS_chill_force_examples.Rmd
+# - 25-chillR_PLS_chill_force_reflection.Rmd
+# - 26-chillR_eval_PLS.Rmd
+# - 27-chillR_contours.Rmd
+# - 28-chillR_experimentally_enhanced_PLS.Rmd
+# - 29-chillR_model_validity.Rmd
+# - 30-chillR_PhenoFlex.Rmd
+# - 31-chillR_PhenoFlex_revisited.Rmd
+# - 32-chillR_PhenoFlex_exp_seasons.Rmd
+# - 33-chillR_bloom_frost_analysis.Rmd
+# - 34-Frost_risk_projections.Rmd
+# - 35-Main_concepts.Rmd
+# - 99-references.Rmd
