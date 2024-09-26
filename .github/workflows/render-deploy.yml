@@ -24,8 +24,30 @@ jobs:
       - name: Install system dependencies
         run: |
           apt-get -y update
-          apt-get -y install make pandoc libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libcurl4-openssl-dev libxml2-dev libssl-dev libsecret-1-dev libsodium-dev libicu-dev libudunits2-dev libpng-dev libfontconfig1-dev libfreetype6-dev 
-          zlib1g-dev libjpeg-dev libtiff-dev libfribidi-dev libharfbuzz-dev git rustc cargo
+          apt-get -y install \
+          make \
+          libgdal-dev \
+          gdal-bin \
+          libgeos-dev \
+          libproj-dev \
+          libsqlite3-dev \
+          libcurl4-openssl-dev \
+          libxml2-dev \
+          libssl-dev \
+          libsecret-1-dev \
+          libsodium-dev \
+          libicu-dev \
+          libudunits2-dev \
+          libpng-dev \
+          libfontconfig1-dev \
+          libfreetype6-dev \
+          zlib1g-dev \
+          libjpeg-dev \
+          libtiff-dev \
+          libfribidi-dev \
+          libharfbuzz-dev \
+          rustc \
+          cargo
       
       # Step 3: Set up Pandoc
       - name: Install
