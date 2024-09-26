@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 30 Making valid tree phenology models | Tree phenology analysis with R</title>
+  <meta name="description" content="This lecture introduces the chillR package for R." />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 30 Making valid tree phenology models | Tree phenology analysis with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This lecture introduces the chillR package for R." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 30 Making valid tree phenology models | Tree phenology analysis with R" />
+  
+  <meta name="twitter:description" content="This lecture introduces the chillR package for R." />
+  
+
+<meta name="author" content="Eike Luedeling" />
+
+
+<meta name="date" content="2024-09-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exp_PLS.html"/>
+<link rel="next" href="phenoflex.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/font-awesome-6.5.2/js/script.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Tree phenology analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#objectives"><i class="fa fa-check"></i><b>1.1</b> Objectives</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#performance-assessment"><i class="fa fa-check"></i><b>1.2</b> Performance assessment</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#house-rules"><i class="fa fa-check"></i><b>1.3</b> House rules</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-1.html"><a href="introduction-1.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-1.html"><a href="introduction-1.html#objectives-1"><i class="fa fa-check"></i><b>2.1</b> Objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-1.html"><a href="introduction-1.html#performance-assessment-1"><i class="fa fa-check"></i><b>2.2</b> Performance assessment</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-1.html"><a href="introduction-1.html#house-rules-1"><i class="fa fa-check"></i><b>2.3</b> House rules</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html"><i class="fa fa-check"></i><b>3</b> The tools we use</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html#r-and-rstudio"><i class="fa fa-check"></i><b>3.1</b> R and RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html#git-and-github"><i class="fa fa-check"></i><b>3.2</b> git and github</a></li>
+<li class="chapter" data-level="3.3" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html#rmarkdown"><i class="fa fa-check"></i><b>3.3</b> Rmarkdown</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="tree-dormancy.html"><a href="tree-dormancy.html"><i class="fa fa-check"></i><b>4</b> Tree dormancy</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="tree-dormancy.html"><a href="tree-dormancy.html#learning-goals-for-this-lesson"><i class="fa fa-check"></i><b>4.1</b> Learning goals for this lesson:</a></li>
+<li class="chapter" data-level="4.2" data-path="tree-dormancy.html"><a href="tree-dormancy.html#introduction-to-dormancy"><i class="fa fa-check"></i><b>4.2</b> Introduction to dormancy</a></li>
+<li class="chapter" data-level="4.3" data-path="tree-dormancy.html"><a href="tree-dormancy.html#dormancy-physiology"><i class="fa fa-check"></i><b>4.3</b> Dormancy physiology</a></li>
+<li class="chapter" data-level="4.4" data-path="tree-dormancy.html"><a href="tree-dormancy.html#experimental-and-statistical-determination-of-the-chilling-and-forcing-periods"><i class="fa fa-check"></i><b>4.4</b> Experimental and statistical determination of the chilling and forcing periods</a></li>
+<li class="chapter" data-level="4.5" data-path="tree-dormancy.html"><a href="tree-dormancy.html#phenology-record-and-bbch-scale"><i class="fa fa-check"></i><b>4.5</b> Phenology record and BBCH scale</a></li>
+<li class="chapter" data-level="" data-path="tree-dormancy.html"><a href="tree-dormancy.html#exercises_dormancy"><i class="fa fa-check"></i><code>Exercises</code> on tree dormancy</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html"><i class="fa fa-check"></i><b>5</b> Climate change and impact projection</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#the-drivers-of-climate-change"><i class="fa fa-check"></i><b>5.1</b> The drivers of climate change</a></li>
+<li class="chapter" data-level="5.2" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#what-weve-already-seen"><i class="fa fa-check"></i><b>5.2</b> What we’ve already seen</a></li>
+<li class="chapter" data-level="5.3" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#future-scenarios"><i class="fa fa-check"></i><b>5.3</b> Future scenarios</a></li>
+<li class="chapter" data-level="5.4" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#impact-projection-approaches"><i class="fa fa-check"></i><b>5.4</b> Impact projection approaches</a></li>
+<li class="chapter" data-level="" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#exercises_climate_change"><i class="fa fa-check"></i><code>Exercises</code> on climate change</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html"><i class="fa fa-check"></i><b>6</b> Winter chill projections</a>
+<ul>
+<li class="chapter" data-level="" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#goals_analysis_examples"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="6.1" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-projections-1"><i class="fa fa-check"></i><b>6.1</b> Winter chill projections</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-oman"><i class="fa fa-check"></i><b>6.1.1</b> Winter chill in Oman</a></li>
+<li class="chapter" data-level="6.1.2" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-model-sensitivity"><i class="fa fa-check"></i><b>6.1.2</b> Chill model sensitivity</a></li>
+<li class="chapter" data-level="6.1.3" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-california"><i class="fa fa-check"></i><b>6.1.3</b> Winter chill in California</a></li>
+<li class="chapter" data-level="6.1.4" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-ratios"><i class="fa fa-check"></i><b>6.1.4</b> Winter chill ratios</a></li>
+<li class="chapter" data-level="6.1.5" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#a-global-projection-of-future-winter-chill"><i class="fa fa-check"></i><b>6.1.5</b> A global projection of future winter chill</a></li>
+<li class="chapter" data-level="6.1.6" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-germany"><i class="fa fa-check"></i><b>6.1.6</b> Winter chill in Germany</a></li>
+<li class="chapter" data-level="6.1.7" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-tunisia"><i class="fa fa-check"></i><b>6.1.7</b> Winter chill in Tunisia</a></li>
+<li class="chapter" data-level="6.1.8" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-chile"><i class="fa fa-check"></i><b>6.1.8</b> Winter chill in Chile</a></li>
+<li class="chapter" data-level="6.1.9" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-projection-for-patagonia"><i class="fa fa-check"></i><b>6.1.9</b> Chill projection for Patagonia</a></li>
+<li class="chapter" data-level="6.1.10" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-model-comparison"><i class="fa fa-check"></i><b>6.1.10</b> Chill model comparison</a></li>
+<li class="chapter" data-level="6.1.11" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-projection-for-all-of-tunisia"><i class="fa fa-check"></i><b>6.1.11</b> Chill projection for all of Tunisia</a></li>
+<li class="chapter" data-level="6.1.12" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#revisiting-chill-accumulation-in-oman"><i class="fa fa-check"></i><b>6.1.12</b> Revisiting chill accumulation in Oman</a></li>
+<li class="chapter" data-level="6.1.13" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#future-studies"><i class="fa fa-check"></i><b>6.1.13</b> Future studies?</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#exercises_past_studies"><i class="fa fa-check"></i><code>Exercises</code> on past chill projections</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html"><i class="fa fa-check"></i><b>7</b> Manual chill analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html#goals_manual_chill_analysis"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="7.1" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html#computing-chilling-hours-from-hourly-temperature-data"><i class="fa fa-check"></i><b>7.1</b> Computing Chilling Hours from hourly temperature data</a></li>
+<li class="chapter" data-level="7.2" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html#our-first-chill-function"><i class="fa fa-check"></i><b>7.2</b> Our first chill function</a></li>
+<li class="chapter" data-level="" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html#exercises_manual_chill_analysis"><i class="fa fa-check"></i><code>Exercises</code> on basic chill modeling</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="chill-models.html"><a href="chill-models.html"><i class="fa fa-check"></i><b>8</b> Chill models</a>
+<ul>
+<li class="chapter" data-level="" data-path="chill-models.html"><a href="chill-models.html#goals_chill_models"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="8.1" data-path="chill-models.html"><a href="chill-models.html#chill-models-in-chillr"><i class="fa fa-check"></i><b>8.1</b> Chill models in <code>chillR</code></a></li>
+<li class="chapter" data-level="" data-path="chill-models.html"><a href="chill-models.html#exercises_chill_models"><i class="fa fa-check"></i><code>Exercises</code> on chill models</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html"><i class="fa fa-check"></i><b>9</b> Making hourly temperatures</a>
+<ul>
+<li class="chapter" data-level="" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#goals_hourly"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="9.1" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#generating-hourly-temperatures"><i class="fa fa-check"></i><b>9.1</b> Generating hourly temperatures</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#idealized-daily-temperature-curves"><i class="fa fa-check"></i><b>9.1.1</b> Idealized daily temperature curves</a></li>
+<li class="chapter" data-level="9.1.2" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#empirical-daily-temperature-curves"><i class="fa fa-check"></i><b>9.1.2</b> Empirical daily temperature curves</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#exercises_hourly"><i class="fa fa-check"></i><code>Exercises</code> on hourly temperatures</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html"><i class="fa fa-check"></i><b>10</b> Some useful tools in R</a>
+<ul>
+<li class="chapter" data-level="" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#goals_R_tools"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="10.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#an-evolving-language---and-a-lifelong-learning-process"><i class="fa fa-check"></i><b>10.1</b> An evolving language - and a lifelong learning process</a></li>
+<li class="chapter" data-level="10.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-tidyverse"><i class="fa fa-check"></i><b>10.2</b> The <code>tidyverse</code></a></li>
+<li class="chapter" data-level="10.3" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-ggplot2-package"><i class="fa fa-check"></i><b>10.3</b> The <code>ggplot2</code> package</a></li>
+<li class="chapter" data-level="10.4" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-tibble-package"><i class="fa fa-check"></i><b>10.4</b> The <code>tibble</code> package</a></li>
+<li class="chapter" data-level="10.5" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-magrittr-package---pipes"><i class="fa fa-check"></i><b>10.5</b> The <code>magrittr</code> package - pipes</a></li>
+<li class="chapter" data-level="10.6" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-tidyr-package"><i class="fa fa-check"></i><b>10.6</b> The <code>tidyr</code> package</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#pivot_longer"><i class="fa fa-check"></i><b>10.6.1</b> <code>pivot_longer</code></a></li>
+<li class="chapter" data-level="10.6.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#pivot_wider"><i class="fa fa-check"></i><b>10.6.2</b> <code>pivot_wider</code></a></li>
+<li class="chapter" data-level="10.6.3" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#select"><i class="fa fa-check"></i><b>10.6.3</b> <code>select</code></a></li>
+<li class="chapter" data-level="10.6.4" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#filter"><i class="fa fa-check"></i><b>10.6.4</b> <code>filter</code></a></li>
+<li class="chapter" data-level="10.6.5" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#mutate"><i class="fa fa-check"></i><b>10.6.5</b> <code>mutate</code></a></li>
+<li class="chapter" data-level="10.6.6" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#arrange"><i class="fa fa-check"></i><b>10.6.6</b> <code>arrange</code></a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#loops"><i class="fa fa-check"></i><b>10.7</b> Loops</a>
+<ul>
+<li class="chapter" data-level="10.7.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#for-loops"><i class="fa fa-check"></i><b>10.7.1</b> <em>For</em> loops</a></li>
+<li class="chapter" data-level="10.7.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#while-loops"><i class="fa fa-check"></i><b>10.7.2</b> <em>While</em> loops</a></li>
+</ul></li>
+<li class="chapter" data-level="10.8" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#apply-functions"><i class="fa fa-check"></i><b>10.8</b> <code>apply</code> functions</a>
+<ul>
+<li class="chapter" data-level="10.8.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#sapply"><i class="fa fa-check"></i><b>10.8.1</b> <code>sapply</code></a></li>
+<li class="chapter" data-level="10.8.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#lapply"><i class="fa fa-check"></i><b>10.8.2</b> <code>lapply</code></a></li>
+<li class="chapter" data-level="10.8.3" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#apply"><i class="fa fa-check"></i><b>10.8.3</b> <code>apply</code></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#exercises_R_tools"><i class="fa fa-check"></i><code>Exercises</code> on useful R tools</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="get_temp_data.html"><a href="get_temp_data.html"><i class="fa fa-check"></i><b>11</b> Getting temperature data</a>
+<ul>
+<li class="chapter" data-level="" data-path="get_temp_data.html"><a href="get_temp_data.html#goals_get_temps"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="11.1" data-path="get_temp_data.html"><a href="get_temp_data.html#temperature-data-needs"><i class="fa fa-check"></i><b>11.1</b> Temperature data needs</a></li>
+<li class="chapter" data-level="11.2" data-path="get_temp_data.html"><a href="get_temp_data.html#the-global-summary-of-the-day-database"><i class="fa fa-check"></i><b>11.2</b> The Global Summary of the Day database</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="get_temp_data.html"><a href="get_temp_data.html#actionlist_stations"><i class="fa fa-check"></i><b>11.2.1</b> <code>action=list_stations</code></a></li>
+<li class="chapter" data-level="11.2.2" data-path="get_temp_data.html"><a href="get_temp_data.html#actiondownload_weather"><i class="fa fa-check"></i><b>11.2.2</b> <code>action="download_weather"</code></a></li>
+<li class="chapter" data-level="11.2.3" data-path="get_temp_data.html"><a href="get_temp_data.html#downloaded-weather-as-action-argument"><i class="fa fa-check"></i><b>11.2.3</b> downloaded weather as <code>action</code> argument</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get_temp_data.html"><a href="get_temp_data.html#exercises_getting"><i class="fa fa-check"></i><code>Exercises</code> on getting temperature data</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html"><i class="fa fa-check"></i><b>12</b> Filling gaps in temperature records</a>
+<ul>
+<li class="chapter" data-level="" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#goals_gaps"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="12.1" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#gaps"><i class="fa fa-check"></i><b>12.1</b> Gaps</a></li>
+<li class="chapter" data-level="12.2" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#filling-short-gaps-in-daily-records"><i class="fa fa-check"></i><b>12.2</b> Filling short gaps in daily records</a></li>
+<li class="chapter" data-level="12.3" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#filling-long-gaps-in-daily-records"><i class="fa fa-check"></i><b>12.3</b> Filling long gaps in daily records</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#bias-correction-for-shorter-intervals"><i class="fa fa-check"></i><b>12.3.1</b> Bias-correction for shorter intervals</a></li>
+<li class="chapter" data-level="12.3.2" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#saving-the-data-for-later"><i class="fa fa-check"></i><b>12.3.2</b> Saving the data for later</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#filling-gaps-in-hourly-records"><i class="fa fa-check"></i><b>12.4</b> Filling gaps in hourly records</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#accuracy-assessment"><i class="fa fa-check"></i><b>12.4.1</b> Accuracy assessment</a></li>
+<li class="chapter" data-level="12.4.2" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#computing-agroclimatic-metrics"><i class="fa fa-check"></i><b>12.4.2</b> Computing agroclimatic metrics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#exercises_patching"><i class="fa fa-check"></i><code>Exercises</code> on filling gaps</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html"><i class="fa fa-check"></i><b>13</b> Generating temperature scenarios</a>
+<ul>
+<li class="chapter" data-level="" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#goals_temperature_scenarios"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="13.1" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#chill-scenarios"><i class="fa fa-check"></i><b>13.1</b> Chill scenarios</a></li>
+<li class="chapter" data-level="13.2" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#risk-assessment-in-orchard-planning"><i class="fa fa-check"></i><b>13.2</b> Risk assessment in orchard planning</a></li>
+<li class="chapter" data-level="13.3" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#weather-generators"><i class="fa fa-check"></i><b>13.3</b> Weather generators</a></li>
+<li class="chapter" data-level="13.4" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#weather-generation-in-chillr"><i class="fa fa-check"></i><b>13.4</b> Weather generation in <code>chillR</code></a></li>
+<li class="chapter" data-level="" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#weather_generation_exercises"><i class="fa fa-check"></i><code>Exercises</code> on temperature generation</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html"><i class="fa fa-check"></i><b>14</b> Saving and loading data (and hiding this in markdown)</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html#learning-goals-for-this-lesson-1"><i class="fa fa-check"></i><b>14.1</b> Learning Goals for this lesson:</a></li>
+<li class="chapter" data-level="14.2" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html#saving-and-loading-data"><i class="fa fa-check"></i><b>14.2</b> Saving and loading data</a></li>
+<li class="chapter" data-level="14.3" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html#hiding-all-this-from-the-readers-of-our-markdown-file"><i class="fa fa-check"></i><b>14.3</b> Hiding all this from the readers of our markdown file</a></li>
+<li class="chapter" data-level="" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html#exercises_saveLoad"><i class="fa fa-check"></i><code>Exercises</code> on saving and loading data</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html"><i class="fa fa-check"></i><b>15</b> Historic temperature scenarios</a>
+<ul>
+<li class="chapter" data-level="" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html#goals_hist_temp_scen"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="15.1" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html#climate-change-scenarios"><i class="fa fa-check"></i><b>15.1</b> Climate change scenarios</a></li>
+<li class="chapter" data-level="15.2" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html#making-historic-temperature-scenarios"><i class="fa fa-check"></i><b>15.2</b> Making historic temperature scenarios</a></li>
+<li class="chapter" data-level="" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html#exercises_historic_scenarios"><i class="fa fa-check"></i><code>Exercises</code> on generating historic temperature scenarios</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html"><i class="fa fa-check"></i><b>16</b> Future temperature scenarios</a>
+<ul>
+<li class="chapter" data-level="" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#goals_future_temp_scen"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="16.1" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#impacts-of-future-climate-change"><i class="fa fa-check"></i><b>16.1</b> Impacts of future climate change</a></li>
+<li class="chapter" data-level="16.2" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#future-climate-scenarios"><i class="fa fa-check"></i><b>16.2</b> Future climate scenarios</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#some-background-on-climate-models-and-warming-pathways"><i class="fa fa-check"></i><b>16.2.1</b> Some background on climate models and warming pathways</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#exercises_future_scenarios"><i class="fa fa-check"></i><code>Exercises</code> on future temperature scenarios</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html"><i class="fa fa-check"></i><b>17</b> Making CMIP6 scenarios</a>
+<ul>
+<li class="chapter" data-level="" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#goals_CMIP6"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="17.1" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#accessing-gridded-climate-data-from-the-copernicus-climate-data-store"><i class="fa fa-check"></i><b>17.1</b> Accessing gridded climate data from the Copernicus climate data store</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#downloading-future-climate-data"><i class="fa fa-check"></i><b>17.1.1</b> Downloading future climate data</a></li>
+<li class="chapter" data-level="17.1.2" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#generating-change-scenarios"><i class="fa fa-check"></i><b>17.1.2</b> Generating change scenarios</a></li>
+<li class="chapter" data-level="17.1.3" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#extracting-data-from-the-grids"><i class="fa fa-check"></i><b>17.1.3</b> Extracting data from the grids</a></li>
+<li class="chapter" data-level="17.1.4" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#baseline-adjustment"><i class="fa fa-check"></i><b>17.1.4</b> Baseline adjustment</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#exercises_CMIP6"><i class="fa fa-check"></i><code>Exercises</code> on generating CMIP6 temperature scenarios</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="making-cmip5-scenarios-with-the-climatewizard.html"><a href="making-cmip5-scenarios-with-the-climatewizard.html"><i class="fa fa-check"></i><b>18</b> Making CMIP5 scenarios with the <code>ClimateWizard</code></a>
+<ul>
+<li class="chapter" data-level="" data-path="making-cmip5-scenarios-with-the-climatewizard.html"><a href="making-cmip5-scenarios-with-the-climatewizard.html#goals_ClimateWizard"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="18.1" data-path="making-cmip5-scenarios-with-the-climatewizard.html"><a href="making-cmip5-scenarios-with-the-climatewizard.html#using-the-climatewizard"><i class="fa fa-check"></i><b>18.1</b> Using the <code>ClimateWizard</code></a></li>
+<li class="chapter" data-level="" data-path="making-cmip5-scenarios-with-the-climatewizard.html"><a href="making-cmip5-scenarios-with-the-climatewizard.html#exercises_ClimateWizard"><i class="fa fa-check"></i><code>Exercises</code> on generating CMIP5 temperature scenarios</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="plot_future.html"><a href="plot_future.html"><i class="fa fa-check"></i><b>19</b> Plotting future scenarios</a>
+<ul>
+<li class="chapter" data-level="" data-path="plot_future.html"><a href="plot_future.html#goals_future_plots"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="19.1" data-path="plot_future.html"><a href="plot_future.html#making-attractive-plots"><i class="fa fa-check"></i><b>19.1</b> Making attractive plots</a></li>
+<li class="chapter" data-level="19.2" data-path="plot_future.html"><a href="plot_future.html#the-results"><i class="fa fa-check"></i><b>19.2</b> The results</a></li>
+<li class="chapter" data-level="" data-path="plot_future.html"><a href="plot_future.html#exercises_future_plots"><i class="fa fa-check"></i><code>Exercises</code> on plotting future projections</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html"><i class="fa fa-check"></i><b>20</b> Chill model comparison</a>
+<ul>
+<li class="chapter" data-level="" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#goals_chill_model"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="20.1" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#safe-winter-chill"><i class="fa fa-check"></i><b>20.1</b> Safe Winter Chill</a></li>
+<li class="chapter" data-level="20.2" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#chill-metrics"><i class="fa fa-check"></i><b>20.2</b> Chill metrics</a></li>
+<li class="chapter" data-level="20.3" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#an-animated-plot-of-relative-changes-in-safe-winter-chill"><i class="fa fa-check"></i><b>20.3</b> An animated plot of relative changes in Safe Winter Chill</a></li>
+<li class="chapter" data-level="" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#exercises_chill_model_comparison"><i class="fa fa-check"></i><code>Exercises</code> on chill model comparison</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="simple_phenology.html"><a href="simple_phenology.html"><i class="fa fa-check"></i><b>21</b> Simple phenology analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="simple_phenology.html"><a href="simple_phenology.html#goals_simple_phenology"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="21.1" data-path="simple_phenology.html"><a href="simple_phenology.html#phenology-analysis"><i class="fa fa-check"></i><b>21.1</b> Phenology analysis</a></li>
+<li class="chapter" data-level="21.2" data-path="simple_phenology.html"><a href="simple_phenology.html#time-series-analysis"><i class="fa fa-check"></i><b>21.2</b> Time series analysis</a></li>
+<li class="chapter" data-level="21.3" data-path="simple_phenology.html"><a href="simple_phenology.html#p-hacking"><i class="fa fa-check"></i><b>21.3</b> p-hacking</a></li>
+<li class="chapter" data-level="21.4" data-path="simple_phenology.html"><a href="simple_phenology.html#the-process-that-generates-the-data"><i class="fa fa-check"></i><b>21.4</b> The process that generates the data</a></li>
+<li class="chapter" data-level="21.5" data-path="simple_phenology.html"><a href="simple_phenology.html#an-ecological-theory-to-guide-our-analysis"><i class="fa fa-check"></i><b>21.5</b> An ecological theory to guide our analysis</a></li>
+<li class="chapter" data-level="21.6" data-path="simple_phenology.html"><a href="simple_phenology.html#temperature-correlations"><i class="fa fa-check"></i><b>21.6</b> Temperature correlations</a></li>
+<li class="chapter" data-level="" data-path="simple_phenology.html"><a href="simple_phenology.html#exercises_simple_analysis"><i class="fa fa-check"></i><code>Exercises</code> on simple phenology analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="pls_intro.html"><a href="pls_intro.html"><i class="fa fa-check"></i><b>22</b> Delineating temperature response phases with PLS regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls_intro.html"><a href="pls_intro.html#goals_PLS_intro"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="22.1" data-path="pls_intro.html"><a href="pls_intro.html#detecting-temperature-response-phases"><i class="fa fa-check"></i><b>22.1</b> Detecting temperature response phases</a></li>
+<li class="chapter" data-level="22.2" data-path="pls_intro.html"><a href="pls_intro.html#finding-signals-in-hyperspectral-remote-sensing-data"><i class="fa fa-check"></i><b>22.2</b> Finding signals in hyperspectral remote sensing data</a></li>
+<li class="chapter" data-level="22.3" data-path="pls_intro.html"><a href="pls_intro.html#pls-regression-for-phenology-analysis"><i class="fa fa-check"></i><b>22.3</b> PLS regression for phenology analysis</a></li>
+<li class="chapter" data-level="22.4" data-path="pls_intro.html"><a href="pls_intro.html#a-note-of-caution-about-pls-results"><i class="fa fa-check"></i><b>22.4</b> A note of caution about PLS results</a></li>
+<li class="chapter" data-level="22.5" data-path="pls_intro.html"><a href="pls_intro.html#pls-analysis-of-alexander-lucas-pears-in-klein-altendorf"><i class="fa fa-check"></i><b>22.5</b> PLS analysis of ‘Alexander Lucas’ pears in Klein-Altendorf</a></li>
+<li class="chapter" data-level="" data-path="pls_intro.html"><a href="pls_intro.html#exercises_first_PLS"><i class="fa fa-check"></i><code>Exercises</code> on chill model comparison</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="pls_reflection.html"><a href="pls_reflection.html"><i class="fa fa-check"></i><b>23</b> Successes and limitations of PLS regression analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls_reflection.html"><a href="pls_reflection.html#goals_PLS_reflection"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="23.1" data-path="pls_reflection.html"><a href="pls_reflection.html#pls-regression"><i class="fa fa-check"></i><b>23.1</b> PLS regression</a></li>
+<li class="chapter" data-level="23.2" data-path="pls_reflection.html"><a href="pls_reflection.html#pls-examples"><i class="fa fa-check"></i><b>23.2</b> PLS examples</a>
+<ul>
+<li class="chapter" data-level="23.2.1" data-path="pls_reflection.html"><a href="pls_reflection.html#grasslands-on-the-tibetan-plateau"><i class="fa fa-check"></i><b>23.2.1</b> Grasslands on the Tibetan Plateau</a></li>
+<li class="chapter" data-level="23.2.2" data-path="pls_reflection.html"><a href="pls_reflection.html#deciduous-trees"><i class="fa fa-check"></i><b>23.2.2</b> Deciduous trees</a></li>
+<li class="chapter" data-level="23.2.3" data-path="pls_reflection.html"><a href="pls_reflection.html#why-were-not-seeing-the-chilling-phase"><i class="fa fa-check"></i><b>23.2.3</b> Why we’re not seeing the chilling phase</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls_reflection.html"><a href="pls_reflection.html#exercises_PLS_reflection"><i class="fa fa-check"></i><code>Exercises</code> on chill model comparison</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="pls_chillforce.html"><a href="pls_chillforce.html"><i class="fa fa-check"></i><b>24</b> PLS regression with agroclimatic metrics</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls_chillforce.html"><a href="pls_chillforce.html#goals_PLS_chillforce"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="24.1" data-path="pls_chillforce.html"><a href="pls_chillforce.html#adjusting-pls-for-use-with-non-monotonic-relationships"><i class="fa fa-check"></i><b>24.1</b> Adjusting PLS for use with non-monotonic relationships</a></li>
+<li class="chapter" data-level="24.2" data-path="pls_chillforce.html"><a href="pls_chillforce.html#pls-analysis-with-chilling-and-forcing-data"><i class="fa fa-check"></i><b>24.2</b> PLS analysis with chilling and forcing data</a></li>
+<li class="chapter" data-level="24.3" data-path="pls_chillforce.html"><a href="pls_chillforce.html#delineating-chilling-and-forcing-periods"><i class="fa fa-check"></i><b>24.3</b> Delineating chilling and forcing periods</a></li>
+<li class="chapter" data-level="24.4" data-path="pls_chillforce.html"><a href="pls_chillforce.html#ggplotting-the-results"><i class="fa fa-check"></i><b>24.4</b> <code>ggplot</code>ting the results</a></li>
+<li class="chapter" data-level="" data-path="pls_chillforce.html"><a href="pls_chillforce.html#exercises_PLS_chill_force"><i class="fa fa-check"></i><code>Exercises</code> on chill model comparison</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html"><i class="fa fa-check"></i><b>25</b> Examples of PLS regression with agroclimatic metrics</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#goals_PLS_chillforce_ex"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="25.1" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#pls-regression-across-species-and-agroclimatic-contexts"><i class="fa fa-check"></i><b>25.1</b> PLS regression across species and agroclimatic contexts</a>
+<ul>
+<li class="chapter" data-level="25.1.1" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#chestnut-jujube-and-apricot-in-beijing"><i class="fa fa-check"></i><b>25.1.1</b> Chestnut, jujube and apricot in Beijing</a></li>
+<li class="chapter" data-level="25.1.2" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#apples-in-shaanxi-province-china"><i class="fa fa-check"></i><b>25.1.2</b> Apples in Shaanxi Province, China</a></li>
+<li class="chapter" data-level="25.1.3" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#cherries-in-klein-altendorf"><i class="fa fa-check"></i><b>25.1.3</b> Cherries in Klein-Altendorf</a></li>
+<li class="chapter" data-level="25.1.4" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#apricots-in-the-uk"><i class="fa fa-check"></i><b>25.1.4</b> Apricots in the UK</a></li>
+<li class="chapter" data-level="25.1.5" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#grapevine-in-croatia"><i class="fa fa-check"></i><b>25.1.5</b> Grapevine in Croatia</a></li>
+<li class="chapter" data-level="25.1.6" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#walnuts-in-california"><i class="fa fa-check"></i><b>25.1.6</b> Walnuts in California</a></li>
+<li class="chapter" data-level="25.1.7" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#almonds-in-tunisia"><i class="fa fa-check"></i><b>25.1.7</b> Almonds in Tunisia</a></li>
+<li class="chapter" data-level="25.1.8" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#pistachios-in-tunisia"><i class="fa fa-check"></i><b>25.1.8</b> Pistachios in Tunisia</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#exercises_PLS_chill_force_ex"><i class="fa fa-check"></i><code>Exercises</code> on examples of PLS regression with agroclimatic metrics</a></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html"><i class="fa fa-check"></i><b>26</b> Why PLS doesn’t always work</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#goals_PLS_chillforce_reflection"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="26.1" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#disappointing-pls-performance"><i class="fa fa-check"></i><b>26.1</b> Disappointing PLS performance</a></li>
+<li class="chapter" data-level="26.2" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#what-pls-regression-can-find"><i class="fa fa-check"></i><b>26.2</b> What PLS regression can find</a></li>
+<li class="chapter" data-level="26.3" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#chill-model-sensitivity-vs.-observed-temperature"><i class="fa fa-check"></i><b>26.3</b> Chill model sensitivity vs. observed temperature</a>
+<ul>
+<li class="chapter" data-level="26.3.1" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#beijing-china"><i class="fa fa-check"></i><b>26.3.1</b> Beijing, China</a></li>
+<li class="chapter" data-level="26.3.2" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#klein-altendorf-germany"><i class="fa fa-check"></i><b>26.3.2</b> Klein-Altendorf, Germany</a></li>
+<li class="chapter" data-level="26.3.3" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#davis-california"><i class="fa fa-check"></i><b>26.3.3</b> Davis, California</a></li>
+<li class="chapter" data-level="26.3.4" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#sfax-tunisia"><i class="fa fa-check"></i><b>26.3.4</b> Sfax, Tunisia</a></li>
+</ul></li>
+<li class="chapter" data-level="26.4" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#heat-model-sensitivity-vs.-observed-temperature"><i class="fa fa-check"></i><b>26.4</b> Heat model sensitivity vs. observed temperature</a></li>
+<li class="chapter" data-level="" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#exercises_PLS_chillforce_reflection"><i class="fa fa-check"></i><code>Exercises</code> on expected PLS responsiveness</a></li>
+</ul></li>
+<li class="chapter" data-level="27" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html"><i class="fa fa-check"></i><b>27</b> Evaluating PLS outputs</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#goals_PLS_eval"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="27.1" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#chilling-and-forcing-requirements"><i class="fa fa-check"></i><b>27.1</b> Chilling and forcing requirements</a></li>
+<li class="chapter" data-level="27.2" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#response-to-seasonal-temperature"><i class="fa fa-check"></i><b>27.2</b> Response to seasonal temperature</a></li>
+<li class="chapter" data-level="27.3" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#applying-our-functions-to-california-walnuts"><i class="fa fa-check"></i><b>27.3</b> Applying our functions to California walnuts</a></li>
+<li class="chapter" data-level="" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#exercises_PLS_eval"><i class="fa fa-check"></i><code>Exercises</code> on evaluating PLS regression results</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html"><i class="fa fa-check"></i><b>28</b> The relative importance of chill and heat</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#goals_PLS_chillforce_relimp"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="28.1" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#chilling-vs.-forcing-temperatures"><i class="fa fa-check"></i><b>28.1</b> Chilling vs. forcing temperatures</a></li>
+<li class="chapter" data-level="28.2" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#patterns-in-temperature-responses"><i class="fa fa-check"></i><b>28.2</b> Patterns in temperature responses</a></li>
+<li class="chapter" data-level="28.3" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#the-warm-end-of-the-spectrum"><i class="fa fa-check"></i><b>28.3</b> The warm end of the spectrum</a></li>
+<li class="chapter" data-level="28.4" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#implications-of-our-hypothesis"><i class="fa fa-check"></i><b>28.4</b> Implications of our hypothesis</a></li>
+<li class="chapter" data-level="" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#exercises_PLS_chillforce_relimp"><i class="fa fa-check"></i><code>Exercises</code> on the relative importance of chill and heat</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="exp_PLS.html"><a href="exp_PLS.html"><i class="fa fa-check"></i><b>29</b> Experimentally enhanced PLS</a>
+<ul>
+<li class="chapter" data-level="" data-path="exp_PLS.html"><a href="exp_PLS.html#goals_exp_PLS"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="29.1" data-path="exp_PLS.html"><a href="exp_PLS.html#enhanced-phenology-data"><i class="fa fa-check"></i><b>29.1</b> Enhanced phenology data</a></li>
+<li class="chapter" data-level="" data-path="exp_PLS.html"><a href="exp_PLS.html#exc_exp_PLS"><i class="fa fa-check"></i><code>Exercises</code> on experimental PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="30" data-path="model_validity.html"><a href="model_validity.html"><i class="fa fa-check"></i><b>30</b> Making valid tree phenology models</a>
+<ul>
+<li class="chapter" data-level="" data-path="model_validity.html"><a href="model_validity.html#goals_model_validity"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="30.1" data-path="model_validity.html"><a href="model_validity.html#the-modeling-challenge"><i class="fa fa-check"></i><b>30.1</b> The modeling challenge</a></li>
+<li class="chapter" data-level="30.2" data-path="model_validity.html"><a href="model_validity.html#validating-models"><i class="fa fa-check"></i><b>30.2</b> Validating models</a></li>
+<li class="chapter" data-level="30.3" data-path="model_validity.html"><a href="model_validity.html#mapping-validity-domains"><i class="fa fa-check"></i><b>30.3</b> Mapping validity domains</a></li>
+<li class="chapter" data-level="30.4" data-path="model_validity.html"><a href="model_validity.html#one-last-thought-on-model-validity"><i class="fa fa-check"></i><b>30.4</b> One last thought on model validity</a></li>
+<li class="chapter" data-level="" data-path="model_validity.html"><a href="model_validity.html#ex_model_validity"><i class="fa fa-check"></i><code>Exercises</code> on making valid tree phenology models</a></li>
+</ul></li>
+<li class="chapter" data-level="31" data-path="phenoflex.html"><a href="phenoflex.html"><i class="fa fa-check"></i><b>31</b> The <code>PhenoFlex</code> model</a>
+<ul>
+<li class="chapter" data-level="" data-path="phenoflex.html"><a href="phenoflex.html#goals_phenoflex"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="31.1" data-path="phenoflex.html"><a href="phenoflex.html#ingredients-of-this-lesson"><i class="fa fa-check"></i><b>31.1</b> Ingredients of this lesson</a></li>
+<li class="chapter" data-level="31.2" data-path="phenoflex.html"><a href="phenoflex.html#towards-credible-phenology-models"><i class="fa fa-check"></i><b>31.2</b> Towards credible phenology models</a></li>
+<li class="chapter" data-level="31.3" data-path="phenoflex.html"><a href="phenoflex.html#the-phenoflex-framework"><i class="fa fa-check"></i><b>31.3</b> The PhenoFlex framework</a></li>
+<li class="chapter" data-level="31.4" data-path="phenoflex.html"><a href="phenoflex.html#running-phenoflex"><i class="fa fa-check"></i><b>31.4</b> Running <code>PhenoFlex</code></a></li>
+<li class="chapter" data-level="31.5" data-path="phenoflex.html"><a href="phenoflex.html#parameterizing-phenoflex"><i class="fa fa-check"></i><b>31.5</b> Parameterizing <code>PhenoFlex</code></a></li>
+<li class="chapter" data-level="31.6" data-path="phenoflex.html"><a href="phenoflex.html#conclusions-on-phenoflex"><i class="fa fa-check"></i><b>31.6</b> Conclusions on <code>PhenoFlex</code></a></li>
+<li class="chapter" data-level="" data-path="phenoflex.html"><a href="phenoflex.html#ex_model_phenoflex"><i class="fa fa-check"></i><code>Exercises</code> on making valid tree phenology models</a></li>
+</ul></li>
+<li class="chapter" data-level="32" data-path="phenoflex2.html"><a href="phenoflex2.html"><i class="fa fa-check"></i><b>32</b> The <code>PhenoFlex</code> model - a second look</a>
+<ul>
+<li class="chapter" data-level="" data-path="phenoflex2.html"><a href="phenoflex2.html#goals_phenoflex2"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="32.1" data-path="phenoflex2.html"><a href="phenoflex2.html#some-basic-diagnostics-for-our-phenoflex-fit"><i class="fa fa-check"></i><b>32.1</b> Some basic diagnostics for our <code>PhenoFlex</code> fit</a></li>
+<li class="chapter" data-level="32.2" data-path="phenoflex2.html"><a href="phenoflex2.html#temperature-response-of-the-phenoflex-components"><i class="fa fa-check"></i><b>32.2</b> Temperature response of the <code>PhenoFlex</code> components</a></li>
+<li class="chapter" data-level="32.3" data-path="phenoflex2.html"><a href="phenoflex2.html#overall-impression"><i class="fa fa-check"></i><b>32.3</b> Overall impression</a></li>
+<li class="chapter" data-level="32.4" data-path="phenoflex2.html"><a href="phenoflex2.html#caveats-and-assumptions"><i class="fa fa-check"></i><b>32.4</b> Caveats and assumptions</a></li>
+<li class="chapter" data-level="32.5" data-path="phenoflex2.html"><a href="phenoflex2.html#outlook"><i class="fa fa-check"></i><b>32.5</b> Outlook</a></li>
+<li class="chapter" data-level="" data-path="phenoflex2.html"><a href="phenoflex2.html#ex_phenoflex2"><i class="fa fa-check"></i><code>Exercises</code> on basic <code>PhenoFlex</code> diagnostics</a></li>
+</ul></li>
+<li class="chapter" data-level="33" data-path="phenoflex3.html"><a href="phenoflex3.html"><i class="fa fa-check"></i><b>33</b> Can we improve the performance of <code>PhenoFlex</code>?</a>
+<ul>
+<li class="chapter" data-level="" data-path="phenoflex3.html"><a href="phenoflex3.html#goals_phenoflex3"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="33.1" data-path="phenoflex3.html"><a href="phenoflex3.html#the-motivation"><i class="fa fa-check"></i><b>33.1</b> The motivation</a></li>
+<li class="chapter" data-level="33.2" data-path="phenoflex3.html"><a href="phenoflex3.html#using-experimental-phenology-data-for-assessing-the-performance-of-phenoflex"><i class="fa fa-check"></i><b>33.2</b> Using experimental phenology data for assessing the performance of <code>PhenoFlex</code></a></li>
+<li class="chapter" data-level="33.3" data-path="phenoflex3.html"><a href="phenoflex3.html#validation"><i class="fa fa-check"></i><b>33.3</b> Validation</a></li>
+<li class="chapter" data-level="33.4" data-path="phenoflex3.html"><a href="phenoflex3.html#conclusions"><i class="fa fa-check"></i><b>33.4</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="phenoflex3.html"><a href="phenoflex3.html#ex_phenoflex3"><i class="fa fa-check"></i><code>Exercises</code> on improving the performance of <code>PhenoFlex</code></a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html"><i class="fa fa-check"></i><b>34</b> Frost risk analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#goals_frost_risk"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="34.1" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#spring-frost"><i class="fa fa-check"></i><b>34.1</b> Spring frost</a></li>
+<li class="chapter" data-level="34.2" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#phenology-trend-analysis"><i class="fa fa-check"></i><b>34.2</b> Phenology trend analysis</a></li>
+<li class="chapter" data-level="34.3" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#frost-risk"><i class="fa fa-check"></i><b>34.3</b> Frost risk</a></li>
+<li class="chapter" data-level="" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#exercises_frost_risk"><i class="fa fa-check"></i><code>Exercises</code> on frost risk analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="35" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html"><i class="fa fa-check"></i><b>35</b> A robust method to estimate future frost risks (?)</a>
+<ul>
+<li class="chapter" data-level="" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html#goals_future_frost_risk"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="35.1" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html#frost-risk-for-future-scenarios"><i class="fa fa-check"></i><b>35.1</b> Frost risk for future scenarios</a></li>
+<li class="chapter" data-level="35.2" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html#validation-1"><i class="fa fa-check"></i><b>35.2</b> Validation</a></li>
+<li class="chapter" data-level="35.3" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html#exercises-for-this-chapter"><i class="fa fa-check"></i><b>35.3</b> <code>Exercises</code> for this chapter</a></li>
+</ul></li>
+<li class="chapter" data-level="36" data-path="major_concepts.html"><a href="major_concepts.html"><i class="fa fa-check"></i><b>36</b> Major concepts</a>
+<ul>
+<li class="chapter" data-level="" data-path="major_concepts.html"><a href="major_concepts.html#goals_major_concepts"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
+<li class="chapter" data-level="36.1" data-path="major_concepts.html"><a href="major_concepts.html#key-insights"><i class="fa fa-check"></i><b>36.1</b> Key insights</a>
+<ul>
+<li class="chapter" data-level="36.1.1" data-path="major_concepts.html"><a href="major_concepts.html#tree-dormancy-1"><i class="fa fa-check"></i><b>36.1.1</b> Tree dormancy</a></li>
+<li class="chapter" data-level="36.1.2" data-path="major_concepts.html"><a href="major_concepts.html#climate-change"><i class="fa fa-check"></i><b>36.1.2</b> Climate change</a></li>
+<li class="chapter" data-level="36.1.3" data-path="major_concepts.html"><a href="major_concepts.html#phenology-modeling"><i class="fa fa-check"></i><b>36.1.3</b> Phenology modeling</a></li>
+<li class="chapter" data-level="36.1.4" data-path="major_concepts.html"><a href="major_concepts.html#phenology-responses-to-global-warming"><i class="fa fa-check"></i><b>36.1.4</b> Phenology responses to global warming</a></li>
+<li class="chapter" data-level="36.1.5" data-path="major_concepts.html"><a href="major_concepts.html#the-phenoflex-modeling-framework"><i class="fa fa-check"></i><b>36.1.5</b> The <code>PhenoFlex</code> modeling framework</a></li>
+</ul></li>
+<li class="chapter" data-level="36.2" data-path="major_concepts.html"><a href="major_concepts.html#major-concepts-weve-encountered"><i class="fa fa-check"></i><b>36.2</b> Major concepts we’ve encountered</a>
+<ul>
+<li class="chapter" data-level="36.2.1" data-path="major_concepts.html"><a href="major_concepts.html#reproducibility-and-transparency"><i class="fa fa-check"></i><b>36.2.1</b> Reproducibility and transparency</a></li>
+<li class="chapter" data-level="36.2.2" data-path="major_concepts.html"><a href="major_concepts.html#tools"><i class="fa fa-check"></i><b>36.2.2</b> Tools</a></li>
+<li class="chapter" data-level="36.2.3" data-path="major_concepts.html"><a href="major_concepts.html#automate-and-move-on"><i class="fa fa-check"></i><b>36.2.3</b> Automate and move on</a></li>
+<li class="chapter" data-level="36.2.4" data-path="major_concepts.html"><a href="major_concepts.html#the-power-of-r"><i class="fa fa-check"></i><b>36.2.4</b> The power of R</a></li>
+<li class="chapter" data-level="36.2.5" data-path="major_concepts.html"><a href="major_concepts.html#curiosity-and-interdisciplinarity"><i class="fa fa-check"></i><b>36.2.5</b> Curiosity and interdisciplinarity</a></li>
+<li class="chapter" data-level="36.2.6" data-path="major_concepts.html"><a href="major_concepts.html#uncertainty"><i class="fa fa-check"></i><b>36.2.6</b> Uncertainty</a></li>
+<li class="chapter" data-level="36.2.7" data-path="major_concepts.html"><a href="major_concepts.html#p-hacking-1"><i class="fa fa-check"></i><b>36.2.7</b> p-hacking</a></li>
+<li class="chapter" data-level="36.2.8" data-path="major_concepts.html"><a href="major_concepts.html#the-dangers-of-machine-learning"><i class="fa fa-check"></i><b>36.2.8</b> The dangers of machine learning</a></li>
+<li class="chapter" data-level="36.2.9" data-path="major_concepts.html"><a href="major_concepts.html#rationalizing"><i class="fa fa-check"></i><b>36.2.9</b> Rationalizing</a></li>
+<li class="chapter" data-level="36.2.10" data-path="major_concepts.html"><a href="major_concepts.html#overfitting"><i class="fa fa-check"></i><b>36.2.10</b> Overfitting</a></li>
+<li class="chapter" data-level="36.2.11" data-path="major_concepts.html"><a href="major_concepts.html#the-process-that-generated-the-data"><i class="fa fa-check"></i><b>36.2.11</b> The process that generated the data</a></li>
+<li class="chapter" data-level="36.2.12" data-path="major_concepts.html"><a href="major_concepts.html#the-importance-of-theory"><i class="fa fa-check"></i><b>36.2.12</b> The importance of theory</a></li>
+<li class="chapter" data-level="36.2.13" data-path="major_concepts.html"><a href="major_concepts.html#conceptual-modeling"><i class="fa fa-check"></i><b>36.2.13</b> Conceptual modeling</a></li>
+<li class="chapter" data-level="36.2.14" data-path="major_concepts.html"><a href="major_concepts.html#consistency-with-existing-theory-and-prior-knowledge"><i class="fa fa-check"></i><b>36.2.14</b> Consistency with existing theory and prior knowledge</a></li>
+<li class="chapter" data-level="36.2.15" data-path="major_concepts.html"><a href="major_concepts.html#model-validity-and-model-validation"><i class="fa fa-check"></i><b>36.2.15</b> Model validity and model validation</a></li>
+<li class="chapter" data-level="36.2.16" data-path="major_concepts.html"><a href="major_concepts.html#our-role-in-research"><i class="fa fa-check"></i><b>36.2.16</b> Our role in research</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="major_concepts.html"><a href="major_concepts.html#ex_majorconcepts"><i class="fa fa-check"></i><code>Exercises</code> on major concepts</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="refs.html"><a href="refs.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Tree phenology analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="model_validity" class="section level1 hasAnchor" number="30">
+<h1><span class="header-section-number">Chapter 30</span> Making valid tree phenology models<a href="model_validity.html#model_validity" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="goals_model_validity" class="section level2 unnumbered hasAnchor">
+<h2>Learning goals for this lesson<a href="model_validity.html#goals_model_validity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Understand why models should not just be validated based on the output they produce</li>
+<li>Learn the difference between <em>output validation</em> and <em>process validation</em></li>
+<li>Understand what <em>validation for purpose</em> means</li>
+<li>Learn what <em>validity domains</em> of models are</li>
+<li>Get an idea of what it takes to make models that can be trusted with projections under future temperature conditions</li>
+</ul>
+</div>
+<div id="the-modeling-challenge" class="section level2 hasAnchor" number="30.1">
+<h2><span class="header-section-number">30.1</span> The modeling challenge<a href="model_validity.html#the-modeling-challenge" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ve already touched on the challenges of modeling winter chill a few times, but so far we’ve stayed away from the full challenge of modeling the whole dormancy season - and making predictions of budburst dates. Today, we’ll start getting into this topic.</p>
+<p>I’m not going to systematically review modeling attempts of the past. A major reason for this is that I’m too lazy to do that, but I’m also quite sure that there haven’t been many convincing modeling attempts so far. This is largely because several major challenges have stood in the way of generating a good model:</p>
+<ul>
+<li>uncertainty about the temperature response during chilling</li>
+<li>uncertainty about the temperature response during forcing</li>
+<li>uncertainty about possible interactions between chill accumulation and heat requirements</li>
+<li>uncertainty about start and end dates of chilling and forcing periods</li>
+</ul>
+<p>On the other hand, we have experimental or observational evidence on tree responses during dormancy that a model should be able to explain:</p>
+<ul>
+<li>trees respond to chilling for some time, and to forcing later</li>
+<li>it seems likely that low chill accumulation can be compensated by additional heat</li>
+<li>high temperatures appear to cancel previously accumulated chill, to some extent at least</li>
+<li>trees show distinct responses to temperatures occurring in particular temperature cycles</li>
+<li>frost doesn’t seem to be effective for chill accumulation</li>
+<li>temperate tree crops can be grown even in fairly warm locations</li>
+<li>…</li>
+</ul>
+<p>There are surely more things we know about trees during dormancy that should also be listed here. Credible models should include mechanisms that allow them, at least in principle, to explain phenomena we see. When models lack mechanisms that might explain important behavior that we see in orchards, they aren’t particularly credible.</p>
+<p>Similarly, when models disregard the uncertainties listed above and are based on the assumption that processes that are still quite unclear are perfectly understood, it is difficult to take them very seriously.</p>
+<p>In my view, this is true for virtually all full dormancy modeling frameworks so far - at least the ones I’m familiar with.</p>
+</div>
+<div id="validating-models" class="section level2 hasAnchor" number="30.2">
+<h2><span class="header-section-number">30.2</span> Validating models<a href="model_validity.html#validating-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There have certainly been some models that have been able to produce reasonably accurate predictions of observed bloom dates, but this doesn’t necessarily mean that they are actually accurate models. Comparing a model’s ability to predict observations that have been made is often used as the only way of validating models, but this is really not enough. I’ll distinguish here between <strong><em>output validation</em></strong> and <strong><em>process validation</em></strong>. In <em>output validation</em>, we only look at whether our model can predict what we actually observed. This can then be quantified with various measures, including Root Mean Square Error, Model Efficiency etc. With this validation method, however, we get very little information on whether the model actually did something reasonable. It’s quite possible that the model produced <em>the right results for the wrong reasons</em>, if we don’t bother to look under the hood.</p>
+<p><em>Process validation</em> is harder and it requires us to actually know something about the processes involved in the system of interest. I don’t know of any formal procedures for doing such a process validation, so we’re a bit on our own with this (unless <em>you</em> know of a method). What we need to achieve is a comparison of (our) knowledge about the biological processes that are at work with the set of processes that are included in the model. As in the chapter on <a href="simple_phenology.html#simple_phenology">Simple phenology analysis</a>, we could consider starting this process with an influence diagram (a drawing with boxes and arrows) or some other schematic representation of our understanding of system dynamics. Or we can start with the kind of lists I showed above, and see if we can convince ourselves that our model covers these issues.</p>
+<p>Note that we probably shouldn’t be too hard on the poor modelers, because it is awfully difficult to make good models. Sometimes not-so-perfect models are sufficient for the purposes of the people who use the models. But we should always remain critical and look for possible flaws in the products we might want to use.</p>
+<p>Another important consideration in model validation is the <em>purpose</em> of the model, i.e. what do we actually want to use the model for. A <strong><em>validation for purpose</em></strong> would start with a reflection on what the model should be able to achieve and carefully evaluate whether we can realistically expect it to prove useful in the context we have in mind. This is important, because each model has a certain <strong><em>validity domain</em></strong>, i.e. the range of conditions that the model is capable of making reliable predictions for. To illustrate this point, let’s look at a very simple example:</p>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="model_validity.html#cb405-1" tabindex="-1"></a><span class="fu">require</span>(ggplot2)</span>
+<span id="cb405-2"><a href="model_validity.html#cb405-2" tabindex="-1"></a>dat<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
+<span id="cb405-3"><a href="model_validity.html#cb405-3" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">2.3</span>, <span class="fl">2.5</span>, <span class="fl">2.7</span>, <span class="fl">2.7</span>))</span>
+<span id="cb405-4"><a href="model_validity.html#cb405-4" tabindex="-1"></a></span>
+<span id="cb405-5"><a href="model_validity.html#cb405-5" tabindex="-1"></a><span class="fu">ggplot</span>(dat,<span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb405-6"><a href="model_validity.html#cb405-6" tabindex="-1"></a>               <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb405-7"><a href="model_validity.html#cb405-7" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb405-8"><a href="model_validity.html#cb405-8" tabindex="-1"></a>              <span class="at">fullrange =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb405-9"><a href="model_validity.html#cb405-9" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb405-10"><a href="model_validity.html#cb405-10" tabindex="-1"></a>              <span class="at">fullrange =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb405-11"><a href="model_validity.html#cb405-11" tabindex="-1"></a>              <span class="at">col =</span> <span class="st">&quot;dark green&quot;</span>) <span class="sc">+</span></span>
+<span id="cb405-12"><a href="model_validity.html#cb405-12" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb405-13"><a href="model_validity.html#cb405-13" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb405-14"><a href="model_validity.html#cb405-14" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">8</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb405-15"><a href="model_validity.html#cb405-15" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p><img src="Book_files/figure-html/unnamed-chunk-268-1.png" width="672" /></p>
+<p>In this figure, I’ve produced a very simple regression model based on measurements of y for x-values between 1 and 4. Can we use this model to predict the value of y for x=8, which is indicated by the red line? My guess is that most readers will have a bad feeling about this task - and for good reasons. The model’s <em>validity domain</em> is quite tightly circumscribed by the set of values that were used to produce the model - the range shown by the green regression line and the dark shaded area. We really have no way of knowing how the system of interest behaves outside this range. The blue line and the lightly shaded area should normally not even be drawn (and it took setting the <code>fullrange</code> parameter in <code>geom_smooth</code> to <code>TRUE</code> to make this appear).</p>
+<p>Actually, what I just said isn’t always strictly true, unless you’re a true believer in the frequentist idea of science, where we assume that we know absolutely nothing except what the data tells us. If you’re not one of these people, you should have developed an expectation of how the system behaves even before running the regression analysis. If this expectation leaves you reasonably confident that the response variable you’re modeling behaves similarly for x=8 as for x=3, then you may be able to make such predictions. You should then clearly state that you’re making this assumption, however, and provide reasons for why you think this is justified.</p>
+<p>Assuming that we have no reason to expect the regression model to be valid outside the range of values used to calibrate it, it is easy to see where we can expect reliable predictions and where we can’t. For more complex models, such as crop models or phenology models, this is much harder to see, and questions about <em>validity domains</em> are often not adequately addressed.</p>
+<p>For us to have confidence in a phenology prediction model, we should expect model performance to be validated under conditions that resemble those we want to make predictions for. This may seem obvious, but it is actually pretty difficult to achieve, when your goal is, for example, to predict phenology responses to climate change. This is a pretty common objective of phenology modeling studies, and I’m not aware of <em>any</em> such studies having presented adequate evidence that the models that are applied actually meet this requirement.</p>
+<p>The previous chapters have shown that questions about the <em>validity domain</em> of phenology models are justified. After all, we expect temperature responses to change as the climate changes, e.g. from a dominant effect of forcing temperatures to a greater importance of chilling temperatures. It is of course possible to build such models, but most analyses use relatively simple equations to describe phenology changes, which clearly don’t allow for changes in temperature response dynamics.</p>
+<p>When we can have little confidence that models sufficiently capture the temperature-responsive processes that are going on in our system, it is hard to know what to make of them. Especially when such studies make no attempt to quantify the possible error that results from this omission, we really get very little out of such analyses. They provide numbers we can’t trust, and they don’t offer information on how reliable they are. Usually we also don’t get clear indications of the major assumptions about system biology that were made in producing the models. Such studies, in my opinionated view, are useless at best, and misleading at worst.</p>
+</div>
+<div id="mapping-validity-domains" class="section level2 hasAnchor" number="30.3">
+<h2><span class="header-section-number">30.3</span> Mapping validity domains<a href="model_validity.html#mapping-validity-domains" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s assume we made a phenology model based on historic phenology observations at Klein-Altendorf, and we wanted to use this model to predict future phenology at the same location. We can map the validity domain of our model by plotting the range of conditions under which we’ve made observations.</p>
+<p>We can then compare this range with the range of conditions we want to make predictions for, in this case the various future climate scenarios we produced in the chapter on <a href="making-cmip6-scenarios.html#making-cmip6-scenarios">Making CMIP6 scenarios</a>. We saved all of these data earlier (I hope you did…), so we can just load them now. I’ll also convert the data into one long <code>data.frame</code>, with all the attributes (Time horizon, GCM, SSP) stored with each data point.</p>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="model_validity.html#cb406-1" tabindex="-1"></a><span class="fu">require</span>(chillR)</span>
+<span id="cb406-2"><a href="model_validity.html#cb406-2" tabindex="-1"></a>past_weather <span class="ot">&lt;-</span> <span class="fu">read_tab</span>(<span class="st">&quot;data/TMaxTMin1958-2019_patched.csv&quot;</span>)</span>
+<span id="cb406-3"><a href="model_validity.html#cb406-3" tabindex="-1"></a>past_weather<span class="sc">$</span>SSP_Time <span class="ot">&lt;-</span> <span class="st">&quot;Past&quot;</span></span>
+<span id="cb406-4"><a href="model_validity.html#cb406-4" tabindex="-1"></a></span>
+<span id="cb406-5"><a href="model_validity.html#cb406-5" tabindex="-1"></a>future_temps <span class="ot">&lt;-</span> <span class="fu">load_temperature_scenarios</span>(<span class="st">&quot;data/future_climate&quot;</span>,</span>
+<span id="cb406-6"><a href="model_validity.html#cb406-6" tabindex="-1"></a>                                           <span class="st">&quot;Bonn_futuretemps&quot;</span>)</span>
+<span id="cb406-7"><a href="model_validity.html#cb406-7" tabindex="-1"></a></span>
+<span id="cb406-8"><a href="model_validity.html#cb406-8" tabindex="-1"></a>SSPs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ssp126&quot;</span>, <span class="st">&quot;ssp245&quot;</span>, <span class="st">&quot;ssp585&quot;</span>)</span>
+<span id="cb406-9"><a href="model_validity.html#cb406-9" tabindex="-1"></a>Times <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2050</span>, <span class="dv">2085</span>)</span>
+<span id="cb406-10"><a href="model_validity.html#cb406-10" tabindex="-1"></a></span>
+<span id="cb406-11"><a href="model_validity.html#cb406-11" tabindex="-1"></a>list_ssp <span class="ot">&lt;-</span> </span>
+<span id="cb406-12"><a href="model_validity.html#cb406-12" tabindex="-1"></a>  <span class="fu">strsplit</span>(<span class="fu">names</span>(future_temps), <span class="st">&#39;</span><span class="sc">\\</span><span class="st">.&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb406-13"><a href="model_validity.html#cb406-13" tabindex="-1"></a>  <span class="fu">map</span>(<span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb406-14"><a href="model_validity.html#cb406-14" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
+<span id="cb406-15"><a href="model_validity.html#cb406-15" tabindex="-1"></a></span>
+<span id="cb406-16"><a href="model_validity.html#cb406-16" tabindex="-1"></a>list_gcm <span class="ot">&lt;-</span></span>
+<span id="cb406-17"><a href="model_validity.html#cb406-17" tabindex="-1"></a>  <span class="fu">strsplit</span>(<span class="fu">names</span>(future_temps), <span class="st">&#39;</span><span class="sc">\\</span><span class="st">.&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb406-18"><a href="model_validity.html#cb406-18" tabindex="-1"></a>  <span class="fu">map</span>(<span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb406-19"><a href="model_validity.html#cb406-19" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
+<span id="cb406-20"><a href="model_validity.html#cb406-20" tabindex="-1"></a></span>
+<span id="cb406-21"><a href="model_validity.html#cb406-21" tabindex="-1"></a>list_time <span class="ot">&lt;-</span></span>
+<span id="cb406-22"><a href="model_validity.html#cb406-22" tabindex="-1"></a>  <span class="fu">strsplit</span>(<span class="fu">names</span>(future_temps), <span class="st">&#39;</span><span class="sc">\\</span><span class="st">.&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb406-23"><a href="model_validity.html#cb406-23" tabindex="-1"></a>  <span class="fu">map</span>(<span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb406-24"><a href="model_validity.html#cb406-24" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
+<span id="cb406-25"><a href="model_validity.html#cb406-25" tabindex="-1"></a></span>
+<span id="cb406-26"><a href="model_validity.html#cb406-26" tabindex="-1"></a><span class="cf">for</span>(SSP <span class="cf">in</span> SSPs)</span>
+<span id="cb406-27"><a href="model_validity.html#cb406-27" tabindex="-1"></a>  <span class="cf">for</span>(Time <span class="cf">in</span> Times)</span>
+<span id="cb406-28"><a href="model_validity.html#cb406-28" tabindex="-1"></a>   {Temps <span class="ot">&lt;-</span> future_temps[list_ssp <span class="sc">==</span> SSP <span class="sc">&amp;</span> list_time <span class="sc">==</span> Time]</span>
+<span id="cb406-29"><a href="model_validity.html#cb406-29" tabindex="-1"></a>    <span class="fu">names</span>(Temps) <span class="ot">&lt;-</span> list_gcm[list_ssp <span class="sc">==</span> SSP <span class="sc">&amp;</span> list_time <span class="sc">==</span> Time]</span>
+<span id="cb406-30"><a href="model_validity.html#cb406-30" tabindex="-1"></a>    </span>
+<span id="cb406-31"><a href="model_validity.html#cb406-31" tabindex="-1"></a>    <span class="cf">for</span>(gcm <span class="cf">in</span> <span class="fu">names</span>(Temps))</span>
+<span id="cb406-32"><a href="model_validity.html#cb406-32" tabindex="-1"></a>      Temps[[gcm]] <span class="ot">&lt;-</span> Temps[[gcm]] <span class="sc">%&gt;%</span> </span>
+<span id="cb406-33"><a href="model_validity.html#cb406-33" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">GCM =</span> gcm,</span>
+<span id="cb406-34"><a href="model_validity.html#cb406-34" tabindex="-1"></a>               <span class="at">SSP =</span> SSP,</span>
+<span id="cb406-35"><a href="model_validity.html#cb406-35" tabindex="-1"></a>               <span class="at">Time =</span> Time)</span>
+<span id="cb406-36"><a href="model_validity.html#cb406-36" tabindex="-1"></a>    </span>
+<span id="cb406-37"><a href="model_validity.html#cb406-37" tabindex="-1"></a>    Temps <span class="ot">&lt;-</span> <span class="fu">do.call</span>(<span class="st">&quot;rbind&quot;</span>, Temps)</span>
+<span id="cb406-38"><a href="model_validity.html#cb406-38" tabindex="-1"></a>    <span class="cf">if</span>(SSP <span class="sc">==</span> SSPs[<span class="dv">1</span>] <span class="sc">&amp;</span> Time <span class="sc">==</span> Times[<span class="dv">1</span>])</span>
+<span id="cb406-39"><a href="model_validity.html#cb406-39" tabindex="-1"></a>      results <span class="ot">&lt;-</span> Temps <span class="cf">else</span></span>
+<span id="cb406-40"><a href="model_validity.html#cb406-40" tabindex="-1"></a>        results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(results,</span>
+<span id="cb406-41"><a href="model_validity.html#cb406-41" tabindex="-1"></a>                         Temps)</span>
+<span id="cb406-42"><a href="model_validity.html#cb406-42" tabindex="-1"></a>    }</span>
+<span id="cb406-43"><a href="model_validity.html#cb406-43" tabindex="-1"></a></span>
+<span id="cb406-44"><a href="model_validity.html#cb406-44" tabindex="-1"></a>results<span class="sc">$</span>SSP[results<span class="sc">$</span>SSP <span class="sc">==</span> <span class="st">&quot;ssp126&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;SSP1&quot;</span></span>
+<span id="cb406-45"><a href="model_validity.html#cb406-45" tabindex="-1"></a>results<span class="sc">$</span>SSP[results<span class="sc">$</span>SSP <span class="sc">==</span> <span class="st">&quot;ssp245&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;SSP2&quot;</span></span>
+<span id="cb406-46"><a href="model_validity.html#cb406-46" tabindex="-1"></a>results<span class="sc">$</span>SSP[results<span class="sc">$</span>SSP <span class="sc">==</span> <span class="st">&quot;ssp585&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;SSP5&quot;</span></span>
+<span id="cb406-47"><a href="model_validity.html#cb406-47" tabindex="-1"></a></span>
+<span id="cb406-48"><a href="model_validity.html#cb406-48" tabindex="-1"></a>results<span class="sc">$</span>SSP_Time <span class="ot">&lt;-</span> <span class="fu">paste0</span>(results<span class="sc">$</span>SSP,<span class="st">&quot; &quot;</span>,results<span class="sc">$</span>Time)</span>
+<span id="cb406-49"><a href="model_validity.html#cb406-49" tabindex="-1"></a></span>
+<span id="cb406-50"><a href="model_validity.html#cb406-50" tabindex="-1"></a>future_months <span class="ot">&lt;-</span></span>
+<span id="cb406-51"><a href="model_validity.html#cb406-51" tabindex="-1"></a>  <span class="fu">aggregate</span>(results[, <span class="fu">c</span>(<span class="st">&quot;Tmin&quot;</span>, <span class="st">&quot;Tmax&quot;</span>)],</span>
+<span id="cb406-52"><a href="model_validity.html#cb406-52" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">list</span>(results<span class="sc">$</span>SSP_Time,</span>
+<span id="cb406-53"><a href="model_validity.html#cb406-53" tabindex="-1"></a>                      results<span class="sc">$</span>Year,</span>
+<span id="cb406-54"><a href="model_validity.html#cb406-54" tabindex="-1"></a>                      results<span class="sc">$</span>Month),</span>
+<span id="cb406-55"><a href="model_validity.html#cb406-55" tabindex="-1"></a>            <span class="at">FUN =</span> mean)</span>
+<span id="cb406-56"><a href="model_validity.html#cb406-56" tabindex="-1"></a><span class="fu">colnames</span>(future_months)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;SSP_Time&quot;</span>,</span>
+<span id="cb406-57"><a href="model_validity.html#cb406-57" tabindex="-1"></a>                                  <span class="st">&quot;Year&quot;</span>,</span>
+<span id="cb406-58"><a href="model_validity.html#cb406-58" tabindex="-1"></a>                                  <span class="st">&quot;Month&quot;</span>)</span>
+<span id="cb406-59"><a href="model_validity.html#cb406-59" tabindex="-1"></a></span>
+<span id="cb406-60"><a href="model_validity.html#cb406-60" tabindex="-1"></a>past_months <span class="ot">&lt;-</span></span>
+<span id="cb406-61"><a href="model_validity.html#cb406-61" tabindex="-1"></a>  <span class="fu">aggregate</span>(past_weather[, <span class="fu">c</span>(<span class="st">&quot;Tmin&quot;</span>,<span class="st">&quot;Tmax&quot;</span>)],</span>
+<span id="cb406-62"><a href="model_validity.html#cb406-62" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">list</span>(past_weather<span class="sc">$</span>SSP_Time,</span>
+<span id="cb406-63"><a href="model_validity.html#cb406-63" tabindex="-1"></a>                      past_weather<span class="sc">$</span>Year,</span>
+<span id="cb406-64"><a href="model_validity.html#cb406-64" tabindex="-1"></a>                      past_weather<span class="sc">$</span>Month),</span>
+<span id="cb406-65"><a href="model_validity.html#cb406-65" tabindex="-1"></a>            <span class="at">FUN=</span>mean)</span>
+<span id="cb406-66"><a href="model_validity.html#cb406-66" tabindex="-1"></a><span class="fu">colnames</span>(past_months)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;SSP_Time&quot;</span>, <span class="st">&quot;Year&quot;</span>, <span class="st">&quot;Month&quot;</span>)</span>
+<span id="cb406-67"><a href="model_validity.html#cb406-67" tabindex="-1"></a></span>
+<span id="cb406-68"><a href="model_validity.html#cb406-68" tabindex="-1"></a>all_months <span class="ot">&lt;-</span> <span class="fu">rbind</span>(past_months,</span>
+<span id="cb406-69"><a href="model_validity.html#cb406-69" tabindex="-1"></a>                    future_months)</span>
+<span id="cb406-70"><a href="model_validity.html#cb406-70" tabindex="-1"></a></span>
+<span id="cb406-71"><a href="model_validity.html#cb406-71" tabindex="-1"></a>all_months<span class="sc">$</span>month_name <span class="ot">&lt;-</span> <span class="fu">factor</span>(all_months<span class="sc">$</span>Month,</span>
+<span id="cb406-72"><a href="model_validity.html#cb406-72" tabindex="-1"></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">6</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb406-73"><a href="model_validity.html#cb406-73" tabindex="-1"></a>                                <span class="at">labels =</span> month.name[<span class="fu">c</span>(<span class="dv">6</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)])</span></code></pre></div>
+<p>The total range of point values can be described with a so-called <em>convex hull</em>. This is a polygon that includes all observed values. It is constructed from the smallest possible set of actual observations that still allows enclosing all observations by a polygon connecting all the data points.</p>
+<p>Here’s how we can plot this with <code>ggplot</code>:</p>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="model_validity.html#cb407-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb407-2"><a href="model_validity.html#cb407-2" tabindex="-1"></a></span>
+<span id="cb407-3"><a href="model_validity.html#cb407-3" tabindex="-1"></a><span class="co"># Calculate the hulls for each group</span></span>
+<span id="cb407-4"><a href="model_validity.html#cb407-4" tabindex="-1"></a>hull_temps <span class="ot">&lt;-</span> all_months <span class="sc">%&gt;%</span></span>
+<span id="cb407-5"><a href="model_validity.html#cb407-5" tabindex="-1"></a>  <span class="fu">group_by</span>(SSP_Time,</span>
+<span id="cb407-6"><a href="model_validity.html#cb407-6" tabindex="-1"></a>           month_name) <span class="sc">%&gt;%</span></span>
+<span id="cb407-7"><a href="model_validity.html#cb407-7" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">chull</span>(Tmin,</span>
+<span id="cb407-8"><a href="model_validity.html#cb407-8" tabindex="-1"></a>              Tmax))</span>
+<span id="cb407-9"><a href="model_validity.html#cb407-9" tabindex="-1"></a></span>
+<span id="cb407-10"><a href="model_validity.html#cb407-10" tabindex="-1"></a><span class="fu">ggplot</span>(hull_temps,</span>
+<span id="cb407-11"><a href="model_validity.html#cb407-11" tabindex="-1"></a>       <span class="fu">aes</span>(Tmin, Tmax, </span>
+<span id="cb407-12"><a href="model_validity.html#cb407-12" tabindex="-1"></a>           <span class="at">fill =</span> <span class="fu">factor</span>(SSP_Time))) <span class="sc">+</span></span>
+<span id="cb407-13"><a href="model_validity.html#cb407-13" tabindex="-1"></a>  <span class="fu">geom_polygon</span>() <span class="sc">+</span></span>
+<span id="cb407-14"><a href="model_validity.html#cb407-14" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(month_name)) <span class="sc">+</span></span>
+<span id="cb407-15"><a href="model_validity.html#cb407-15" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Scenario&quot;</span>,</span>
+<span id="cb407-16"><a href="model_validity.html#cb407-16" tabindex="-1"></a>                    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">&quot;Past&quot;</span>,</span>
+<span id="cb407-17"><a href="model_validity.html#cb407-17" tabindex="-1"></a>                               <span class="st">&quot;SSP1 2050&quot;</span>,</span>
+<span id="cb407-18"><a href="model_validity.html#cb407-18" tabindex="-1"></a>                               <span class="st">&quot;SSP1 2085&quot;</span>,</span>
+<span id="cb407-19"><a href="model_validity.html#cb407-19" tabindex="-1"></a>                               <span class="st">&quot;SSP2 2050&quot;</span>,</span>
+<span id="cb407-20"><a href="model_validity.html#cb407-20" tabindex="-1"></a>                               <span class="st">&quot;SSP2 2085&quot;</span>,</span>
+<span id="cb407-21"><a href="model_validity.html#cb407-21" tabindex="-1"></a>                               <span class="st">&quot;SSP5 2050&quot;</span>,</span>
+<span id="cb407-22"><a href="model_validity.html#cb407-22" tabindex="-1"></a>                               <span class="st">&quot;SSP5 2085&quot;</span>),</span>
+<span id="cb407-23"><a href="model_validity.html#cb407-23" tabindex="-1"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>,</span>
+<span id="cb407-24"><a href="model_validity.html#cb407-24" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;light green&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb407-25"><a href="model_validity.html#cb407-25" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark green&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb407-26"><a href="model_validity.html#cb407-26" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;coral&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb407-27"><a href="model_validity.html#cb407-27" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark red&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb407-28"><a href="model_validity.html#cb407-28" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;light blue&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb407-29"><a href="model_validity.html#cb407-29" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark blue&quot;</span>, <span class="fl">0.3</span>))) <span class="sc">+</span></span>
+<span id="cb407-30"><a href="model_validity.html#cb407-30" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p><img src="Book_files/figure-html/unnamed-chunk-270-1.png" width="672" /></p>
+<p>It’s hard to see what’s going on here, so let’s only focus on the dormancy months.</p>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="model_validity.html#cb408-1" tabindex="-1"></a><span class="fu">ggplot</span>(hull_temps[<span class="fu">which</span>(hull_temps<span class="sc">$</span>Month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)),],</span>
+<span id="cb408-2"><a href="model_validity.html#cb408-2" tabindex="-1"></a>       <span class="fu">aes</span>(Tmin,</span>
+<span id="cb408-3"><a href="model_validity.html#cb408-3" tabindex="-1"></a>           Tmax,</span>
+<span id="cb408-4"><a href="model_validity.html#cb408-4" tabindex="-1"></a>           <span class="at">fill =</span> <span class="fu">factor</span>(SSP_Time))) <span class="sc">+</span></span>
+<span id="cb408-5"><a href="model_validity.html#cb408-5" tabindex="-1"></a>  <span class="fu">geom_polygon</span>() <span class="sc">+</span></span>
+<span id="cb408-6"><a href="model_validity.html#cb408-6" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(month_name)) <span class="sc">+</span></span>
+<span id="cb408-7"><a href="model_validity.html#cb408-7" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Scenario&quot;</span>,</span>
+<span id="cb408-8"><a href="model_validity.html#cb408-8" tabindex="-1"></a>                    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">&quot;Past&quot;</span>,</span>
+<span id="cb408-9"><a href="model_validity.html#cb408-9" tabindex="-1"></a>                               <span class="st">&quot;SSP1 2050&quot;</span>,</span>
+<span id="cb408-10"><a href="model_validity.html#cb408-10" tabindex="-1"></a>                               <span class="st">&quot;SSP1 2085&quot;</span>,</span>
+<span id="cb408-11"><a href="model_validity.html#cb408-11" tabindex="-1"></a>                               <span class="st">&quot;SSP2 2050&quot;</span>,</span>
+<span id="cb408-12"><a href="model_validity.html#cb408-12" tabindex="-1"></a>                               <span class="st">&quot;SSP2 2085&quot;</span>,</span>
+<span id="cb408-13"><a href="model_validity.html#cb408-13" tabindex="-1"></a>                               <span class="st">&quot;SSP5 2050&quot;</span>,</span>
+<span id="cb408-14"><a href="model_validity.html#cb408-14" tabindex="-1"></a>                               <span class="st">&quot;SSP5 2085&quot;</span>),</span>
+<span id="cb408-15"><a href="model_validity.html#cb408-15" tabindex="-1"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>,</span>
+<span id="cb408-16"><a href="model_validity.html#cb408-16" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;light green&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb408-17"><a href="model_validity.html#cb408-17" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark green&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb408-18"><a href="model_validity.html#cb408-18" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;coral&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb408-19"><a href="model_validity.html#cb408-19" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark red&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb408-20"><a href="model_validity.html#cb408-20" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;light blue&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb408-21"><a href="model_validity.html#cb408-21" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark blue&quot;</span>, <span class="fl">0.3</span>))) <span class="sc">+</span></span>
+<span id="cb408-22"><a href="model_validity.html#cb408-22" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p><img src="Book_files/figure-html/unnamed-chunk-271-1.png" width="672" /></p>
+<p>We see clearly that the data we collected in the past - the data we would presumably use to calibrate a phenology model - only cover a relatively small part of the temperature regime that we should expect in the future. Especially for SSP5, we’d be missing a substantial part of the range of expected conditions, if we relied on a model built with data collected in the past. This means that we should <strong><em>not</em></strong> use such a model to predict conditions for these future scenarios!</p>
+<p>What if we based our model development on our <em>experimentally enhanced</em> observations?</p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="model_validity.html#cb409-1" tabindex="-1"></a>enhanced <span class="ot">&lt;-</span> <span class="fu">read_tab</span>(<span class="st">&quot;data/final_weather_data_S1_S2.csv&quot;</span>)</span>
+<span id="cb409-2"><a href="model_validity.html#cb409-2" tabindex="-1"></a>enhanced<span class="sc">$</span>Year <span class="ot">&lt;-</span> enhanced<span class="sc">$</span>Treatment</span>
+<span id="cb409-3"><a href="model_validity.html#cb409-3" tabindex="-1"></a>enhanced<span class="sc">$</span>SSP_Time <span class="ot">&lt;-</span> <span class="st">&quot;Past enhanced&quot;</span></span>
+<span id="cb409-4"><a href="model_validity.html#cb409-4" tabindex="-1"></a></span>
+<span id="cb409-5"><a href="model_validity.html#cb409-5" tabindex="-1"></a></span>
+<span id="cb409-6"><a href="model_validity.html#cb409-6" tabindex="-1"></a>enhanced_months <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(enhanced[, <span class="fu">c</span>(<span class="st">&quot;Tmin&quot;</span>, <span class="st">&quot;Tmax&quot;</span>)],</span>
+<span id="cb409-7"><a href="model_validity.html#cb409-7" tabindex="-1"></a>                             <span class="at">by =</span> <span class="fu">list</span>(enhanced<span class="sc">$</span>SSP_Time,</span>
+<span id="cb409-8"><a href="model_validity.html#cb409-8" tabindex="-1"></a>                                       enhanced<span class="sc">$</span>Year,</span>
+<span id="cb409-9"><a href="model_validity.html#cb409-9" tabindex="-1"></a>                                       enhanced<span class="sc">$</span>Month),</span>
+<span id="cb409-10"><a href="model_validity.html#cb409-10" tabindex="-1"></a>                             <span class="at">FUN =</span> mean)</span>
+<span id="cb409-11"><a href="model_validity.html#cb409-11" tabindex="-1"></a><span class="fu">colnames</span>(enhanced_months)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;SSP_Time&quot;</span>, <span class="st">&quot;Year&quot;</span>, <span class="st">&quot;Month&quot;</span>)</span>
+<span id="cb409-12"><a href="model_validity.html#cb409-12" tabindex="-1"></a></span>
+<span id="cb409-13"><a href="model_validity.html#cb409-13" tabindex="-1"></a>all_months_enhanced <span class="ot">&lt;-</span> <span class="fu">rbind</span>(enhanced_months,</span>
+<span id="cb409-14"><a href="model_validity.html#cb409-14" tabindex="-1"></a>                             future_months)</span>
+<span id="cb409-15"><a href="model_validity.html#cb409-15" tabindex="-1"></a></span>
+<span id="cb409-16"><a href="model_validity.html#cb409-16" tabindex="-1"></a>all_months_enhanced<span class="sc">$</span>month_name <span class="ot">&lt;-</span> <span class="fu">factor</span>(all_months_enhanced<span class="sc">$</span>Month,</span>
+<span id="cb409-17"><a href="model_validity.html#cb409-17" tabindex="-1"></a>                                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">6</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb409-18"><a href="model_validity.html#cb409-18" tabindex="-1"></a>                                         <span class="at">labels =</span> month.name[<span class="fu">c</span>(<span class="dv">6</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)])</span>
+<span id="cb409-19"><a href="model_validity.html#cb409-19" tabindex="-1"></a></span>
+<span id="cb409-20"><a href="model_validity.html#cb409-20" tabindex="-1"></a><span class="co"># Calculate the hulls for each group</span></span>
+<span id="cb409-21"><a href="model_validity.html#cb409-21" tabindex="-1"></a>hull_temps_enhanced <span class="ot">&lt;-</span> all_months_enhanced <span class="sc">%&gt;%</span></span>
+<span id="cb409-22"><a href="model_validity.html#cb409-22" tabindex="-1"></a>  <span class="fu">group_by</span>(SSP_Time,</span>
+<span id="cb409-23"><a href="model_validity.html#cb409-23" tabindex="-1"></a>           month_name) <span class="sc">%&gt;%</span></span>
+<span id="cb409-24"><a href="model_validity.html#cb409-24" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">chull</span>(Tmin, </span>
+<span id="cb409-25"><a href="model_validity.html#cb409-25" tabindex="-1"></a>              Tmax))</span>
+<span id="cb409-26"><a href="model_validity.html#cb409-26" tabindex="-1"></a></span>
+<span id="cb409-27"><a href="model_validity.html#cb409-27" tabindex="-1"></a><span class="fu">ggplot</span>(hull_temps_enhanced[</span>
+<span id="cb409-28"><a href="model_validity.html#cb409-28" tabindex="-1"></a>  <span class="fu">which</span>(hull_temps_enhanced<span class="sc">$</span>Month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)),],</span>
+<span id="cb409-29"><a href="model_validity.html#cb409-29" tabindex="-1"></a>       <span class="fu">aes</span>(Tmin,</span>
+<span id="cb409-30"><a href="model_validity.html#cb409-30" tabindex="-1"></a>           Tmax,</span>
+<span id="cb409-31"><a href="model_validity.html#cb409-31" tabindex="-1"></a>           <span class="at">fill =</span> <span class="fu">factor</span>(SSP_Time))) <span class="sc">+</span></span>
+<span id="cb409-32"><a href="model_validity.html#cb409-32" tabindex="-1"></a>  <span class="fu">geom_polygon</span>() <span class="sc">+</span></span>
+<span id="cb409-33"><a href="model_validity.html#cb409-33" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(month_name)) <span class="sc">+</span></span>
+<span id="cb409-34"><a href="model_validity.html#cb409-34" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Scenario&quot;</span>,</span>
+<span id="cb409-35"><a href="model_validity.html#cb409-35" tabindex="-1"></a>                    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">&quot;Past enhanced&quot;</span>,</span>
+<span id="cb409-36"><a href="model_validity.html#cb409-36" tabindex="-1"></a>                               <span class="st">&quot;SSP1 2050&quot;</span>,</span>
+<span id="cb409-37"><a href="model_validity.html#cb409-37" tabindex="-1"></a>                               <span class="st">&quot;SSP1 2085&quot;</span>,</span>
+<span id="cb409-38"><a href="model_validity.html#cb409-38" tabindex="-1"></a>                               <span class="st">&quot;SSP2 2050&quot;</span>,</span>
+<span id="cb409-39"><a href="model_validity.html#cb409-39" tabindex="-1"></a>                               <span class="st">&quot;SSP2 2085&quot;</span>,</span>
+<span id="cb409-40"><a href="model_validity.html#cb409-40" tabindex="-1"></a>                               <span class="st">&quot;SSP5 2050&quot;</span>,</span>
+<span id="cb409-41"><a href="model_validity.html#cb409-41" tabindex="-1"></a>                               <span class="st">&quot;SSP5 2085&quot;</span>),</span>
+<span id="cb409-42"><a href="model_validity.html#cb409-42" tabindex="-1"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>,</span>
+<span id="cb409-43"><a href="model_validity.html#cb409-43" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;light green&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb409-44"><a href="model_validity.html#cb409-44" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark green&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb409-45"><a href="model_validity.html#cb409-45" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;coral&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb409-46"><a href="model_validity.html#cb409-46" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark red&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb409-47"><a href="model_validity.html#cb409-47" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;light blue&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb409-48"><a href="model_validity.html#cb409-48" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark blue&quot;</span>, <span class="fl">0.3</span>))) <span class="sc">+</span></span>
+<span id="cb409-49"><a href="model_validity.html#cb409-49" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p><img src="Book_files/figure-html/unnamed-chunk-272-1.png" width="672" /></p>
+<p>This is also not such a great coverage of the scenarios we’re expecting, but mainly we’ve overshot our goal a bit, with much warmer scenarios in the experimental setting than are predicted for the future.</p>
+<p>Maybe we need to combine historic conditions with our enhanced treatment.</p>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="model_validity.html#cb410-1" tabindex="-1"></a>past_months<span class="sc">$</span>SSP_Time <span class="ot">&lt;-</span> <span class="st">&quot;Past combined&quot;</span></span>
+<span id="cb410-2"><a href="model_validity.html#cb410-2" tabindex="-1"></a>enhanced_months<span class="sc">$</span>SSP_Time <span class="ot">&lt;-</span> <span class="st">&quot;Past combined&quot;</span></span>
+<span id="cb410-3"><a href="model_validity.html#cb410-3" tabindex="-1"></a></span>
+<span id="cb410-4"><a href="model_validity.html#cb410-4" tabindex="-1"></a>all_months_both <span class="ot">&lt;-</span> <span class="fu">rbind</span>(enhanced_months,</span>
+<span id="cb410-5"><a href="model_validity.html#cb410-5" tabindex="-1"></a>                         past_months,</span>
+<span id="cb410-6"><a href="model_validity.html#cb410-6" tabindex="-1"></a>                         future_months)</span>
+<span id="cb410-7"><a href="model_validity.html#cb410-7" tabindex="-1"></a></span>
+<span id="cb410-8"><a href="model_validity.html#cb410-8" tabindex="-1"></a>all_months_both<span class="sc">$</span>month_name <span class="ot">&lt;-</span> <span class="fu">factor</span>(all_months_both<span class="sc">$</span>Month,</span>
+<span id="cb410-9"><a href="model_validity.html#cb410-9" tabindex="-1"></a>                                     <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">6</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb410-10"><a href="model_validity.html#cb410-10" tabindex="-1"></a>                                     <span class="at">labels =</span> month.name[<span class="fu">c</span>(<span class="dv">6</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)])</span>
+<span id="cb410-11"><a href="model_validity.html#cb410-11" tabindex="-1"></a></span>
+<span id="cb410-12"><a href="model_validity.html#cb410-12" tabindex="-1"></a>hull_temps_both <span class="ot">&lt;-</span> all_months_both <span class="sc">%&gt;%</span></span>
+<span id="cb410-13"><a href="model_validity.html#cb410-13" tabindex="-1"></a>  <span class="fu">group_by</span>(SSP_Time,</span>
+<span id="cb410-14"><a href="model_validity.html#cb410-14" tabindex="-1"></a>           month_name) <span class="sc">%&gt;%</span></span>
+<span id="cb410-15"><a href="model_validity.html#cb410-15" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">chull</span>(Tmin,</span>
+<span id="cb410-16"><a href="model_validity.html#cb410-16" tabindex="-1"></a>              Tmax))</span>
+<span id="cb410-17"><a href="model_validity.html#cb410-17" tabindex="-1"></a></span>
+<span id="cb410-18"><a href="model_validity.html#cb410-18" tabindex="-1"></a><span class="fu">ggplot</span>(hull_temps_both[</span>
+<span id="cb410-19"><a href="model_validity.html#cb410-19" tabindex="-1"></a>  <span class="fu">which</span>(hull_temps_both<span class="sc">$</span>Month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)),],</span>
+<span id="cb410-20"><a href="model_validity.html#cb410-20" tabindex="-1"></a>       <span class="fu">aes</span>(Tmin,</span>
+<span id="cb410-21"><a href="model_validity.html#cb410-21" tabindex="-1"></a>           Tmax,</span>
+<span id="cb410-22"><a href="model_validity.html#cb410-22" tabindex="-1"></a>           <span class="at">fill =</span> <span class="fu">factor</span>(SSP_Time))) <span class="sc">+</span></span>
+<span id="cb410-23"><a href="model_validity.html#cb410-23" tabindex="-1"></a>  <span class="fu">geom_polygon</span>() <span class="sc">+</span></span>
+<span id="cb410-24"><a href="model_validity.html#cb410-24" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(month_name)) <span class="sc">+</span></span>
+<span id="cb410-25"><a href="model_validity.html#cb410-25" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Scenario&quot;</span>,</span>
+<span id="cb410-26"><a href="model_validity.html#cb410-26" tabindex="-1"></a>                    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">&quot;Past combined&quot;</span>,</span>
+<span id="cb410-27"><a href="model_validity.html#cb410-27" tabindex="-1"></a>                               <span class="st">&quot;SSP1 2050&quot;</span>,</span>
+<span id="cb410-28"><a href="model_validity.html#cb410-28" tabindex="-1"></a>                               <span class="st">&quot;SSP1 2085&quot;</span>,</span>
+<span id="cb410-29"><a href="model_validity.html#cb410-29" tabindex="-1"></a>                               <span class="st">&quot;SSP2 2050&quot;</span>,</span>
+<span id="cb410-30"><a href="model_validity.html#cb410-30" tabindex="-1"></a>                               <span class="st">&quot;SSP2 2085&quot;</span>,</span>
+<span id="cb410-31"><a href="model_validity.html#cb410-31" tabindex="-1"></a>                               <span class="st">&quot;SSP5 2050&quot;</span>,</span>
+<span id="cb410-32"><a href="model_validity.html#cb410-32" tabindex="-1"></a>                               <span class="st">&quot;SSP5 2085&quot;</span>),</span>
+<span id="cb410-33"><a href="model_validity.html#cb410-33" tabindex="-1"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>,</span>
+<span id="cb410-34"><a href="model_validity.html#cb410-34" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;light green&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb410-35"><a href="model_validity.html#cb410-35" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark green&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb410-36"><a href="model_validity.html#cb410-36" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;coral&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb410-37"><a href="model_validity.html#cb410-37" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark red&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb410-38"><a href="model_validity.html#cb410-38" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;light blue&quot;</span>, <span class="fl">0.3</span>),</span>
+<span id="cb410-39"><a href="model_validity.html#cb410-39" tabindex="-1"></a>                               <span class="fu">alpha</span>(<span class="st">&quot;dark blue&quot;</span>, <span class="fl">0.3</span>))) <span class="sc">+</span></span>
+<span id="cb410-40"><a href="model_validity.html#cb410-40" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p><img src="Book_files/figure-html/unnamed-chunk-273-1.png" width="672" /></p>
+<p>This is now a pretty good coverage for all months, with the possible exception of October, which wasn’t covered by our experiments. If we succeed in producing a model that performs satisfactorily under all conditions covered by the <code>Past_combined</code> scenarios here, we could confidently expect it to produce accurate forecasts of future phenology. This would then open the door to follow-on studies, e.g. on future frost risk.</p>
+<p>But how do we develop a phenology model and parameterize it with observed phenology? Let’s see if we can find the answer in the next chapter on <a href="phenoflex.html#phenoflex">The <code>PhenoFlex</code> model</a>.</p>
+</div>
+<div id="one-last-thought-on-model-validity" class="section level2 hasAnchor" number="30.4">
+<h2><span class="header-section-number">30.4</span> One last thought on model validity<a href="model_validity.html#one-last-thought-on-model-validity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The example of phenology models is fairly straightforward, because we expect phenology to be almost exclusively dependent on temperature. Many other models depend on more factors that are difficult to keep track of. For example, crop models may only have been validated under a certain range of climatic conditions, with effective pest and disease control, for a particular set of crop varieties, for a selection of soils and for mechanized cultivation. Should we use such a model for smallholder systems under marginal soil and climate conditions, where farmers rely on manual cultivation methods? Probably not… (yet this is widely done)</p>
+</div>
+<div id="ex_model_validity" class="section level2 unnumbered hasAnchor">
+<h2><code>Exercises</code> on making valid tree phenology models<a href="model_validity.html#ex_model_validity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Please document all results of the following assignments in your <code>learning logbook</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Explain the difference between <em>output validation</em> and <em>process validation</em>.</li>
+<li>Explain what a <em>validity domain</em> is and why it is important to consider this whenever we want to use our model to forecast something.</li>
+<li>What is <em>validation for purpose</em>?</li>
+<li>How can we ensure that our model is suitable for the predictions we want to make?</li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exp_PLS.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="phenoflex.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Book.pdf", "Book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
