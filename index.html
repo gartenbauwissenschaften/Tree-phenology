@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Tree phenology analysis with R</title>
+  <meta name="description" content="This lecture introduces the chillR package for R." />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Tree phenology analysis with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This lecture introduces the chillR package for R." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Tree phenology analysis with R" />
+  
+  <meta name="twitter:description" content="This lecture introduces the chillR package for R." />
+  
+
+<meta name="author" content="Eike Luedeling" />
+
+
+<meta name="date" content="2024-09-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Tree phenology analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="#introduction"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="#objectives"><i class="fa fa-check"></i><b>1.1</b> Objectives</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="#performance-assessment"><i class="fa fa-check"></i><b>1.2</b> Performance assessment</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="#house-rules"><i class="fa fa-check"></i><b>1.3</b> House rules</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Tree phenology analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Tree phenology analysis with R</h1>
+<p class="author"><em>Eike Luedeling</em></p>
+<p class="date"><em>2024-09-26</em></p>
+</div>
+<div id="introduction" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Introduction<a href="#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><img src="chillR_hexSticker.png" style="width:90.0%" /></p>
+<p><strong><em>Welcome to Tree Phenology Analysis with R!</em></strong></p>
+<p>My name is <a href="http://www.hortibonn.de/author/prof.-dr.-eike-luedeling/">Eike Luedeling</a>, and I lead the <a href="http://www.hortibonn.de">HortiBonn research group</a> within the <a href="https://www.inres.uni-bonn.de/">Institute of Crop Science and Resource Conservation (INRES)</a> at the <a href="https://www.uni-bonn.de/en">University of Bonn</a>.</p>
+<p>In this course/module/book, I will provide an overview of methods we can use to study the impact of climate - and climate change - on tree phenology. If you don’t know what phenology is and you have no idea how to analyze climate change impacts, you’ve come to the right place. If you already know a bit about these topics, I hope you’ll still be able to learn a few new things here. This course was developed for M.Sc. students in <a href="https://www.lf.uni-bonn.de/en/studying/master/npw">Crop Science</a> and <a href="https://www.lf.uni-bonn.de/en/studying/master/arts2020">Agricultural Science and Resource Management in the Tropics and Subtropics (ARTS)</a> at the <a href="https://www.uni-bonn.de/en">University of Bonn</a>, but you’re welcome to go through the materials even if you’re not a member of this illustrious circle.</p>
+<p>After some introduction of the subject matter, i.e. phenology (with special focus on dormancy) and climate change, much of this course will consist of practical application of the <a href="https://cran.r-project.org/web/packages/chillR/index.html"><code>chillR</code></a> package for <a href="https://www.r-project.org/">R</a>, which I have been developing since 2013 to facilitate this kind of analysis.</p>
+<p>Some people have started using this package. Here are some statistics on package downloads directly from CRAN, the main server that hosts R packages:</p>
+<p><img src="http://www.r-pkg.org/badges/version/chillR?color=green" style="width:33.0%" alt="CRAN Status" /><img src="http://cranlogs.r-pkg.org/badges/grand-total/chillR?color=orange" style="width:33.0%" alt="total downloads" /></p>
+<p><img src="http://cranlogs.r-pkg.org/badges/last-month/chillR?color=blue" style="width:33.0%" alt="downloads last month" /><img src="http://cranlogs.r-pkg.org/badges/last-week/chillR?color=yellow" style="width:33.0%" alt="downloads last week" /></p>
+<div id="objectives" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Objectives<a href="#objectives" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this course, I aim to provide you with the following skills and experiences:</p>
+<ul>
+<li>Knowledge about phenology</li>
+<li>Knowledge about tree dormancy</li>
+<li>Understanding of climate change impact projection methods</li>
+<li>Appreciation for the importance of risks and uncertainty in climate change projection</li>
+<li>Understanding of how to use some staple tools of R code development</li>
+<li>Ability to use <code>chillR</code> functions for climate change impact projection</li>
+<li>Ability to use <code>chillR</code> functions for tree phenology analysis</li>
+<li>Understanding and ability to use the PhenoFlex dormancy analysis framework</li>
+</ul>
+</div>
+<div id="performance-assessment" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Performance assessment<a href="#performance-assessment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this module, there will be no exam, but you’ll still have to put in a bit of effort to pass and get a good grade here. Over the course of the semester, we’ll be developing a <code>learning logbook</code>. This will be an <a href="https://rmarkdown.rstudio.com/">Rmarkdown</a> document (<a href="https://static-content.springer.com/esm/art%3A10.1007%2Fs10584-020-02862-8/MediaObjects/10584_2020_2862_MOESM1_ESM.pdf">here’s an example of what this is</a>), where you’ll record your learning and your coding work. This document will contain short thematic chapters on the lecture contents, as well as the code you’ll produce and the outputs you’ll generate. The final chapters will contain some discussion of the results you’ll have obtained. This document will be evaluated, and it will be the major determinant of your final grade (participation in class will also count for some of the grade).</p>
+<p>To help you stay on track with the development of your logbook, we’ll occasionally take a look at your draft during the semester.</p>
+</div>
+<div id="house-rules" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> House rules<a href="#house-rules" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this course, we’ll gradually work our way into the <code>chillR</code> package. At the end of the semester, you should be able to do some state-of-the-art analyses in this space. Yet even if it’s not your ambition to become a phenology analyst, you’ll have picked up a bunch of useful skills along the way. I’ll try to teach you how to use some staple programming tools and techniques that can be used for all kinds of programming challenges. These will include the use of github and Rmarkdown, as well the the ability to create, manipulate and use R functions and packages. You’ll also gain familiarity with the challenges of modeling tree dormancy and making state-of-the-art climate change impact projections. For impacts that depend entirely on temperature, you’ll learn how to use tools that can produce projections that (as far as I’m aware) are robust enough to be acceptable by an academic journal - even one specialized on the study of climate change impacts.</p>
+<p>What is expected of you is to be engaged in this class, and to diligently complete the assignments you receive. Learning things in R requires practice, through which many things that seem cumbersome at first eventually become almost automatic. I’m absolutely convinced that the things you’ll get exposed to in this class can be great assets in your scientific (or other) career. So please take the materials seriously!</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Book.pdf", "Book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>
