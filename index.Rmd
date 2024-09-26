@@ -20,7 +20,7 @@ description: This lecture introduces the chillR package for R.
 site: bookdown::bookdown_site
 ---
 
-```{r include=FALSE}
+```{r eval=FALSE, include=FALSE}
 install.packages("bookdown")
 install.packages("kableExtra")
 install.packages("pander")
