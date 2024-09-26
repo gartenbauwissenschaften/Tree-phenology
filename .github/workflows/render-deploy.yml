@@ -23,8 +23,8 @@ jobs:
       # pak::pkg_sysreqs(unique_packages,sysreqs_platform = "ubuntu")
       - name: Install system dependencies
         run: |
-          apt-get -y update
-          apt-get -y install \
+          sudo apt-get -y update
+          sudo apt-get -y install \
           make \
           libgdal-dev \
           gdal-bin \
