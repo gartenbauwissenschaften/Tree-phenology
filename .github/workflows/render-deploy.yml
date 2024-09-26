@@ -23,8 +23,25 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgdal-dev libgeos-dev libproj-dev
-          sudo apt-get install -y libsodium-dev
+          sudo apt-get install -y \
+            libsodium-dev \
+            libudunits2-dev \
+            libgdal-dev \
+            libgeos-dev \
+            libproj-dev \
+            libxml2-dev \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libtiff5-dev \
+            libjpeg-dev \
+            libharfbuzz-dev \
+            libfribidi-dev \
+            libgit2-dev \
+            zlib1g-dev \
+            libxt-dev
       
       # Step 3: Set up Pandoc
       - name: Install
