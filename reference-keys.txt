@@ -17,10 +17,6 @@ introduction
 objectives
 performance-assessment
 house-rules
-introduction-1
-objectives-1
-performance-assessment-1
-house-rules-1
 the-tools-we-use
 r-and-rstudio
 git-and-github

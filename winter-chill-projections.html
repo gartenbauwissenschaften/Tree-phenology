@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Winter chill projections | Tree phenology analysis with R</title>
+  <title>Chapter 5 Winter chill projections | Tree phenology analysis with R</title>
   <meta name="description" content="This lecture introduces the chillR package for R." />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Winter chill projections | Tree phenology analysis with R" />
+  <meta property="og:title" content="Chapter 5 Winter chill projections | Tree phenology analysis with R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This lecture introduces the chillR package for R." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Winter chill projections | Tree phenology analysis with R" />
+  <meta name="twitter:title" content="Chapter 5 Winter chill projections | Tree phenology analysis with R" />
   
   <meta name="twitter:description" content="This lecture introduces the chillR package for R." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Eike Luedeling" />
 
 
-<meta name="date" content="2024-09-26" />
+<meta name="date" content="2024-09-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -183,383 +183,377 @@ div.csl-indent {
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#performance-assessment"><i class="fa fa-check"></i><b>1.2</b> Performance assessment</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#house-rules"><i class="fa fa-check"></i><b>1.3</b> House rules</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction-1.html"><a href="introduction-1.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<li class="chapter" data-level="2" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html"><i class="fa fa-check"></i><b>2</b> The tools we use</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="introduction-1.html"><a href="introduction-1.html#objectives-1"><i class="fa fa-check"></i><b>2.1</b> Objectives</a></li>
-<li class="chapter" data-level="2.2" data-path="introduction-1.html"><a href="introduction-1.html#performance-assessment-1"><i class="fa fa-check"></i><b>2.2</b> Performance assessment</a></li>
-<li class="chapter" data-level="2.3" data-path="introduction-1.html"><a href="introduction-1.html#house-rules-1"><i class="fa fa-check"></i><b>2.3</b> House rules</a></li>
+<li class="chapter" data-level="2.1" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html#r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> R and RStudio</a></li>
+<li class="chapter" data-level="2.2" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html#git-and-github"><i class="fa fa-check"></i><b>2.2</b> git and github</a></li>
+<li class="chapter" data-level="2.3" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html#rmarkdown"><i class="fa fa-check"></i><b>2.3</b> Rmarkdown</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html"><i class="fa fa-check"></i><b>3</b> The tools we use</a>
+<li class="chapter" data-level="3" data-path="tree-dormancy.html"><a href="tree-dormancy.html"><i class="fa fa-check"></i><b>3</b> Tree dormancy</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html#r-and-rstudio"><i class="fa fa-check"></i><b>3.1</b> R and RStudio</a></li>
-<li class="chapter" data-level="3.2" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html#git-and-github"><i class="fa fa-check"></i><b>3.2</b> git and github</a></li>
-<li class="chapter" data-level="3.3" data-path="the-tools-we-use.html"><a href="the-tools-we-use.html#rmarkdown"><i class="fa fa-check"></i><b>3.3</b> Rmarkdown</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="tree-dormancy.html"><a href="tree-dormancy.html"><i class="fa fa-check"></i><b>4</b> Tree dormancy</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="tree-dormancy.html"><a href="tree-dormancy.html#learning-goals-for-this-lesson"><i class="fa fa-check"></i><b>4.1</b> Learning goals for this lesson:</a></li>
-<li class="chapter" data-level="4.2" data-path="tree-dormancy.html"><a href="tree-dormancy.html#introduction-to-dormancy"><i class="fa fa-check"></i><b>4.2</b> Introduction to dormancy</a></li>
-<li class="chapter" data-level="4.3" data-path="tree-dormancy.html"><a href="tree-dormancy.html#dormancy-physiology"><i class="fa fa-check"></i><b>4.3</b> Dormancy physiology</a></li>
-<li class="chapter" data-level="4.4" data-path="tree-dormancy.html"><a href="tree-dormancy.html#experimental-and-statistical-determination-of-the-chilling-and-forcing-periods"><i class="fa fa-check"></i><b>4.4</b> Experimental and statistical determination of the chilling and forcing periods</a></li>
-<li class="chapter" data-level="4.5" data-path="tree-dormancy.html"><a href="tree-dormancy.html#phenology-record-and-bbch-scale"><i class="fa fa-check"></i><b>4.5</b> Phenology record and BBCH scale</a></li>
+<li class="chapter" data-level="3.1" data-path="tree-dormancy.html"><a href="tree-dormancy.html#learning-goals-for-this-lesson"><i class="fa fa-check"></i><b>3.1</b> Learning goals for this lesson:</a></li>
+<li class="chapter" data-level="3.2" data-path="tree-dormancy.html"><a href="tree-dormancy.html#introduction-to-dormancy"><i class="fa fa-check"></i><b>3.2</b> Introduction to dormancy</a></li>
+<li class="chapter" data-level="3.3" data-path="tree-dormancy.html"><a href="tree-dormancy.html#dormancy-physiology"><i class="fa fa-check"></i><b>3.3</b> Dormancy physiology</a></li>
+<li class="chapter" data-level="3.4" data-path="tree-dormancy.html"><a href="tree-dormancy.html#experimental-and-statistical-determination-of-the-chilling-and-forcing-periods"><i class="fa fa-check"></i><b>3.4</b> Experimental and statistical determination of the chilling and forcing periods</a></li>
+<li class="chapter" data-level="3.5" data-path="tree-dormancy.html"><a href="tree-dormancy.html#phenology-record-and-bbch-scale"><i class="fa fa-check"></i><b>3.5</b> Phenology record and BBCH scale</a></li>
 <li class="chapter" data-level="" data-path="tree-dormancy.html"><a href="tree-dormancy.html#exercises_dormancy"><i class="fa fa-check"></i><code>Exercises</code> on tree dormancy</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html"><i class="fa fa-check"></i><b>5</b> Climate change and impact projection</a>
+<li class="chapter" data-level="4" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html"><i class="fa fa-check"></i><b>4</b> Climate change and impact projection</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#the-drivers-of-climate-change"><i class="fa fa-check"></i><b>5.1</b> The drivers of climate change</a></li>
-<li class="chapter" data-level="5.2" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#what-weve-already-seen"><i class="fa fa-check"></i><b>5.2</b> What we’ve already seen</a></li>
-<li class="chapter" data-level="5.3" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#future-scenarios"><i class="fa fa-check"></i><b>5.3</b> Future scenarios</a></li>
-<li class="chapter" data-level="5.4" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#impact-projection-approaches"><i class="fa fa-check"></i><b>5.4</b> Impact projection approaches</a></li>
+<li class="chapter" data-level="4.1" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#the-drivers-of-climate-change"><i class="fa fa-check"></i><b>4.1</b> The drivers of climate change</a></li>
+<li class="chapter" data-level="4.2" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#what-weve-already-seen"><i class="fa fa-check"></i><b>4.2</b> What we’ve already seen</a></li>
+<li class="chapter" data-level="4.3" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#future-scenarios"><i class="fa fa-check"></i><b>4.3</b> Future scenarios</a></li>
+<li class="chapter" data-level="4.4" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#impact-projection-approaches"><i class="fa fa-check"></i><b>4.4</b> Impact projection approaches</a></li>
 <li class="chapter" data-level="" data-path="climate-change-and-impact-projection.html"><a href="climate-change-and-impact-projection.html#exercises_climate_change"><i class="fa fa-check"></i><code>Exercises</code> on climate change</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html"><i class="fa fa-check"></i><b>6</b> Winter chill projections</a>
+<li class="chapter" data-level="5" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html"><i class="fa fa-check"></i><b>5</b> Winter chill projections</a>
 <ul>
 <li class="chapter" data-level="" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#goals_analysis_examples"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="6.1" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-projections-1"><i class="fa fa-check"></i><b>6.1</b> Winter chill projections</a>
+<li class="chapter" data-level="5.1" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-projections-1"><i class="fa fa-check"></i><b>5.1</b> Winter chill projections</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-oman"><i class="fa fa-check"></i><b>6.1.1</b> Winter chill in Oman</a></li>
-<li class="chapter" data-level="6.1.2" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-model-sensitivity"><i class="fa fa-check"></i><b>6.1.2</b> Chill model sensitivity</a></li>
-<li class="chapter" data-level="6.1.3" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-california"><i class="fa fa-check"></i><b>6.1.3</b> Winter chill in California</a></li>
-<li class="chapter" data-level="6.1.4" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-ratios"><i class="fa fa-check"></i><b>6.1.4</b> Winter chill ratios</a></li>
-<li class="chapter" data-level="6.1.5" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#a-global-projection-of-future-winter-chill"><i class="fa fa-check"></i><b>6.1.5</b> A global projection of future winter chill</a></li>
-<li class="chapter" data-level="6.1.6" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-germany"><i class="fa fa-check"></i><b>6.1.6</b> Winter chill in Germany</a></li>
-<li class="chapter" data-level="6.1.7" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-tunisia"><i class="fa fa-check"></i><b>6.1.7</b> Winter chill in Tunisia</a></li>
-<li class="chapter" data-level="6.1.8" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-chile"><i class="fa fa-check"></i><b>6.1.8</b> Winter chill in Chile</a></li>
-<li class="chapter" data-level="6.1.9" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-projection-for-patagonia"><i class="fa fa-check"></i><b>6.1.9</b> Chill projection for Patagonia</a></li>
-<li class="chapter" data-level="6.1.10" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-model-comparison"><i class="fa fa-check"></i><b>6.1.10</b> Chill model comparison</a></li>
-<li class="chapter" data-level="6.1.11" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-projection-for-all-of-tunisia"><i class="fa fa-check"></i><b>6.1.11</b> Chill projection for all of Tunisia</a></li>
-<li class="chapter" data-level="6.1.12" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#revisiting-chill-accumulation-in-oman"><i class="fa fa-check"></i><b>6.1.12</b> Revisiting chill accumulation in Oman</a></li>
-<li class="chapter" data-level="6.1.13" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#future-studies"><i class="fa fa-check"></i><b>6.1.13</b> Future studies?</a></li>
+<li class="chapter" data-level="5.1.1" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-oman"><i class="fa fa-check"></i><b>5.1.1</b> Winter chill in Oman</a></li>
+<li class="chapter" data-level="5.1.2" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-model-sensitivity"><i class="fa fa-check"></i><b>5.1.2</b> Chill model sensitivity</a></li>
+<li class="chapter" data-level="5.1.3" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-california"><i class="fa fa-check"></i><b>5.1.3</b> Winter chill in California</a></li>
+<li class="chapter" data-level="5.1.4" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-ratios"><i class="fa fa-check"></i><b>5.1.4</b> Winter chill ratios</a></li>
+<li class="chapter" data-level="5.1.5" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#a-global-projection-of-future-winter-chill"><i class="fa fa-check"></i><b>5.1.5</b> A global projection of future winter chill</a></li>
+<li class="chapter" data-level="5.1.6" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-germany"><i class="fa fa-check"></i><b>5.1.6</b> Winter chill in Germany</a></li>
+<li class="chapter" data-level="5.1.7" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-tunisia"><i class="fa fa-check"></i><b>5.1.7</b> Winter chill in Tunisia</a></li>
+<li class="chapter" data-level="5.1.8" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#winter-chill-in-chile"><i class="fa fa-check"></i><b>5.1.8</b> Winter chill in Chile</a></li>
+<li class="chapter" data-level="5.1.9" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-projection-for-patagonia"><i class="fa fa-check"></i><b>5.1.9</b> Chill projection for Patagonia</a></li>
+<li class="chapter" data-level="5.1.10" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-model-comparison"><i class="fa fa-check"></i><b>5.1.10</b> Chill model comparison</a></li>
+<li class="chapter" data-level="5.1.11" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#chill-projection-for-all-of-tunisia"><i class="fa fa-check"></i><b>5.1.11</b> Chill projection for all of Tunisia</a></li>
+<li class="chapter" data-level="5.1.12" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#revisiting-chill-accumulation-in-oman"><i class="fa fa-check"></i><b>5.1.12</b> Revisiting chill accumulation in Oman</a></li>
+<li class="chapter" data-level="5.1.13" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#future-studies"><i class="fa fa-check"></i><b>5.1.13</b> Future studies?</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="winter-chill-projections.html"><a href="winter-chill-projections.html#exercises_past_studies"><i class="fa fa-check"></i><code>Exercises</code> on past chill projections</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html"><i class="fa fa-check"></i><b>7</b> Manual chill analysis</a>
+<li class="chapter" data-level="6" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html"><i class="fa fa-check"></i><b>6</b> Manual chill analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html#goals_manual_chill_analysis"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="7.1" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html#computing-chilling-hours-from-hourly-temperature-data"><i class="fa fa-check"></i><b>7.1</b> Computing Chilling Hours from hourly temperature data</a></li>
-<li class="chapter" data-level="7.2" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html#our-first-chill-function"><i class="fa fa-check"></i><b>7.2</b> Our first chill function</a></li>
+<li class="chapter" data-level="6.1" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html#computing-chilling-hours-from-hourly-temperature-data"><i class="fa fa-check"></i><b>6.1</b> Computing Chilling Hours from hourly temperature data</a></li>
+<li class="chapter" data-level="6.2" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html#our-first-chill-function"><i class="fa fa-check"></i><b>6.2</b> Our first chill function</a></li>
 <li class="chapter" data-level="" data-path="manual-chill-analysis.html"><a href="manual-chill-analysis.html#exercises_manual_chill_analysis"><i class="fa fa-check"></i><code>Exercises</code> on basic chill modeling</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="chill-models.html"><a href="chill-models.html"><i class="fa fa-check"></i><b>8</b> Chill models</a>
+<li class="chapter" data-level="7" data-path="chill-models.html"><a href="chill-models.html"><i class="fa fa-check"></i><b>7</b> Chill models</a>
 <ul>
 <li class="chapter" data-level="" data-path="chill-models.html"><a href="chill-models.html#goals_chill_models"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="8.1" data-path="chill-models.html"><a href="chill-models.html#chill-models-in-chillr"><i class="fa fa-check"></i><b>8.1</b> Chill models in <code>chillR</code></a></li>
+<li class="chapter" data-level="7.1" data-path="chill-models.html"><a href="chill-models.html#chill-models-in-chillr"><i class="fa fa-check"></i><b>7.1</b> Chill models in <code>chillR</code></a></li>
 <li class="chapter" data-level="" data-path="chill-models.html"><a href="chill-models.html#exercises_chill_models"><i class="fa fa-check"></i><code>Exercises</code> on chill models</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html"><i class="fa fa-check"></i><b>9</b> Making hourly temperatures</a>
+<li class="chapter" data-level="8" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html"><i class="fa fa-check"></i><b>8</b> Making hourly temperatures</a>
 <ul>
 <li class="chapter" data-level="" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#goals_hourly"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="9.1" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#generating-hourly-temperatures"><i class="fa fa-check"></i><b>9.1</b> Generating hourly temperatures</a>
+<li class="chapter" data-level="8.1" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#generating-hourly-temperatures"><i class="fa fa-check"></i><b>8.1</b> Generating hourly temperatures</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#idealized-daily-temperature-curves"><i class="fa fa-check"></i><b>9.1.1</b> Idealized daily temperature curves</a></li>
-<li class="chapter" data-level="9.1.2" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#empirical-daily-temperature-curves"><i class="fa fa-check"></i><b>9.1.2</b> Empirical daily temperature curves</a></li>
+<li class="chapter" data-level="8.1.1" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#idealized-daily-temperature-curves"><i class="fa fa-check"></i><b>8.1.1</b> Idealized daily temperature curves</a></li>
+<li class="chapter" data-level="8.1.2" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#empirical-daily-temperature-curves"><i class="fa fa-check"></i><b>8.1.2</b> Empirical daily temperature curves</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="making-hourly-temperatures.html"><a href="making-hourly-temperatures.html#exercises_hourly"><i class="fa fa-check"></i><code>Exercises</code> on hourly temperatures</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html"><i class="fa fa-check"></i><b>10</b> Some useful tools in R</a>
+<li class="chapter" data-level="9" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html"><i class="fa fa-check"></i><b>9</b> Some useful tools in R</a>
 <ul>
 <li class="chapter" data-level="" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#goals_R_tools"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="10.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#an-evolving-language---and-a-lifelong-learning-process"><i class="fa fa-check"></i><b>10.1</b> An evolving language - and a lifelong learning process</a></li>
-<li class="chapter" data-level="10.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-tidyverse"><i class="fa fa-check"></i><b>10.2</b> The <code>tidyverse</code></a></li>
-<li class="chapter" data-level="10.3" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-ggplot2-package"><i class="fa fa-check"></i><b>10.3</b> The <code>ggplot2</code> package</a></li>
-<li class="chapter" data-level="10.4" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-tibble-package"><i class="fa fa-check"></i><b>10.4</b> The <code>tibble</code> package</a></li>
-<li class="chapter" data-level="10.5" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-magrittr-package---pipes"><i class="fa fa-check"></i><b>10.5</b> The <code>magrittr</code> package - pipes</a></li>
-<li class="chapter" data-level="10.6" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-tidyr-package"><i class="fa fa-check"></i><b>10.6</b> The <code>tidyr</code> package</a>
+<li class="chapter" data-level="9.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#an-evolving-language---and-a-lifelong-learning-process"><i class="fa fa-check"></i><b>9.1</b> An evolving language - and a lifelong learning process</a></li>
+<li class="chapter" data-level="9.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-tidyverse"><i class="fa fa-check"></i><b>9.2</b> The <code>tidyverse</code></a></li>
+<li class="chapter" data-level="9.3" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-ggplot2-package"><i class="fa fa-check"></i><b>9.3</b> The <code>ggplot2</code> package</a></li>
+<li class="chapter" data-level="9.4" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-tibble-package"><i class="fa fa-check"></i><b>9.4</b> The <code>tibble</code> package</a></li>
+<li class="chapter" data-level="9.5" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-magrittr-package---pipes"><i class="fa fa-check"></i><b>9.5</b> The <code>magrittr</code> package - pipes</a></li>
+<li class="chapter" data-level="9.6" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#the-tidyr-package"><i class="fa fa-check"></i><b>9.6</b> The <code>tidyr</code> package</a>
 <ul>
-<li class="chapter" data-level="10.6.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#pivot_longer"><i class="fa fa-check"></i><b>10.6.1</b> <code>pivot_longer</code></a></li>
-<li class="chapter" data-level="10.6.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#pivot_wider"><i class="fa fa-check"></i><b>10.6.2</b> <code>pivot_wider</code></a></li>
-<li class="chapter" data-level="10.6.3" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#select"><i class="fa fa-check"></i><b>10.6.3</b> <code>select</code></a></li>
-<li class="chapter" data-level="10.6.4" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#filter"><i class="fa fa-check"></i><b>10.6.4</b> <code>filter</code></a></li>
-<li class="chapter" data-level="10.6.5" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#mutate"><i class="fa fa-check"></i><b>10.6.5</b> <code>mutate</code></a></li>
-<li class="chapter" data-level="10.6.6" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#arrange"><i class="fa fa-check"></i><b>10.6.6</b> <code>arrange</code></a></li>
+<li class="chapter" data-level="9.6.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#pivot_longer"><i class="fa fa-check"></i><b>9.6.1</b> <code>pivot_longer</code></a></li>
+<li class="chapter" data-level="9.6.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#pivot_wider"><i class="fa fa-check"></i><b>9.6.2</b> <code>pivot_wider</code></a></li>
+<li class="chapter" data-level="9.6.3" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#select"><i class="fa fa-check"></i><b>9.6.3</b> <code>select</code></a></li>
+<li class="chapter" data-level="9.6.4" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#filter"><i class="fa fa-check"></i><b>9.6.4</b> <code>filter</code></a></li>
+<li class="chapter" data-level="9.6.5" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#mutate"><i class="fa fa-check"></i><b>9.6.5</b> <code>mutate</code></a></li>
+<li class="chapter" data-level="9.6.6" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#arrange"><i class="fa fa-check"></i><b>9.6.6</b> <code>arrange</code></a></li>
 </ul></li>
-<li class="chapter" data-level="10.7" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#loops"><i class="fa fa-check"></i><b>10.7</b> Loops</a>
+<li class="chapter" data-level="9.7" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#loops"><i class="fa fa-check"></i><b>9.7</b> Loops</a>
 <ul>
-<li class="chapter" data-level="10.7.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#for-loops"><i class="fa fa-check"></i><b>10.7.1</b> <em>For</em> loops</a></li>
-<li class="chapter" data-level="10.7.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#while-loops"><i class="fa fa-check"></i><b>10.7.2</b> <em>While</em> loops</a></li>
+<li class="chapter" data-level="9.7.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#for-loops"><i class="fa fa-check"></i><b>9.7.1</b> <em>For</em> loops</a></li>
+<li class="chapter" data-level="9.7.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#while-loops"><i class="fa fa-check"></i><b>9.7.2</b> <em>While</em> loops</a></li>
 </ul></li>
-<li class="chapter" data-level="10.8" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#apply-functions"><i class="fa fa-check"></i><b>10.8</b> <code>apply</code> functions</a>
+<li class="chapter" data-level="9.8" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#apply-functions"><i class="fa fa-check"></i><b>9.8</b> <code>apply</code> functions</a>
 <ul>
-<li class="chapter" data-level="10.8.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#sapply"><i class="fa fa-check"></i><b>10.8.1</b> <code>sapply</code></a></li>
-<li class="chapter" data-level="10.8.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#lapply"><i class="fa fa-check"></i><b>10.8.2</b> <code>lapply</code></a></li>
-<li class="chapter" data-level="10.8.3" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#apply"><i class="fa fa-check"></i><b>10.8.3</b> <code>apply</code></a></li>
+<li class="chapter" data-level="9.8.1" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#sapply"><i class="fa fa-check"></i><b>9.8.1</b> <code>sapply</code></a></li>
+<li class="chapter" data-level="9.8.2" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#lapply"><i class="fa fa-check"></i><b>9.8.2</b> <code>lapply</code></a></li>
+<li class="chapter" data-level="9.8.3" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#apply"><i class="fa fa-check"></i><b>9.8.3</b> <code>apply</code></a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="some-useful-tools-in-r.html"><a href="some-useful-tools-in-r.html#exercises_R_tools"><i class="fa fa-check"></i><code>Exercises</code> on useful R tools</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="get_temp_data.html"><a href="get_temp_data.html"><i class="fa fa-check"></i><b>11</b> Getting temperature data</a>
+<li class="chapter" data-level="10" data-path="get_temp_data.html"><a href="get_temp_data.html"><i class="fa fa-check"></i><b>10</b> Getting temperature data</a>
 <ul>
 <li class="chapter" data-level="" data-path="get_temp_data.html"><a href="get_temp_data.html#goals_get_temps"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="11.1" data-path="get_temp_data.html"><a href="get_temp_data.html#temperature-data-needs"><i class="fa fa-check"></i><b>11.1</b> Temperature data needs</a></li>
-<li class="chapter" data-level="11.2" data-path="get_temp_data.html"><a href="get_temp_data.html#the-global-summary-of-the-day-database"><i class="fa fa-check"></i><b>11.2</b> The Global Summary of the Day database</a>
+<li class="chapter" data-level="10.1" data-path="get_temp_data.html"><a href="get_temp_data.html#temperature-data-needs"><i class="fa fa-check"></i><b>10.1</b> Temperature data needs</a></li>
+<li class="chapter" data-level="10.2" data-path="get_temp_data.html"><a href="get_temp_data.html#the-global-summary-of-the-day-database"><i class="fa fa-check"></i><b>10.2</b> The Global Summary of the Day database</a>
 <ul>
-<li class="chapter" data-level="11.2.1" data-path="get_temp_data.html"><a href="get_temp_data.html#actionlist_stations"><i class="fa fa-check"></i><b>11.2.1</b> <code>action=list_stations</code></a></li>
-<li class="chapter" data-level="11.2.2" data-path="get_temp_data.html"><a href="get_temp_data.html#actiondownload_weather"><i class="fa fa-check"></i><b>11.2.2</b> <code>action="download_weather"</code></a></li>
-<li class="chapter" data-level="11.2.3" data-path="get_temp_data.html"><a href="get_temp_data.html#downloaded-weather-as-action-argument"><i class="fa fa-check"></i><b>11.2.3</b> downloaded weather as <code>action</code> argument</a></li>
+<li class="chapter" data-level="10.2.1" data-path="get_temp_data.html"><a href="get_temp_data.html#actionlist_stations"><i class="fa fa-check"></i><b>10.2.1</b> <code>action=list_stations</code></a></li>
+<li class="chapter" data-level="10.2.2" data-path="get_temp_data.html"><a href="get_temp_data.html#actiondownload_weather"><i class="fa fa-check"></i><b>10.2.2</b> <code>action="download_weather"</code></a></li>
+<li class="chapter" data-level="10.2.3" data-path="get_temp_data.html"><a href="get_temp_data.html#downloaded-weather-as-action-argument"><i class="fa fa-check"></i><b>10.2.3</b> downloaded weather as <code>action</code> argument</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="get_temp_data.html"><a href="get_temp_data.html#exercises_getting"><i class="fa fa-check"></i><code>Exercises</code> on getting temperature data</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html"><i class="fa fa-check"></i><b>12</b> Filling gaps in temperature records</a>
+<li class="chapter" data-level="11" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html"><i class="fa fa-check"></i><b>11</b> Filling gaps in temperature records</a>
 <ul>
 <li class="chapter" data-level="" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#goals_gaps"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="12.1" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#gaps"><i class="fa fa-check"></i><b>12.1</b> Gaps</a></li>
-<li class="chapter" data-level="12.2" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#filling-short-gaps-in-daily-records"><i class="fa fa-check"></i><b>12.2</b> Filling short gaps in daily records</a></li>
-<li class="chapter" data-level="12.3" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#filling-long-gaps-in-daily-records"><i class="fa fa-check"></i><b>12.3</b> Filling long gaps in daily records</a>
+<li class="chapter" data-level="11.1" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#gaps"><i class="fa fa-check"></i><b>11.1</b> Gaps</a></li>
+<li class="chapter" data-level="11.2" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#filling-short-gaps-in-daily-records"><i class="fa fa-check"></i><b>11.2</b> Filling short gaps in daily records</a></li>
+<li class="chapter" data-level="11.3" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#filling-long-gaps-in-daily-records"><i class="fa fa-check"></i><b>11.3</b> Filling long gaps in daily records</a>
 <ul>
-<li class="chapter" data-level="12.3.1" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#bias-correction-for-shorter-intervals"><i class="fa fa-check"></i><b>12.3.1</b> Bias-correction for shorter intervals</a></li>
-<li class="chapter" data-level="12.3.2" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#saving-the-data-for-later"><i class="fa fa-check"></i><b>12.3.2</b> Saving the data for later</a></li>
+<li class="chapter" data-level="11.3.1" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#bias-correction-for-shorter-intervals"><i class="fa fa-check"></i><b>11.3.1</b> Bias-correction for shorter intervals</a></li>
+<li class="chapter" data-level="11.3.2" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#saving-the-data-for-later"><i class="fa fa-check"></i><b>11.3.2</b> Saving the data for later</a></li>
 </ul></li>
-<li class="chapter" data-level="12.4" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#filling-gaps-in-hourly-records"><i class="fa fa-check"></i><b>12.4</b> Filling gaps in hourly records</a>
+<li class="chapter" data-level="11.4" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#filling-gaps-in-hourly-records"><i class="fa fa-check"></i><b>11.4</b> Filling gaps in hourly records</a>
 <ul>
-<li class="chapter" data-level="12.4.1" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#accuracy-assessment"><i class="fa fa-check"></i><b>12.4.1</b> Accuracy assessment</a></li>
-<li class="chapter" data-level="12.4.2" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#computing-agroclimatic-metrics"><i class="fa fa-check"></i><b>12.4.2</b> Computing agroclimatic metrics</a></li>
+<li class="chapter" data-level="11.4.1" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#accuracy-assessment"><i class="fa fa-check"></i><b>11.4.1</b> Accuracy assessment</a></li>
+<li class="chapter" data-level="11.4.2" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#computing-agroclimatic-metrics"><i class="fa fa-check"></i><b>11.4.2</b> Computing agroclimatic metrics</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="filling-gaps-in-temperature-records.html"><a href="filling-gaps-in-temperature-records.html#exercises_patching"><i class="fa fa-check"></i><code>Exercises</code> on filling gaps</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html"><i class="fa fa-check"></i><b>13</b> Generating temperature scenarios</a>
+<li class="chapter" data-level="12" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html"><i class="fa fa-check"></i><b>12</b> Generating temperature scenarios</a>
 <ul>
 <li class="chapter" data-level="" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#goals_temperature_scenarios"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="13.1" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#chill-scenarios"><i class="fa fa-check"></i><b>13.1</b> Chill scenarios</a></li>
-<li class="chapter" data-level="13.2" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#risk-assessment-in-orchard-planning"><i class="fa fa-check"></i><b>13.2</b> Risk assessment in orchard planning</a></li>
-<li class="chapter" data-level="13.3" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#weather-generators"><i class="fa fa-check"></i><b>13.3</b> Weather generators</a></li>
-<li class="chapter" data-level="13.4" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#weather-generation-in-chillr"><i class="fa fa-check"></i><b>13.4</b> Weather generation in <code>chillR</code></a></li>
+<li class="chapter" data-level="12.1" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#chill-scenarios"><i class="fa fa-check"></i><b>12.1</b> Chill scenarios</a></li>
+<li class="chapter" data-level="12.2" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#risk-assessment-in-orchard-planning"><i class="fa fa-check"></i><b>12.2</b> Risk assessment in orchard planning</a></li>
+<li class="chapter" data-level="12.3" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#weather-generators"><i class="fa fa-check"></i><b>12.3</b> Weather generators</a></li>
+<li class="chapter" data-level="12.4" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#weather-generation-in-chillr"><i class="fa fa-check"></i><b>12.4</b> Weather generation in <code>chillR</code></a></li>
 <li class="chapter" data-level="" data-path="generating-temperature-scenarios.html"><a href="generating-temperature-scenarios.html#weather_generation_exercises"><i class="fa fa-check"></i><code>Exercises</code> on temperature generation</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html"><i class="fa fa-check"></i><b>14</b> Saving and loading data (and hiding this in markdown)</a>
+<li class="chapter" data-level="13" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html"><i class="fa fa-check"></i><b>13</b> Saving and loading data (and hiding this in markdown)</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html#learning-goals-for-this-lesson-1"><i class="fa fa-check"></i><b>14.1</b> Learning Goals for this lesson:</a></li>
-<li class="chapter" data-level="14.2" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html#saving-and-loading-data"><i class="fa fa-check"></i><b>14.2</b> Saving and loading data</a></li>
-<li class="chapter" data-level="14.3" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html#hiding-all-this-from-the-readers-of-our-markdown-file"><i class="fa fa-check"></i><b>14.3</b> Hiding all this from the readers of our markdown file</a></li>
+<li class="chapter" data-level="13.1" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html#learning-goals-for-this-lesson-1"><i class="fa fa-check"></i><b>13.1</b> Learning Goals for this lesson:</a></li>
+<li class="chapter" data-level="13.2" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html#saving-and-loading-data"><i class="fa fa-check"></i><b>13.2</b> Saving and loading data</a></li>
+<li class="chapter" data-level="13.3" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html#hiding-all-this-from-the-readers-of-our-markdown-file"><i class="fa fa-check"></i><b>13.3</b> Hiding all this from the readers of our markdown file</a></li>
 <li class="chapter" data-level="" data-path="saving-and-loading-data-and-hiding-this-in-markdown.html"><a href="saving-and-loading-data-and-hiding-this-in-markdown.html#exercises_saveLoad"><i class="fa fa-check"></i><code>Exercises</code> on saving and loading data</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html"><i class="fa fa-check"></i><b>15</b> Historic temperature scenarios</a>
+<li class="chapter" data-level="14" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html"><i class="fa fa-check"></i><b>14</b> Historic temperature scenarios</a>
 <ul>
 <li class="chapter" data-level="" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html#goals_hist_temp_scen"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="15.1" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html#climate-change-scenarios"><i class="fa fa-check"></i><b>15.1</b> Climate change scenarios</a></li>
-<li class="chapter" data-level="15.2" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html#making-historic-temperature-scenarios"><i class="fa fa-check"></i><b>15.2</b> Making historic temperature scenarios</a></li>
+<li class="chapter" data-level="14.1" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html#climate-change-scenarios"><i class="fa fa-check"></i><b>14.1</b> Climate change scenarios</a></li>
+<li class="chapter" data-level="14.2" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html#making-historic-temperature-scenarios"><i class="fa fa-check"></i><b>14.2</b> Making historic temperature scenarios</a></li>
 <li class="chapter" data-level="" data-path="historic-temperature-scenarios.html"><a href="historic-temperature-scenarios.html#exercises_historic_scenarios"><i class="fa fa-check"></i><code>Exercises</code> on generating historic temperature scenarios</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html"><i class="fa fa-check"></i><b>16</b> Future temperature scenarios</a>
+<li class="chapter" data-level="15" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html"><i class="fa fa-check"></i><b>15</b> Future temperature scenarios</a>
 <ul>
 <li class="chapter" data-level="" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#goals_future_temp_scen"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="16.1" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#impacts-of-future-climate-change"><i class="fa fa-check"></i><b>16.1</b> Impacts of future climate change</a></li>
-<li class="chapter" data-level="16.2" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#future-climate-scenarios"><i class="fa fa-check"></i><b>16.2</b> Future climate scenarios</a>
+<li class="chapter" data-level="15.1" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#impacts-of-future-climate-change"><i class="fa fa-check"></i><b>15.1</b> Impacts of future climate change</a></li>
+<li class="chapter" data-level="15.2" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#future-climate-scenarios"><i class="fa fa-check"></i><b>15.2</b> Future climate scenarios</a>
 <ul>
-<li class="chapter" data-level="16.2.1" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#some-background-on-climate-models-and-warming-pathways"><i class="fa fa-check"></i><b>16.2.1</b> Some background on climate models and warming pathways</a></li>
+<li class="chapter" data-level="15.2.1" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#some-background-on-climate-models-and-warming-pathways"><i class="fa fa-check"></i><b>15.2.1</b> Some background on climate models and warming pathways</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="future-temperature-scenarios.html"><a href="future-temperature-scenarios.html#exercises_future_scenarios"><i class="fa fa-check"></i><code>Exercises</code> on future temperature scenarios</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html"><i class="fa fa-check"></i><b>17</b> Making CMIP6 scenarios</a>
+<li class="chapter" data-level="16" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html"><i class="fa fa-check"></i><b>16</b> Making CMIP6 scenarios</a>
 <ul>
 <li class="chapter" data-level="" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#goals_CMIP6"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="17.1" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#accessing-gridded-climate-data-from-the-copernicus-climate-data-store"><i class="fa fa-check"></i><b>17.1</b> Accessing gridded climate data from the Copernicus climate data store</a>
+<li class="chapter" data-level="16.1" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#accessing-gridded-climate-data-from-the-copernicus-climate-data-store"><i class="fa fa-check"></i><b>16.1</b> Accessing gridded climate data from the Copernicus climate data store</a>
 <ul>
-<li class="chapter" data-level="17.1.1" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#downloading-future-climate-data"><i class="fa fa-check"></i><b>17.1.1</b> Downloading future climate data</a></li>
-<li class="chapter" data-level="17.1.2" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#generating-change-scenarios"><i class="fa fa-check"></i><b>17.1.2</b> Generating change scenarios</a></li>
-<li class="chapter" data-level="17.1.3" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#extracting-data-from-the-grids"><i class="fa fa-check"></i><b>17.1.3</b> Extracting data from the grids</a></li>
-<li class="chapter" data-level="17.1.4" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#baseline-adjustment"><i class="fa fa-check"></i><b>17.1.4</b> Baseline adjustment</a></li>
+<li class="chapter" data-level="16.1.1" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#downloading-future-climate-data"><i class="fa fa-check"></i><b>16.1.1</b> Downloading future climate data</a></li>
+<li class="chapter" data-level="16.1.2" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#generating-change-scenarios"><i class="fa fa-check"></i><b>16.1.2</b> Generating change scenarios</a></li>
+<li class="chapter" data-level="16.1.3" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#extracting-data-from-the-grids"><i class="fa fa-check"></i><b>16.1.3</b> Extracting data from the grids</a></li>
+<li class="chapter" data-level="16.1.4" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#baseline-adjustment"><i class="fa fa-check"></i><b>16.1.4</b> Baseline adjustment</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="making-cmip6-scenarios.html"><a href="making-cmip6-scenarios.html#exercises_CMIP6"><i class="fa fa-check"></i><code>Exercises</code> on generating CMIP6 temperature scenarios</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="making-cmip5-scenarios-with-the-climatewizard.html"><a href="making-cmip5-scenarios-with-the-climatewizard.html"><i class="fa fa-check"></i><b>18</b> Making CMIP5 scenarios with the <code>ClimateWizard</code></a>
+<li class="chapter" data-level="17" data-path="making-cmip5-scenarios-with-the-climatewizard.html"><a href="making-cmip5-scenarios-with-the-climatewizard.html"><i class="fa fa-check"></i><b>17</b> Making CMIP5 scenarios with the <code>ClimateWizard</code></a>
 <ul>
 <li class="chapter" data-level="" data-path="making-cmip5-scenarios-with-the-climatewizard.html"><a href="making-cmip5-scenarios-with-the-climatewizard.html#goals_ClimateWizard"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="18.1" data-path="making-cmip5-scenarios-with-the-climatewizard.html"><a href="making-cmip5-scenarios-with-the-climatewizard.html#using-the-climatewizard"><i class="fa fa-check"></i><b>18.1</b> Using the <code>ClimateWizard</code></a></li>
+<li class="chapter" data-level="17.1" data-path="making-cmip5-scenarios-with-the-climatewizard.html"><a href="making-cmip5-scenarios-with-the-climatewizard.html#using-the-climatewizard"><i class="fa fa-check"></i><b>17.1</b> Using the <code>ClimateWizard</code></a></li>
 <li class="chapter" data-level="" data-path="making-cmip5-scenarios-with-the-climatewizard.html"><a href="making-cmip5-scenarios-with-the-climatewizard.html#exercises_ClimateWizard"><i class="fa fa-check"></i><code>Exercises</code> on generating CMIP5 temperature scenarios</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="plot_future.html"><a href="plot_future.html"><i class="fa fa-check"></i><b>19</b> Plotting future scenarios</a>
+<li class="chapter" data-level="18" data-path="plot_future.html"><a href="plot_future.html"><i class="fa fa-check"></i><b>18</b> Plotting future scenarios</a>
 <ul>
 <li class="chapter" data-level="" data-path="plot_future.html"><a href="plot_future.html#goals_future_plots"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="19.1" data-path="plot_future.html"><a href="plot_future.html#making-attractive-plots"><i class="fa fa-check"></i><b>19.1</b> Making attractive plots</a></li>
-<li class="chapter" data-level="19.2" data-path="plot_future.html"><a href="plot_future.html#the-results"><i class="fa fa-check"></i><b>19.2</b> The results</a></li>
+<li class="chapter" data-level="18.1" data-path="plot_future.html"><a href="plot_future.html#making-attractive-plots"><i class="fa fa-check"></i><b>18.1</b> Making attractive plots</a></li>
+<li class="chapter" data-level="18.2" data-path="plot_future.html"><a href="plot_future.html#the-results"><i class="fa fa-check"></i><b>18.2</b> The results</a></li>
 <li class="chapter" data-level="" data-path="plot_future.html"><a href="plot_future.html#exercises_future_plots"><i class="fa fa-check"></i><code>Exercises</code> on plotting future projections</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html"><i class="fa fa-check"></i><b>20</b> Chill model comparison</a>
+<li class="chapter" data-level="19" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html"><i class="fa fa-check"></i><b>19</b> Chill model comparison</a>
 <ul>
 <li class="chapter" data-level="" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#goals_chill_model"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="20.1" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#safe-winter-chill"><i class="fa fa-check"></i><b>20.1</b> Safe Winter Chill</a></li>
-<li class="chapter" data-level="20.2" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#chill-metrics"><i class="fa fa-check"></i><b>20.2</b> Chill metrics</a></li>
-<li class="chapter" data-level="20.3" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#an-animated-plot-of-relative-changes-in-safe-winter-chill"><i class="fa fa-check"></i><b>20.3</b> An animated plot of relative changes in Safe Winter Chill</a></li>
+<li class="chapter" data-level="19.1" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#safe-winter-chill"><i class="fa fa-check"></i><b>19.1</b> Safe Winter Chill</a></li>
+<li class="chapter" data-level="19.2" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#chill-metrics"><i class="fa fa-check"></i><b>19.2</b> Chill metrics</a></li>
+<li class="chapter" data-level="19.3" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#an-animated-plot-of-relative-changes-in-safe-winter-chill"><i class="fa fa-check"></i><b>19.3</b> An animated plot of relative changes in Safe Winter Chill</a></li>
 <li class="chapter" data-level="" data-path="chill_model_comparison.html"><a href="chill_model_comparison.html#exercises_chill_model_comparison"><i class="fa fa-check"></i><code>Exercises</code> on chill model comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="simple_phenology.html"><a href="simple_phenology.html"><i class="fa fa-check"></i><b>21</b> Simple phenology analysis</a>
+<li class="chapter" data-level="20" data-path="simple_phenology.html"><a href="simple_phenology.html"><i class="fa fa-check"></i><b>20</b> Simple phenology analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="simple_phenology.html"><a href="simple_phenology.html#goals_simple_phenology"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="21.1" data-path="simple_phenology.html"><a href="simple_phenology.html#phenology-analysis"><i class="fa fa-check"></i><b>21.1</b> Phenology analysis</a></li>
-<li class="chapter" data-level="21.2" data-path="simple_phenology.html"><a href="simple_phenology.html#time-series-analysis"><i class="fa fa-check"></i><b>21.2</b> Time series analysis</a></li>
-<li class="chapter" data-level="21.3" data-path="simple_phenology.html"><a href="simple_phenology.html#p-hacking"><i class="fa fa-check"></i><b>21.3</b> p-hacking</a></li>
-<li class="chapter" data-level="21.4" data-path="simple_phenology.html"><a href="simple_phenology.html#the-process-that-generates-the-data"><i class="fa fa-check"></i><b>21.4</b> The process that generates the data</a></li>
-<li class="chapter" data-level="21.5" data-path="simple_phenology.html"><a href="simple_phenology.html#an-ecological-theory-to-guide-our-analysis"><i class="fa fa-check"></i><b>21.5</b> An ecological theory to guide our analysis</a></li>
-<li class="chapter" data-level="21.6" data-path="simple_phenology.html"><a href="simple_phenology.html#temperature-correlations"><i class="fa fa-check"></i><b>21.6</b> Temperature correlations</a></li>
+<li class="chapter" data-level="20.1" data-path="simple_phenology.html"><a href="simple_phenology.html#phenology-analysis"><i class="fa fa-check"></i><b>20.1</b> Phenology analysis</a></li>
+<li class="chapter" data-level="20.2" data-path="simple_phenology.html"><a href="simple_phenology.html#time-series-analysis"><i class="fa fa-check"></i><b>20.2</b> Time series analysis</a></li>
+<li class="chapter" data-level="20.3" data-path="simple_phenology.html"><a href="simple_phenology.html#p-hacking"><i class="fa fa-check"></i><b>20.3</b> p-hacking</a></li>
+<li class="chapter" data-level="20.4" data-path="simple_phenology.html"><a href="simple_phenology.html#the-process-that-generates-the-data"><i class="fa fa-check"></i><b>20.4</b> The process that generates the data</a></li>
+<li class="chapter" data-level="20.5" data-path="simple_phenology.html"><a href="simple_phenology.html#an-ecological-theory-to-guide-our-analysis"><i class="fa fa-check"></i><b>20.5</b> An ecological theory to guide our analysis</a></li>
+<li class="chapter" data-level="20.6" data-path="simple_phenology.html"><a href="simple_phenology.html#temperature-correlations"><i class="fa fa-check"></i><b>20.6</b> Temperature correlations</a></li>
 <li class="chapter" data-level="" data-path="simple_phenology.html"><a href="simple_phenology.html#exercises_simple_analysis"><i class="fa fa-check"></i><code>Exercises</code> on simple phenology analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="22" data-path="pls_intro.html"><a href="pls_intro.html"><i class="fa fa-check"></i><b>22</b> Delineating temperature response phases with PLS regression</a>
+<li class="chapter" data-level="21" data-path="pls_intro.html"><a href="pls_intro.html"><i class="fa fa-check"></i><b>21</b> Delineating temperature response phases with PLS regression</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls_intro.html"><a href="pls_intro.html#goals_PLS_intro"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="22.1" data-path="pls_intro.html"><a href="pls_intro.html#detecting-temperature-response-phases"><i class="fa fa-check"></i><b>22.1</b> Detecting temperature response phases</a></li>
-<li class="chapter" data-level="22.2" data-path="pls_intro.html"><a href="pls_intro.html#finding-signals-in-hyperspectral-remote-sensing-data"><i class="fa fa-check"></i><b>22.2</b> Finding signals in hyperspectral remote sensing data</a></li>
-<li class="chapter" data-level="22.3" data-path="pls_intro.html"><a href="pls_intro.html#pls-regression-for-phenology-analysis"><i class="fa fa-check"></i><b>22.3</b> PLS regression for phenology analysis</a></li>
-<li class="chapter" data-level="22.4" data-path="pls_intro.html"><a href="pls_intro.html#a-note-of-caution-about-pls-results"><i class="fa fa-check"></i><b>22.4</b> A note of caution about PLS results</a></li>
-<li class="chapter" data-level="22.5" data-path="pls_intro.html"><a href="pls_intro.html#pls-analysis-of-alexander-lucas-pears-in-klein-altendorf"><i class="fa fa-check"></i><b>22.5</b> PLS analysis of ‘Alexander Lucas’ pears in Klein-Altendorf</a></li>
+<li class="chapter" data-level="21.1" data-path="pls_intro.html"><a href="pls_intro.html#detecting-temperature-response-phases"><i class="fa fa-check"></i><b>21.1</b> Detecting temperature response phases</a></li>
+<li class="chapter" data-level="21.2" data-path="pls_intro.html"><a href="pls_intro.html#finding-signals-in-hyperspectral-remote-sensing-data"><i class="fa fa-check"></i><b>21.2</b> Finding signals in hyperspectral remote sensing data</a></li>
+<li class="chapter" data-level="21.3" data-path="pls_intro.html"><a href="pls_intro.html#pls-regression-for-phenology-analysis"><i class="fa fa-check"></i><b>21.3</b> PLS regression for phenology analysis</a></li>
+<li class="chapter" data-level="21.4" data-path="pls_intro.html"><a href="pls_intro.html#a-note-of-caution-about-pls-results"><i class="fa fa-check"></i><b>21.4</b> A note of caution about PLS results</a></li>
+<li class="chapter" data-level="21.5" data-path="pls_intro.html"><a href="pls_intro.html#pls-analysis-of-alexander-lucas-pears-in-klein-altendorf"><i class="fa fa-check"></i><b>21.5</b> PLS analysis of ‘Alexander Lucas’ pears in Klein-Altendorf</a></li>
 <li class="chapter" data-level="" data-path="pls_intro.html"><a href="pls_intro.html#exercises_first_PLS"><i class="fa fa-check"></i><code>Exercises</code> on chill model comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="23" data-path="pls_reflection.html"><a href="pls_reflection.html"><i class="fa fa-check"></i><b>23</b> Successes and limitations of PLS regression analysis</a>
+<li class="chapter" data-level="22" data-path="pls_reflection.html"><a href="pls_reflection.html"><i class="fa fa-check"></i><b>22</b> Successes and limitations of PLS regression analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls_reflection.html"><a href="pls_reflection.html#goals_PLS_reflection"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="23.1" data-path="pls_reflection.html"><a href="pls_reflection.html#pls-regression"><i class="fa fa-check"></i><b>23.1</b> PLS regression</a></li>
-<li class="chapter" data-level="23.2" data-path="pls_reflection.html"><a href="pls_reflection.html#pls-examples"><i class="fa fa-check"></i><b>23.2</b> PLS examples</a>
+<li class="chapter" data-level="22.1" data-path="pls_reflection.html"><a href="pls_reflection.html#pls-regression"><i class="fa fa-check"></i><b>22.1</b> PLS regression</a></li>
+<li class="chapter" data-level="22.2" data-path="pls_reflection.html"><a href="pls_reflection.html#pls-examples"><i class="fa fa-check"></i><b>22.2</b> PLS examples</a>
 <ul>
-<li class="chapter" data-level="23.2.1" data-path="pls_reflection.html"><a href="pls_reflection.html#grasslands-on-the-tibetan-plateau"><i class="fa fa-check"></i><b>23.2.1</b> Grasslands on the Tibetan Plateau</a></li>
-<li class="chapter" data-level="23.2.2" data-path="pls_reflection.html"><a href="pls_reflection.html#deciduous-trees"><i class="fa fa-check"></i><b>23.2.2</b> Deciduous trees</a></li>
-<li class="chapter" data-level="23.2.3" data-path="pls_reflection.html"><a href="pls_reflection.html#why-were-not-seeing-the-chilling-phase"><i class="fa fa-check"></i><b>23.2.3</b> Why we’re not seeing the chilling phase</a></li>
+<li class="chapter" data-level="22.2.1" data-path="pls_reflection.html"><a href="pls_reflection.html#grasslands-on-the-tibetan-plateau"><i class="fa fa-check"></i><b>22.2.1</b> Grasslands on the Tibetan Plateau</a></li>
+<li class="chapter" data-level="22.2.2" data-path="pls_reflection.html"><a href="pls_reflection.html#deciduous-trees"><i class="fa fa-check"></i><b>22.2.2</b> Deciduous trees</a></li>
+<li class="chapter" data-level="22.2.3" data-path="pls_reflection.html"><a href="pls_reflection.html#why-were-not-seeing-the-chilling-phase"><i class="fa fa-check"></i><b>22.2.3</b> Why we’re not seeing the chilling phase</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls_reflection.html"><a href="pls_reflection.html#exercises_PLS_reflection"><i class="fa fa-check"></i><code>Exercises</code> on chill model comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="24" data-path="pls_chillforce.html"><a href="pls_chillforce.html"><i class="fa fa-check"></i><b>24</b> PLS regression with agroclimatic metrics</a>
+<li class="chapter" data-level="23" data-path="pls_chillforce.html"><a href="pls_chillforce.html"><i class="fa fa-check"></i><b>23</b> PLS regression with agroclimatic metrics</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls_chillforce.html"><a href="pls_chillforce.html#goals_PLS_chillforce"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="24.1" data-path="pls_chillforce.html"><a href="pls_chillforce.html#adjusting-pls-for-use-with-non-monotonic-relationships"><i class="fa fa-check"></i><b>24.1</b> Adjusting PLS for use with non-monotonic relationships</a></li>
-<li class="chapter" data-level="24.2" data-path="pls_chillforce.html"><a href="pls_chillforce.html#pls-analysis-with-chilling-and-forcing-data"><i class="fa fa-check"></i><b>24.2</b> PLS analysis with chilling and forcing data</a></li>
-<li class="chapter" data-level="24.3" data-path="pls_chillforce.html"><a href="pls_chillforce.html#delineating-chilling-and-forcing-periods"><i class="fa fa-check"></i><b>24.3</b> Delineating chilling and forcing periods</a></li>
-<li class="chapter" data-level="24.4" data-path="pls_chillforce.html"><a href="pls_chillforce.html#ggplotting-the-results"><i class="fa fa-check"></i><b>24.4</b> <code>ggplot</code>ting the results</a></li>
+<li class="chapter" data-level="23.1" data-path="pls_chillforce.html"><a href="pls_chillforce.html#adjusting-pls-for-use-with-non-monotonic-relationships"><i class="fa fa-check"></i><b>23.1</b> Adjusting PLS for use with non-monotonic relationships</a></li>
+<li class="chapter" data-level="23.2" data-path="pls_chillforce.html"><a href="pls_chillforce.html#pls-analysis-with-chilling-and-forcing-data"><i class="fa fa-check"></i><b>23.2</b> PLS analysis with chilling and forcing data</a></li>
+<li class="chapter" data-level="23.3" data-path="pls_chillforce.html"><a href="pls_chillforce.html#delineating-chilling-and-forcing-periods"><i class="fa fa-check"></i><b>23.3</b> Delineating chilling and forcing periods</a></li>
+<li class="chapter" data-level="23.4" data-path="pls_chillforce.html"><a href="pls_chillforce.html#ggplotting-the-results"><i class="fa fa-check"></i><b>23.4</b> <code>ggplot</code>ting the results</a></li>
 <li class="chapter" data-level="" data-path="pls_chillforce.html"><a href="pls_chillforce.html#exercises_PLS_chill_force"><i class="fa fa-check"></i><code>Exercises</code> on chill model comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html"><i class="fa fa-check"></i><b>25</b> Examples of PLS regression with agroclimatic metrics</a>
+<li class="chapter" data-level="24" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html"><i class="fa fa-check"></i><b>24</b> Examples of PLS regression with agroclimatic metrics</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#goals_PLS_chillforce_ex"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="25.1" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#pls-regression-across-species-and-agroclimatic-contexts"><i class="fa fa-check"></i><b>25.1</b> PLS regression across species and agroclimatic contexts</a>
+<li class="chapter" data-level="24.1" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#pls-regression-across-species-and-agroclimatic-contexts"><i class="fa fa-check"></i><b>24.1</b> PLS regression across species and agroclimatic contexts</a>
 <ul>
-<li class="chapter" data-level="25.1.1" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#chestnut-jujube-and-apricot-in-beijing"><i class="fa fa-check"></i><b>25.1.1</b> Chestnut, jujube and apricot in Beijing</a></li>
-<li class="chapter" data-level="25.1.2" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#apples-in-shaanxi-province-china"><i class="fa fa-check"></i><b>25.1.2</b> Apples in Shaanxi Province, China</a></li>
-<li class="chapter" data-level="25.1.3" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#cherries-in-klein-altendorf"><i class="fa fa-check"></i><b>25.1.3</b> Cherries in Klein-Altendorf</a></li>
-<li class="chapter" data-level="25.1.4" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#apricots-in-the-uk"><i class="fa fa-check"></i><b>25.1.4</b> Apricots in the UK</a></li>
-<li class="chapter" data-level="25.1.5" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#grapevine-in-croatia"><i class="fa fa-check"></i><b>25.1.5</b> Grapevine in Croatia</a></li>
-<li class="chapter" data-level="25.1.6" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#walnuts-in-california"><i class="fa fa-check"></i><b>25.1.6</b> Walnuts in California</a></li>
-<li class="chapter" data-level="25.1.7" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#almonds-in-tunisia"><i class="fa fa-check"></i><b>25.1.7</b> Almonds in Tunisia</a></li>
-<li class="chapter" data-level="25.1.8" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#pistachios-in-tunisia"><i class="fa fa-check"></i><b>25.1.8</b> Pistachios in Tunisia</a></li>
+<li class="chapter" data-level="24.1.1" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#chestnut-jujube-and-apricot-in-beijing"><i class="fa fa-check"></i><b>24.1.1</b> Chestnut, jujube and apricot in Beijing</a></li>
+<li class="chapter" data-level="24.1.2" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#apples-in-shaanxi-province-china"><i class="fa fa-check"></i><b>24.1.2</b> Apples in Shaanxi Province, China</a></li>
+<li class="chapter" data-level="24.1.3" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#cherries-in-klein-altendorf"><i class="fa fa-check"></i><b>24.1.3</b> Cherries in Klein-Altendorf</a></li>
+<li class="chapter" data-level="24.1.4" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#apricots-in-the-uk"><i class="fa fa-check"></i><b>24.1.4</b> Apricots in the UK</a></li>
+<li class="chapter" data-level="24.1.5" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#grapevine-in-croatia"><i class="fa fa-check"></i><b>24.1.5</b> Grapevine in Croatia</a></li>
+<li class="chapter" data-level="24.1.6" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#walnuts-in-california"><i class="fa fa-check"></i><b>24.1.6</b> Walnuts in California</a></li>
+<li class="chapter" data-level="24.1.7" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#almonds-in-tunisia"><i class="fa fa-check"></i><b>24.1.7</b> Almonds in Tunisia</a></li>
+<li class="chapter" data-level="24.1.8" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#pistachios-in-tunisia"><i class="fa fa-check"></i><b>24.1.8</b> Pistachios in Tunisia</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls_chillforce_ex.html"><a href="pls_chillforce_ex.html#exercises_PLS_chill_force_ex"><i class="fa fa-check"></i><code>Exercises</code> on examples of PLS regression with agroclimatic metrics</a></li>
 </ul></li>
-<li class="chapter" data-level="26" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html"><i class="fa fa-check"></i><b>26</b> Why PLS doesn’t always work</a>
+<li class="chapter" data-level="25" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html"><i class="fa fa-check"></i><b>25</b> Why PLS doesn’t always work</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#goals_PLS_chillforce_reflection"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="26.1" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#disappointing-pls-performance"><i class="fa fa-check"></i><b>26.1</b> Disappointing PLS performance</a></li>
-<li class="chapter" data-level="26.2" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#what-pls-regression-can-find"><i class="fa fa-check"></i><b>26.2</b> What PLS regression can find</a></li>
-<li class="chapter" data-level="26.3" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#chill-model-sensitivity-vs.-observed-temperature"><i class="fa fa-check"></i><b>26.3</b> Chill model sensitivity vs. observed temperature</a>
+<li class="chapter" data-level="25.1" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#disappointing-pls-performance"><i class="fa fa-check"></i><b>25.1</b> Disappointing PLS performance</a></li>
+<li class="chapter" data-level="25.2" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#what-pls-regression-can-find"><i class="fa fa-check"></i><b>25.2</b> What PLS regression can find</a></li>
+<li class="chapter" data-level="25.3" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#chill-model-sensitivity-vs.-observed-temperature"><i class="fa fa-check"></i><b>25.3</b> Chill model sensitivity vs. observed temperature</a>
 <ul>
-<li class="chapter" data-level="26.3.1" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#beijing-china"><i class="fa fa-check"></i><b>26.3.1</b> Beijing, China</a></li>
-<li class="chapter" data-level="26.3.2" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#klein-altendorf-germany"><i class="fa fa-check"></i><b>26.3.2</b> Klein-Altendorf, Germany</a></li>
-<li class="chapter" data-level="26.3.3" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#davis-california"><i class="fa fa-check"></i><b>26.3.3</b> Davis, California</a></li>
-<li class="chapter" data-level="26.3.4" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#sfax-tunisia"><i class="fa fa-check"></i><b>26.3.4</b> Sfax, Tunisia</a></li>
+<li class="chapter" data-level="25.3.1" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#beijing-china"><i class="fa fa-check"></i><b>25.3.1</b> Beijing, China</a></li>
+<li class="chapter" data-level="25.3.2" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#klein-altendorf-germany"><i class="fa fa-check"></i><b>25.3.2</b> Klein-Altendorf, Germany</a></li>
+<li class="chapter" data-level="25.3.3" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#davis-california"><i class="fa fa-check"></i><b>25.3.3</b> Davis, California</a></li>
+<li class="chapter" data-level="25.3.4" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#sfax-tunisia"><i class="fa fa-check"></i><b>25.3.4</b> Sfax, Tunisia</a></li>
 </ul></li>
-<li class="chapter" data-level="26.4" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#heat-model-sensitivity-vs.-observed-temperature"><i class="fa fa-check"></i><b>26.4</b> Heat model sensitivity vs. observed temperature</a></li>
+<li class="chapter" data-level="25.4" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#heat-model-sensitivity-vs.-observed-temperature"><i class="fa fa-check"></i><b>25.4</b> Heat model sensitivity vs. observed temperature</a></li>
 <li class="chapter" data-level="" data-path="pls_chillforce_reflection.html"><a href="pls_chillforce_reflection.html#exercises_PLS_chillforce_reflection"><i class="fa fa-check"></i><code>Exercises</code> on expected PLS responsiveness</a></li>
 </ul></li>
-<li class="chapter" data-level="27" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html"><i class="fa fa-check"></i><b>27</b> Evaluating PLS outputs</a>
+<li class="chapter" data-level="26" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html"><i class="fa fa-check"></i><b>26</b> Evaluating PLS outputs</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#goals_PLS_eval"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="27.1" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#chilling-and-forcing-requirements"><i class="fa fa-check"></i><b>27.1</b> Chilling and forcing requirements</a></li>
-<li class="chapter" data-level="27.2" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#response-to-seasonal-temperature"><i class="fa fa-check"></i><b>27.2</b> Response to seasonal temperature</a></li>
-<li class="chapter" data-level="27.3" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#applying-our-functions-to-california-walnuts"><i class="fa fa-check"></i><b>27.3</b> Applying our functions to California walnuts</a></li>
+<li class="chapter" data-level="26.1" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#chilling-and-forcing-requirements"><i class="fa fa-check"></i><b>26.1</b> Chilling and forcing requirements</a></li>
+<li class="chapter" data-level="26.2" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#response-to-seasonal-temperature"><i class="fa fa-check"></i><b>26.2</b> Response to seasonal temperature</a></li>
+<li class="chapter" data-level="26.3" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#applying-our-functions-to-california-walnuts"><i class="fa fa-check"></i><b>26.3</b> Applying our functions to California walnuts</a></li>
 <li class="chapter" data-level="" data-path="pls_eval_PLS.html"><a href="pls_eval_PLS.html#exercises_PLS_eval"><i class="fa fa-check"></i><code>Exercises</code> on evaluating PLS regression results</a></li>
 </ul></li>
-<li class="chapter" data-level="28" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html"><i class="fa fa-check"></i><b>28</b> The relative importance of chill and heat</a>
+<li class="chapter" data-level="27" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html"><i class="fa fa-check"></i><b>27</b> The relative importance of chill and heat</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#goals_PLS_chillforce_relimp"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="28.1" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#chilling-vs.-forcing-temperatures"><i class="fa fa-check"></i><b>28.1</b> Chilling vs. forcing temperatures</a></li>
-<li class="chapter" data-level="28.2" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#patterns-in-temperature-responses"><i class="fa fa-check"></i><b>28.2</b> Patterns in temperature responses</a></li>
-<li class="chapter" data-level="28.3" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#the-warm-end-of-the-spectrum"><i class="fa fa-check"></i><b>28.3</b> The warm end of the spectrum</a></li>
-<li class="chapter" data-level="28.4" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#implications-of-our-hypothesis"><i class="fa fa-check"></i><b>28.4</b> Implications of our hypothesis</a></li>
+<li class="chapter" data-level="27.1" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#chilling-vs.-forcing-temperatures"><i class="fa fa-check"></i><b>27.1</b> Chilling vs. forcing temperatures</a></li>
+<li class="chapter" data-level="27.2" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#patterns-in-temperature-responses"><i class="fa fa-check"></i><b>27.2</b> Patterns in temperature responses</a></li>
+<li class="chapter" data-level="27.3" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#the-warm-end-of-the-spectrum"><i class="fa fa-check"></i><b>27.3</b> The warm end of the spectrum</a></li>
+<li class="chapter" data-level="27.4" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#implications-of-our-hypothesis"><i class="fa fa-check"></i><b>27.4</b> Implications of our hypothesis</a></li>
 <li class="chapter" data-level="" data-path="pls_chillforce_relimp.html"><a href="pls_chillforce_relimp.html#exercises_PLS_chillforce_relimp"><i class="fa fa-check"></i><code>Exercises</code> on the relative importance of chill and heat</a></li>
 </ul></li>
-<li class="chapter" data-level="29" data-path="exp_PLS.html"><a href="exp_PLS.html"><i class="fa fa-check"></i><b>29</b> Experimentally enhanced PLS</a>
+<li class="chapter" data-level="28" data-path="exp_PLS.html"><a href="exp_PLS.html"><i class="fa fa-check"></i><b>28</b> Experimentally enhanced PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="exp_PLS.html"><a href="exp_PLS.html#goals_exp_PLS"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="29.1" data-path="exp_PLS.html"><a href="exp_PLS.html#enhanced-phenology-data"><i class="fa fa-check"></i><b>29.1</b> Enhanced phenology data</a></li>
+<li class="chapter" data-level="28.1" data-path="exp_PLS.html"><a href="exp_PLS.html#enhanced-phenology-data"><i class="fa fa-check"></i><b>28.1</b> Enhanced phenology data</a></li>
 <li class="chapter" data-level="" data-path="exp_PLS.html"><a href="exp_PLS.html#exc_exp_PLS"><i class="fa fa-check"></i><code>Exercises</code> on experimental PLS</a></li>
 </ul></li>
-<li class="chapter" data-level="30" data-path="model_validity.html"><a href="model_validity.html"><i class="fa fa-check"></i><b>30</b> Making valid tree phenology models</a>
+<li class="chapter" data-level="29" data-path="model_validity.html"><a href="model_validity.html"><i class="fa fa-check"></i><b>29</b> Making valid tree phenology models</a>
 <ul>
 <li class="chapter" data-level="" data-path="model_validity.html"><a href="model_validity.html#goals_model_validity"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="30.1" data-path="model_validity.html"><a href="model_validity.html#the-modeling-challenge"><i class="fa fa-check"></i><b>30.1</b> The modeling challenge</a></li>
-<li class="chapter" data-level="30.2" data-path="model_validity.html"><a href="model_validity.html#validating-models"><i class="fa fa-check"></i><b>30.2</b> Validating models</a></li>
-<li class="chapter" data-level="30.3" data-path="model_validity.html"><a href="model_validity.html#mapping-validity-domains"><i class="fa fa-check"></i><b>30.3</b> Mapping validity domains</a></li>
-<li class="chapter" data-level="30.4" data-path="model_validity.html"><a href="model_validity.html#one-last-thought-on-model-validity"><i class="fa fa-check"></i><b>30.4</b> One last thought on model validity</a></li>
+<li class="chapter" data-level="29.1" data-path="model_validity.html"><a href="model_validity.html#the-modeling-challenge"><i class="fa fa-check"></i><b>29.1</b> The modeling challenge</a></li>
+<li class="chapter" data-level="29.2" data-path="model_validity.html"><a href="model_validity.html#validating-models"><i class="fa fa-check"></i><b>29.2</b> Validating models</a></li>
+<li class="chapter" data-level="29.3" data-path="model_validity.html"><a href="model_validity.html#mapping-validity-domains"><i class="fa fa-check"></i><b>29.3</b> Mapping validity domains</a></li>
+<li class="chapter" data-level="29.4" data-path="model_validity.html"><a href="model_validity.html#one-last-thought-on-model-validity"><i class="fa fa-check"></i><b>29.4</b> One last thought on model validity</a></li>
 <li class="chapter" data-level="" data-path="model_validity.html"><a href="model_validity.html#ex_model_validity"><i class="fa fa-check"></i><code>Exercises</code> on making valid tree phenology models</a></li>
 </ul></li>
-<li class="chapter" data-level="31" data-path="phenoflex.html"><a href="phenoflex.html"><i class="fa fa-check"></i><b>31</b> The <code>PhenoFlex</code> model</a>
+<li class="chapter" data-level="30" data-path="phenoflex.html"><a href="phenoflex.html"><i class="fa fa-check"></i><b>30</b> The <code>PhenoFlex</code> model</a>
 <ul>
 <li class="chapter" data-level="" data-path="phenoflex.html"><a href="phenoflex.html#goals_phenoflex"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="31.1" data-path="phenoflex.html"><a href="phenoflex.html#ingredients-of-this-lesson"><i class="fa fa-check"></i><b>31.1</b> Ingredients of this lesson</a></li>
-<li class="chapter" data-level="31.2" data-path="phenoflex.html"><a href="phenoflex.html#towards-credible-phenology-models"><i class="fa fa-check"></i><b>31.2</b> Towards credible phenology models</a></li>
-<li class="chapter" data-level="31.3" data-path="phenoflex.html"><a href="phenoflex.html#the-phenoflex-framework"><i class="fa fa-check"></i><b>31.3</b> The PhenoFlex framework</a></li>
-<li class="chapter" data-level="31.4" data-path="phenoflex.html"><a href="phenoflex.html#running-phenoflex"><i class="fa fa-check"></i><b>31.4</b> Running <code>PhenoFlex</code></a></li>
-<li class="chapter" data-level="31.5" data-path="phenoflex.html"><a href="phenoflex.html#parameterizing-phenoflex"><i class="fa fa-check"></i><b>31.5</b> Parameterizing <code>PhenoFlex</code></a></li>
-<li class="chapter" data-level="31.6" data-path="phenoflex.html"><a href="phenoflex.html#conclusions-on-phenoflex"><i class="fa fa-check"></i><b>31.6</b> Conclusions on <code>PhenoFlex</code></a></li>
+<li class="chapter" data-level="30.1" data-path="phenoflex.html"><a href="phenoflex.html#ingredients-of-this-lesson"><i class="fa fa-check"></i><b>30.1</b> Ingredients of this lesson</a></li>
+<li class="chapter" data-level="30.2" data-path="phenoflex.html"><a href="phenoflex.html#towards-credible-phenology-models"><i class="fa fa-check"></i><b>30.2</b> Towards credible phenology models</a></li>
+<li class="chapter" data-level="30.3" data-path="phenoflex.html"><a href="phenoflex.html#the-phenoflex-framework"><i class="fa fa-check"></i><b>30.3</b> The PhenoFlex framework</a></li>
+<li class="chapter" data-level="30.4" data-path="phenoflex.html"><a href="phenoflex.html#running-phenoflex"><i class="fa fa-check"></i><b>30.4</b> Running <code>PhenoFlex</code></a></li>
+<li class="chapter" data-level="30.5" data-path="phenoflex.html"><a href="phenoflex.html#parameterizing-phenoflex"><i class="fa fa-check"></i><b>30.5</b> Parameterizing <code>PhenoFlex</code></a></li>
+<li class="chapter" data-level="30.6" data-path="phenoflex.html"><a href="phenoflex.html#conclusions-on-phenoflex"><i class="fa fa-check"></i><b>30.6</b> Conclusions on <code>PhenoFlex</code></a></li>
 <li class="chapter" data-level="" data-path="phenoflex.html"><a href="phenoflex.html#ex_model_phenoflex"><i class="fa fa-check"></i><code>Exercises</code> on making valid tree phenology models</a></li>
 </ul></li>
-<li class="chapter" data-level="32" data-path="phenoflex2.html"><a href="phenoflex2.html"><i class="fa fa-check"></i><b>32</b> The <code>PhenoFlex</code> model - a second look</a>
+<li class="chapter" data-level="31" data-path="phenoflex2.html"><a href="phenoflex2.html"><i class="fa fa-check"></i><b>31</b> The <code>PhenoFlex</code> model - a second look</a>
 <ul>
 <li class="chapter" data-level="" data-path="phenoflex2.html"><a href="phenoflex2.html#goals_phenoflex2"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="32.1" data-path="phenoflex2.html"><a href="phenoflex2.html#some-basic-diagnostics-for-our-phenoflex-fit"><i class="fa fa-check"></i><b>32.1</b> Some basic diagnostics for our <code>PhenoFlex</code> fit</a></li>
-<li class="chapter" data-level="32.2" data-path="phenoflex2.html"><a href="phenoflex2.html#temperature-response-of-the-phenoflex-components"><i class="fa fa-check"></i><b>32.2</b> Temperature response of the <code>PhenoFlex</code> components</a></li>
-<li class="chapter" data-level="32.3" data-path="phenoflex2.html"><a href="phenoflex2.html#overall-impression"><i class="fa fa-check"></i><b>32.3</b> Overall impression</a></li>
-<li class="chapter" data-level="32.4" data-path="phenoflex2.html"><a href="phenoflex2.html#caveats-and-assumptions"><i class="fa fa-check"></i><b>32.4</b> Caveats and assumptions</a></li>
-<li class="chapter" data-level="32.5" data-path="phenoflex2.html"><a href="phenoflex2.html#outlook"><i class="fa fa-check"></i><b>32.5</b> Outlook</a></li>
+<li class="chapter" data-level="31.1" data-path="phenoflex2.html"><a href="phenoflex2.html#some-basic-diagnostics-for-our-phenoflex-fit"><i class="fa fa-check"></i><b>31.1</b> Some basic diagnostics for our <code>PhenoFlex</code> fit</a></li>
+<li class="chapter" data-level="31.2" data-path="phenoflex2.html"><a href="phenoflex2.html#temperature-response-of-the-phenoflex-components"><i class="fa fa-check"></i><b>31.2</b> Temperature response of the <code>PhenoFlex</code> components</a></li>
+<li class="chapter" data-level="31.3" data-path="phenoflex2.html"><a href="phenoflex2.html#overall-impression"><i class="fa fa-check"></i><b>31.3</b> Overall impression</a></li>
+<li class="chapter" data-level="31.4" data-path="phenoflex2.html"><a href="phenoflex2.html#caveats-and-assumptions"><i class="fa fa-check"></i><b>31.4</b> Caveats and assumptions</a></li>
+<li class="chapter" data-level="31.5" data-path="phenoflex2.html"><a href="phenoflex2.html#outlook"><i class="fa fa-check"></i><b>31.5</b> Outlook</a></li>
 <li class="chapter" data-level="" data-path="phenoflex2.html"><a href="phenoflex2.html#ex_phenoflex2"><i class="fa fa-check"></i><code>Exercises</code> on basic <code>PhenoFlex</code> diagnostics</a></li>
 </ul></li>
-<li class="chapter" data-level="33" data-path="phenoflex3.html"><a href="phenoflex3.html"><i class="fa fa-check"></i><b>33</b> Can we improve the performance of <code>PhenoFlex</code>?</a>
+<li class="chapter" data-level="32" data-path="phenoflex3.html"><a href="phenoflex3.html"><i class="fa fa-check"></i><b>32</b> Can we improve the performance of <code>PhenoFlex</code>?</a>
 <ul>
 <li class="chapter" data-level="" data-path="phenoflex3.html"><a href="phenoflex3.html#goals_phenoflex3"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="33.1" data-path="phenoflex3.html"><a href="phenoflex3.html#the-motivation"><i class="fa fa-check"></i><b>33.1</b> The motivation</a></li>
-<li class="chapter" data-level="33.2" data-path="phenoflex3.html"><a href="phenoflex3.html#using-experimental-phenology-data-for-assessing-the-performance-of-phenoflex"><i class="fa fa-check"></i><b>33.2</b> Using experimental phenology data for assessing the performance of <code>PhenoFlex</code></a></li>
-<li class="chapter" data-level="33.3" data-path="phenoflex3.html"><a href="phenoflex3.html#validation"><i class="fa fa-check"></i><b>33.3</b> Validation</a></li>
-<li class="chapter" data-level="33.4" data-path="phenoflex3.html"><a href="phenoflex3.html#conclusions"><i class="fa fa-check"></i><b>33.4</b> Conclusions</a></li>
+<li class="chapter" data-level="32.1" data-path="phenoflex3.html"><a href="phenoflex3.html#the-motivation"><i class="fa fa-check"></i><b>32.1</b> The motivation</a></li>
+<li class="chapter" data-level="32.2" data-path="phenoflex3.html"><a href="phenoflex3.html#using-experimental-phenology-data-for-assessing-the-performance-of-phenoflex"><i class="fa fa-check"></i><b>32.2</b> Using experimental phenology data for assessing the performance of <code>PhenoFlex</code></a></li>
+<li class="chapter" data-level="32.3" data-path="phenoflex3.html"><a href="phenoflex3.html#validation"><i class="fa fa-check"></i><b>32.3</b> Validation</a></li>
+<li class="chapter" data-level="32.4" data-path="phenoflex3.html"><a href="phenoflex3.html#conclusions"><i class="fa fa-check"></i><b>32.4</b> Conclusions</a></li>
 <li class="chapter" data-level="" data-path="phenoflex3.html"><a href="phenoflex3.html#ex_phenoflex3"><i class="fa fa-check"></i><code>Exercises</code> on improving the performance of <code>PhenoFlex</code></a></li>
 </ul></li>
-<li class="chapter" data-level="34" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html"><i class="fa fa-check"></i><b>34</b> Frost risk analysis</a>
+<li class="chapter" data-level="33" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html"><i class="fa fa-check"></i><b>33</b> Frost risk analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#goals_frost_risk"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="34.1" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#spring-frost"><i class="fa fa-check"></i><b>34.1</b> Spring frost</a></li>
-<li class="chapter" data-level="34.2" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#phenology-trend-analysis"><i class="fa fa-check"></i><b>34.2</b> Phenology trend analysis</a></li>
-<li class="chapter" data-level="34.3" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#frost-risk"><i class="fa fa-check"></i><b>34.3</b> Frost risk</a></li>
+<li class="chapter" data-level="33.1" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#spring-frost"><i class="fa fa-check"></i><b>33.1</b> Spring frost</a></li>
+<li class="chapter" data-level="33.2" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#phenology-trend-analysis"><i class="fa fa-check"></i><b>33.2</b> Phenology trend analysis</a></li>
+<li class="chapter" data-level="33.3" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#frost-risk"><i class="fa fa-check"></i><b>33.3</b> Frost risk</a></li>
 <li class="chapter" data-level="" data-path="frost-risk-analysis.html"><a href="frost-risk-analysis.html#exercises_frost_risk"><i class="fa fa-check"></i><code>Exercises</code> on frost risk analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="35" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html"><i class="fa fa-check"></i><b>35</b> A robust method to estimate future frost risks (?)</a>
+<li class="chapter" data-level="34" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html"><i class="fa fa-check"></i><b>34</b> A robust method to estimate future frost risks (?)</a>
 <ul>
 <li class="chapter" data-level="" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html#goals_future_frost_risk"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="35.1" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html#frost-risk-for-future-scenarios"><i class="fa fa-check"></i><b>35.1</b> Frost risk for future scenarios</a></li>
-<li class="chapter" data-level="35.2" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html#validation-1"><i class="fa fa-check"></i><b>35.2</b> Validation</a></li>
-<li class="chapter" data-level="35.3" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html#exercises-for-this-chapter"><i class="fa fa-check"></i><b>35.3</b> <code>Exercises</code> for this chapter</a></li>
+<li class="chapter" data-level="34.1" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html#frost-risk-for-future-scenarios"><i class="fa fa-check"></i><b>34.1</b> Frost risk for future scenarios</a></li>
+<li class="chapter" data-level="34.2" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html#validation-1"><i class="fa fa-check"></i><b>34.2</b> Validation</a></li>
+<li class="chapter" data-level="34.3" data-path="a-robust-method-to-estimate-future-frost-risks.html"><a href="a-robust-method-to-estimate-future-frost-risks.html#exercises-for-this-chapter"><i class="fa fa-check"></i><b>34.3</b> <code>Exercises</code> for this chapter</a></li>
 </ul></li>
-<li class="chapter" data-level="36" data-path="major_concepts.html"><a href="major_concepts.html"><i class="fa fa-check"></i><b>36</b> Major concepts</a>
+<li class="chapter" data-level="35" data-path="major_concepts.html"><a href="major_concepts.html"><i class="fa fa-check"></i><b>35</b> Major concepts</a>
 <ul>
 <li class="chapter" data-level="" data-path="major_concepts.html"><a href="major_concepts.html#goals_major_concepts"><i class="fa fa-check"></i>Learning goals for this lesson</a></li>
-<li class="chapter" data-level="36.1" data-path="major_concepts.html"><a href="major_concepts.html#key-insights"><i class="fa fa-check"></i><b>36.1</b> Key insights</a>
+<li class="chapter" data-level="35.1" data-path="major_concepts.html"><a href="major_concepts.html#key-insights"><i class="fa fa-check"></i><b>35.1</b> Key insights</a>
 <ul>
-<li class="chapter" data-level="36.1.1" data-path="major_concepts.html"><a href="major_concepts.html#tree-dormancy-1"><i class="fa fa-check"></i><b>36.1.1</b> Tree dormancy</a></li>
-<li class="chapter" data-level="36.1.2" data-path="major_concepts.html"><a href="major_concepts.html#climate-change"><i class="fa fa-check"></i><b>36.1.2</b> Climate change</a></li>
-<li class="chapter" data-level="36.1.3" data-path="major_concepts.html"><a href="major_concepts.html#phenology-modeling"><i class="fa fa-check"></i><b>36.1.3</b> Phenology modeling</a></li>
-<li class="chapter" data-level="36.1.4" data-path="major_concepts.html"><a href="major_concepts.html#phenology-responses-to-global-warming"><i class="fa fa-check"></i><b>36.1.4</b> Phenology responses to global warming</a></li>
-<li class="chapter" data-level="36.1.5" data-path="major_concepts.html"><a href="major_concepts.html#the-phenoflex-modeling-framework"><i class="fa fa-check"></i><b>36.1.5</b> The <code>PhenoFlex</code> modeling framework</a></li>
+<li class="chapter" data-level="35.1.1" data-path="major_concepts.html"><a href="major_concepts.html#tree-dormancy-1"><i class="fa fa-check"></i><b>35.1.1</b> Tree dormancy</a></li>
+<li class="chapter" data-level="35.1.2" data-path="major_concepts.html"><a href="major_concepts.html#climate-change"><i class="fa fa-check"></i><b>35.1.2</b> Climate change</a></li>
+<li class="chapter" data-level="35.1.3" data-path="major_concepts.html"><a href="major_concepts.html#phenology-modeling"><i class="fa fa-check"></i><b>35.1.3</b> Phenology modeling</a></li>
+<li class="chapter" data-level="35.1.4" data-path="major_concepts.html"><a href="major_concepts.html#phenology-responses-to-global-warming"><i class="fa fa-check"></i><b>35.1.4</b> Phenology responses to global warming</a></li>
+<li class="chapter" data-level="35.1.5" data-path="major_concepts.html"><a href="major_concepts.html#the-phenoflex-modeling-framework"><i class="fa fa-check"></i><b>35.1.5</b> The <code>PhenoFlex</code> modeling framework</a></li>
 </ul></li>
-<li class="chapter" data-level="36.2" data-path="major_concepts.html"><a href="major_concepts.html#major-concepts-weve-encountered"><i class="fa fa-check"></i><b>36.2</b> Major concepts we’ve encountered</a>
+<li class="chapter" data-level="35.2" data-path="major_concepts.html"><a href="major_concepts.html#major-concepts-weve-encountered"><i class="fa fa-check"></i><b>35.2</b> Major concepts we’ve encountered</a>
 <ul>
-<li class="chapter" data-level="36.2.1" data-path="major_concepts.html"><a href="major_concepts.html#reproducibility-and-transparency"><i class="fa fa-check"></i><b>36.2.1</b> Reproducibility and transparency</a></li>
-<li class="chapter" data-level="36.2.2" data-path="major_concepts.html"><a href="major_concepts.html#tools"><i class="fa fa-check"></i><b>36.2.2</b> Tools</a></li>
-<li class="chapter" data-level="36.2.3" data-path="major_concepts.html"><a href="major_concepts.html#automate-and-move-on"><i class="fa fa-check"></i><b>36.2.3</b> Automate and move on</a></li>
-<li class="chapter" data-level="36.2.4" data-path="major_concepts.html"><a href="major_concepts.html#the-power-of-r"><i class="fa fa-check"></i><b>36.2.4</b> The power of R</a></li>
-<li class="chapter" data-level="36.2.5" data-path="major_concepts.html"><a href="major_concepts.html#curiosity-and-interdisciplinarity"><i class="fa fa-check"></i><b>36.2.5</b> Curiosity and interdisciplinarity</a></li>
-<li class="chapter" data-level="36.2.6" data-path="major_concepts.html"><a href="major_concepts.html#uncertainty"><i class="fa fa-check"></i><b>36.2.6</b> Uncertainty</a></li>
-<li class="chapter" data-level="36.2.7" data-path="major_concepts.html"><a href="major_concepts.html#p-hacking-1"><i class="fa fa-check"></i><b>36.2.7</b> p-hacking</a></li>
-<li class="chapter" data-level="36.2.8" data-path="major_concepts.html"><a href="major_concepts.html#the-dangers-of-machine-learning"><i class="fa fa-check"></i><b>36.2.8</b> The dangers of machine learning</a></li>
-<li class="chapter" data-level="36.2.9" data-path="major_concepts.html"><a href="major_concepts.html#rationalizing"><i class="fa fa-check"></i><b>36.2.9</b> Rationalizing</a></li>
-<li class="chapter" data-level="36.2.10" data-path="major_concepts.html"><a href="major_concepts.html#overfitting"><i class="fa fa-check"></i><b>36.2.10</b> Overfitting</a></li>
-<li class="chapter" data-level="36.2.11" data-path="major_concepts.html"><a href="major_concepts.html#the-process-that-generated-the-data"><i class="fa fa-check"></i><b>36.2.11</b> The process that generated the data</a></li>
-<li class="chapter" data-level="36.2.12" data-path="major_concepts.html"><a href="major_concepts.html#the-importance-of-theory"><i class="fa fa-check"></i><b>36.2.12</b> The importance of theory</a></li>
-<li class="chapter" data-level="36.2.13" data-path="major_concepts.html"><a href="major_concepts.html#conceptual-modeling"><i class="fa fa-check"></i><b>36.2.13</b> Conceptual modeling</a></li>
-<li class="chapter" data-level="36.2.14" data-path="major_concepts.html"><a href="major_concepts.html#consistency-with-existing-theory-and-prior-knowledge"><i class="fa fa-check"></i><b>36.2.14</b> Consistency with existing theory and prior knowledge</a></li>
-<li class="chapter" data-level="36.2.15" data-path="major_concepts.html"><a href="major_concepts.html#model-validity-and-model-validation"><i class="fa fa-check"></i><b>36.2.15</b> Model validity and model validation</a></li>
-<li class="chapter" data-level="36.2.16" data-path="major_concepts.html"><a href="major_concepts.html#our-role-in-research"><i class="fa fa-check"></i><b>36.2.16</b> Our role in research</a></li>
+<li class="chapter" data-level="35.2.1" data-path="major_concepts.html"><a href="major_concepts.html#reproducibility-and-transparency"><i class="fa fa-check"></i><b>35.2.1</b> Reproducibility and transparency</a></li>
+<li class="chapter" data-level="35.2.2" data-path="major_concepts.html"><a href="major_concepts.html#tools"><i class="fa fa-check"></i><b>35.2.2</b> Tools</a></li>
+<li class="chapter" data-level="35.2.3" data-path="major_concepts.html"><a href="major_concepts.html#automate-and-move-on"><i class="fa fa-check"></i><b>35.2.3</b> Automate and move on</a></li>
+<li class="chapter" data-level="35.2.4" data-path="major_concepts.html"><a href="major_concepts.html#the-power-of-r"><i class="fa fa-check"></i><b>35.2.4</b> The power of R</a></li>
+<li class="chapter" data-level="35.2.5" data-path="major_concepts.html"><a href="major_concepts.html#curiosity-and-interdisciplinarity"><i class="fa fa-check"></i><b>35.2.5</b> Curiosity and interdisciplinarity</a></li>
+<li class="chapter" data-level="35.2.6" data-path="major_concepts.html"><a href="major_concepts.html#uncertainty"><i class="fa fa-check"></i><b>35.2.6</b> Uncertainty</a></li>
+<li class="chapter" data-level="35.2.7" data-path="major_concepts.html"><a href="major_concepts.html#p-hacking-1"><i class="fa fa-check"></i><b>35.2.7</b> p-hacking</a></li>
+<li class="chapter" data-level="35.2.8" data-path="major_concepts.html"><a href="major_concepts.html#the-dangers-of-machine-learning"><i class="fa fa-check"></i><b>35.2.8</b> The dangers of machine learning</a></li>
+<li class="chapter" data-level="35.2.9" data-path="major_concepts.html"><a href="major_concepts.html#rationalizing"><i class="fa fa-check"></i><b>35.2.9</b> Rationalizing</a></li>
+<li class="chapter" data-level="35.2.10" data-path="major_concepts.html"><a href="major_concepts.html#overfitting"><i class="fa fa-check"></i><b>35.2.10</b> Overfitting</a></li>
+<li class="chapter" data-level="35.2.11" data-path="major_concepts.html"><a href="major_concepts.html#the-process-that-generated-the-data"><i class="fa fa-check"></i><b>35.2.11</b> The process that generated the data</a></li>
+<li class="chapter" data-level="35.2.12" data-path="major_concepts.html"><a href="major_concepts.html#the-importance-of-theory"><i class="fa fa-check"></i><b>35.2.12</b> The importance of theory</a></li>
+<li class="chapter" data-level="35.2.13" data-path="major_concepts.html"><a href="major_concepts.html#conceptual-modeling"><i class="fa fa-check"></i><b>35.2.13</b> Conceptual modeling</a></li>
+<li class="chapter" data-level="35.2.14" data-path="major_concepts.html"><a href="major_concepts.html#consistency-with-existing-theory-and-prior-knowledge"><i class="fa fa-check"></i><b>35.2.14</b> Consistency with existing theory and prior knowledge</a></li>
+<li class="chapter" data-level="35.2.15" data-path="major_concepts.html"><a href="major_concepts.html#model-validity-and-model-validation"><i class="fa fa-check"></i><b>35.2.15</b> Model validity and model validation</a></li>
+<li class="chapter" data-level="35.2.16" data-path="major_concepts.html"><a href="major_concepts.html#our-role-in-research"><i class="fa fa-check"></i><b>35.2.16</b> Our role in research</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="major_concepts.html"><a href="major_concepts.html#ex_majorconcepts"><i class="fa fa-check"></i><code>Exercises</code> on major concepts</a></li>
 </ul></li>
@@ -584,8 +578,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="winter-chill-projections" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Winter chill projections<a href="winter-chill-projections.html#winter-chill-projections" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="winter-chill-projections" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Winter chill projections<a href="winter-chill-projections.html#winter-chill-projections" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="goals_analysis_examples" class="section level2 unnumbered hasAnchor">
 <h2>Learning goals for this lesson<a href="winter-chill-projections.html#goals_analysis_examples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
@@ -594,11 +588,11 @@ div.csl-indent {
 <li>Get curious about how to do such studies</li>
 </ul>
 </div>
-<div id="winter-chill-projections-1" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> Winter chill projections<a href="winter-chill-projections.html#winter-chill-projections-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="winter-chill-projections-1" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Winter chill projections<a href="winter-chill-projections.html#winter-chill-projections-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This lesson will give you an overview of how winter chill can be modeled. More precisely, it will be a little tour of the studies I’ve done on this in the past. I’ll lead you through these studies to help you understand how the methodological pieces of the puzzle fit together. If everything goes according to plan, you should be able to do most of the analyses that are behind these papers after completing this class.</p>
-<div id="winter-chill-in-oman" class="section level3 hasAnchor" number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> Winter chill in Oman<a href="winter-chill-projections.html#winter-chill-in-oman" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="winter-chill-in-oman" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Winter chill in Oman<a href="winter-chill-projections.html#winter-chill-in-oman" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As a student at the <a href="https://www.uni-kassel.de/fb11agrar/fachgebiete-einrichtungen/opats/startseite.html">University of Kassel</a>, I had the chance to participate in research projects focusing on mountain oases in the Sultanate of Oman. I also worked on these systems for my PhD, where I first started to get interested in winter chill. This wasn’t the original study plan. We were going to calculate nutrient budgets for the oases, and this required measuring the yields of the various fruit trees there. Here’s an impression of the oasis orchards:</p>
 <div class="float">
 <img src="pictures/IMG_8538.JPG" style="width:90.0%" alt="The ‘Hanging Gardens’ of Ash Sharayjah, one of the oases of Al Jabal Al Akhdar" />
@@ -606,10 +600,10 @@ div.csl-indent {
 </div>
 <p>This is where you can find these beautiful villages:</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-4"></span>
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-d253551755dabc77a8ff" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-d253551755dabc77a8ff">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldImagery",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addMarkers","args":[23.07,57.66,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Oases of Al Jabal Al Akhdar",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"setView":[[23.07,57.66],12,[]],"limits":{"lat":[23.07,23.07],"lng":[57.66,57.66]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-53f041927025e65eec93" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-53f041927025e65eec93">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldImagery",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addMarkers","args":[23.07,57.66,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Oases of Al Jabal Al Akhdar",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"setView":[[23.07,57.66],12,[]],"limits":{"lat":[23.07,23.07],"lng":[57.66,57.66]}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
-Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
+Figure 5.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 </p>
 </div>
 <p>Unfortunately, many of the trees in the oasis system we worked in produced no fruits in the years we were there. One of my colleagues, <a href="https://scholar.google.de/citations?user=2UgqSrEAAAAJ&amp;hl=en&amp;oi=ao">Jens Gebauer</a> (now <a href="https://www.hochschule-rhein-waal.de/en/faculties/life-sciences/organisation/professors/prof-dr-habil-jens-gebauer">Professor of Horticultural Sciences at Rhine-Waal University of Applied Sciences</a>) suggested that this could have something to do with lack of chilling. This made sense, because most of the trees in these high-altitude oases were not the typical species of the Arabian Peninsula, but temperate trees, such as pomegranates (<a href="https://en.wikipedia.org/wiki/Pomegranate"><em>Punica granatum</em></a>), walnuts (<a href="https://en.wikipedia.org/wiki/Walnut"><em>Juglans regia</em></a>) or apricots (<a href="https://en.wikipedia.org/wiki/Apricot"><em>Prunus armeniaca</em></a>), as you can see here:</p>
@@ -645,8 +639,8 @@ Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 </div>
 <p>This study, which was ultimately accepted by Climatic Change <span class="citation">(<a href="#ref-luedeling_climate_2009">Luedeling et al., 2009b</a>)</span> <a href="https://link.springer.com/article/10.1007/s10584-009-9581-7"><em>(Link)</em></a>, was the beginning of my chill modeling career. Turns our there was still a lot to learn…</p>
 </div>
-<div id="chill-model-sensitivity" class="section level3 hasAnchor" number="6.1.2">
-<h3><span class="header-section-number">6.1.2</span> Chill model sensitivity<a href="winter-chill-projections.html#chill-model-sensitivity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="chill-model-sensitivity" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Chill model sensitivity<a href="winter-chill-projections.html#chill-model-sensitivity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>After finishing my PhD in Kassel, I moved to the <a href="https://www.ucdavis.edu/">University of California at Davis</a> to work as a Postdoctoral Scholar (I had already done an <a href="https://iad.ucdavis.edu/">MSc in International Agricultural Development</a> there, and I wrote a grant proposal with <a href="http://agis.ucdavis.edu/people/minghua_zhang/index.html">Prof. Minghua Zhang</a>, whose lab I had been working in then). The new project was on projecting climate change impacts on winter chill in the Central Valley, one of the world’s most productive regions for temperate fruit trees.</p>
 <p>The first thing I noticed is that the choice of chill model matters - a lot! I had noticed that there are different models to quantify winter chill, but - like many modelers - I decided to go with the one that seemed easiest to handle. This may have been unavoidable at the time, because I had zero programming skills, but this is really not how we should choose models! We’ll see a bit more evidence of what errors can result from this later.</p>
 <p>After I arrived in California, one of the first things I did was disappear into the library for quite some time to read everything I could find on winter chill. What I found made it pretty clear that model choice was worth looking into. So I used the methodological knowledge I had gained in Oman, created a bunch of temperature scenarios for multiple locations and calculated how chill accumulation was likely to change in the future, according to multiple chill models.</p>
@@ -670,8 +664,8 @@ Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 <li><p>I was going to have to learn programming…</p></li>
 </ul>
 </div>
-<div id="winter-chill-in-california" class="section level3 hasAnchor" number="6.1.3">
-<h3><span class="header-section-number">6.1.3</span> Winter chill in California<a href="winter-chill-projections.html#winter-chill-in-california" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="winter-chill-in-california" class="section level3 hasAnchor" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> Winter chill in California<a href="winter-chill-projections.html#winter-chill-in-california" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The main objective of my stay in California was to produce a winter chill projection for California’s fruit and nut growing region - the Central Valley. Here’s an impression of what some orchards there look like:</p>
 <p><img src="pictures/IMG_1087.JPG" style="width:45.0%" alt="Walnut orchard in California" /> <img src="pictures/IMG_2969.JPG" style="width:45.0%" alt="Pistachio orchard in California" /></p>
 <p>California has a fairly dense <a href="https://cimis.water.ca.gov/">network of weather stations</a>, and I wanted to use records from all of them. And for all of these 100+ stations, I wanted multiple climate scenarios (20 or so). This was going to take a long time! The only way to deal with this was to automate most of the process, which made me look into programming. For some reasons that now seem like a major mistake, I decided to automate many steps in JSL, the programming language of a statistics program called JMP. While this wasn’t a very smart choice, it mostly worked, and I managed to automate most steps. The only step I still had to do manually was run the weather generator (20+ times for each of 100+ weather stations, so this was still pretty annoying…).</p>
@@ -687,8 +681,8 @@ Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 </div>
 <p>This analysis appeared in the journal PLOS ONE <span class="citation">(<a href="#ref-luedeling_climatic_2009">Luedeling et al., 2009d</a>)</span> <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0006166"><em>(Link)</em></a> .</p>
 </div>
-<div id="winter-chill-ratios" class="section level3 hasAnchor" number="6.1.4">
-<h3><span class="header-section-number">6.1.4</span> Winter chill ratios<a href="winter-chill-projections.html#winter-chill-ratios" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="winter-chill-ratios" class="section level3 hasAnchor" number="5.1.4">
+<h3><span class="header-section-number">5.1.4</span> Winter chill ratios<a href="winter-chill-projections.html#winter-chill-ratios" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Having figured out how to automate processing steps (in that JSL language), I could move on to greater numbers of stations. The goal was to produce a chill projection for the whole planet. I identified a good data source for setting this up in the Global Summary of the Day database (we’ll get back to this later). This had useful data for several thousand weather stations (and thousands more of not-so-useful stations, which had to be identified and filtered out). Especially with my fairly poor programming skills, this was a huge endeavor. At some point, the data were being processed on 6 computers, which were running day and night for several weeks. Quite likely, this was not because the analyses were so complex, but because I set things up poorly… Anyway, eventually I managed to process data for about 5000 globally distributed weather stations, for which I calculated multiple chill metrics.</p>
 <p>This provided an opportunity to compare chill models again. So I calculated, for each weather station in my dataset, the ratio between various chill metrics. Had these ratios been largely constant all over the planet (e.g. one Chill Portion always corresponds to 10 Chilling Hours), we would have been faily safe using any of the chill models. Unfortunately, this wasn’t the case, with enormous variation in chill metric ratios around the world.</p>
 <div class="float">
@@ -697,8 +691,8 @@ Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 </div>
 <p>This study got published in the International Journal of Biometeorology <span class="citation">(<a href="#ref-luedeling_global_2011">Luedeling &amp; Brown, 2011a</a>)</span> <a href="https://link.springer.com/article/10.1007/s00484-010-0352-y"><em>(Link)</em></a>.</p>
 </div>
-<div id="a-global-projection-of-future-winter-chill" class="section level3 hasAnchor" number="6.1.5">
-<h3><span class="header-section-number">6.1.5</span> A global projection of future winter chill<a href="winter-chill-projections.html#a-global-projection-of-future-winter-chill" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="a-global-projection-of-future-winter-chill" class="section level3 hasAnchor" number="5.1.5">
+<h3><span class="header-section-number">5.1.5</span> A global projection of future winter chill<a href="winter-chill-projections.html#a-global-projection-of-future-winter-chill" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Based on the same analysis procedures, we were also able to produce a global projection of the likely impacts of climate change on winter chill:</p>
 <div class="float">
 <img src="pictures/Figure_5_Time_Comp.jpg" style="width:90.0%" alt="Projected decline in available winter chill around the world" />
@@ -712,8 +706,8 @@ Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 </div>
 <p>This is one of the reasons why we started working with partners in this region, as well as other countries with similar climatic settings (e.g. South Africa, Chile).</p>
 </div>
-<div id="winter-chill-in-germany" class="section level3 hasAnchor" number="6.1.6">
-<h3><span class="header-section-number">6.1.6</span> Winter chill in Germany<a href="winter-chill-projections.html#winter-chill-in-germany" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="winter-chill-in-germany" class="section level3 hasAnchor" number="5.1.6">
+<h3><span class="header-section-number">5.1.6</span> Winter chill in Germany<a href="winter-chill-projections.html#winter-chill-in-germany" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Germany is not highlighed as particularly vulnerable to chill losses. Analyzing historic chilling trends between 1950, we were able to confirm this impression <span class="citation">(<a href="#ref-luedeling_auswirkungen_2009">Luedeling et al., 2009a</a>)</span> <a href="https://link.springer.com/article/10.1007/s10341-009-0085-4"><em>(Link)</em></a>.</p>
 <div class="float">
 <img src="pictures/Chilling_Germany.png" style="width:90.0%" alt="Winter chill in Germany in 2010, and changes between 1950 and 2010" />
@@ -721,8 +715,8 @@ Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 </div>
 <p>The reason for this lack of major changes is that current winter temperatures in Germany are right in the middle of what appears to be the most effective temperature range for chill accumulation. A little warmer or a little colder therefore doesn’t make much of a difference.</p>
 </div>
-<div id="winter-chill-in-tunisia" class="section level3 hasAnchor" number="6.1.7">
-<h3><span class="header-section-number">6.1.7</span> Winter chill in Tunisia<a href="winter-chill-projections.html#winter-chill-in-tunisia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="winter-chill-in-tunisia" class="section level3 hasAnchor" number="5.1.7">
+<h3><span class="header-section-number">5.1.7</span> Winter chill in Tunisia<a href="winter-chill-projections.html#winter-chill-in-tunisia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Prospects are quite different for orchards in Tunisia. Here we’re close to the warmest margin of the production range for many fruit and nut tree species. We published an assessment of past and future trends in winter chill for an orchard in Central Tunisia in 2018, about 7 years after all the other projection studies shown above. This long break was partly because my day job at the time involved <a href="https://www.worldagroforestry.org/">agroforestry</a>, <a href="https://www.worldagroforestry.org/sites/default/files/Publications/PDFS/JA16154.pdf">decision analysis</a> (you can learn about this in our summer term module <a href="https://agtools.app/decision_analysis/">Decision Analysis and Forecasting in Agriculture</a>) and a few other things, but not winter chill. More importantly, however, it took me quite a while to overcome a major challenge of climate change analysis - where to find appropriate information on future climates.</p>
 <p>Difficulties in finding future climate data may seem surprising, given the ubiquity of climate change research. In fact, finding data is not difficult, but data that can easily be used for the purposes of chill modeling (of the kind I like doing) still wasn’t readily available. For some reason, most future climate projections were mostly disseminated as spatial grids covering various extents. Some datasets were only within my reach as raster files covering the whole planet. At even a moderate spatial resolution of 2.5 arcminutes, each of these grids had a size of about 170 MB. This may not sound like much, but consider that for each climate scenario, we need 12 grids, for the mean daily minimum temperature of each month, and another 12 for the maximum temperature (for some weather generators, we need another 12 for rainfall). Consider further that for state-of-the-art climate change scenarios, we should investigate multiple future climate ‘pathways’. In my earlier studies, we used the so-called SRES emissions scenarios (named after the IPCC <strong>S</strong>pecial <strong>R</strong>eport on <strong>E</strong>missions <strong>S</strong>cenarios), usually focusing on the three most commonly used scenarios B2, A1B and A2. So now we’re already at 72 grids (assuming we don’t need rainfall).</p>
 <p>Since we still have incomplete understanding on how the global climate system works, many research groups have developed so-called ‘General Circulation Models’ (GCMs; many people also use an alternative long form: ‘Global Climate Models’), all of which differ slightly in their projections. We currently have no way of deciding which of these models, if any, is right, so the climate science community decided that we should produce <em>ensemble</em> forecasts, i.e. project changes using outputs from all the available models (that are considered credible). The dataset I typically worked with included 20 GCMs. To make matters worse, I typically wanted to project gradual changes over time by including multiple years in an analysis, e.g. the 2020s, the 2050s and the 2080s. You can probably see where this is headed. When we multiply all these numbers, we realize that we need 4320 grids. The disk space required to store these data (in uncompressed form) is more than 700 GB. This is not impossible to find, but processing this amount of data is cumbersome and time-consuming. Still, I actually managed to set up a data processing structure for this and download all the data to an external hard drive.</p>
@@ -741,8 +735,8 @@ Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 <div class="figcaption">Pistachio tree near Sfax, Central Tunisia, in April of 2016, after a particularly warm winter. This tree clearly didn’t fulfill its chilling requirement</div>
 </div>
 </div>
-<div id="winter-chill-in-chile" class="section level3 hasAnchor" number="6.1.8">
-<h3><span class="header-section-number">6.1.8</span> Winter chill in Chile<a href="winter-chill-projections.html#winter-chill-in-chile" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="winter-chill-in-chile" class="section level3 hasAnchor" number="5.1.8">
+<h3><span class="header-section-number">5.1.8</span> Winter chill in Chile<a href="winter-chill-projections.html#winter-chill-in-chile" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>AFRICLIM solved the future climate data problem for locations in Africa. However, this dataset fell short of what was needed in order to add climate change projection capability to <code>chillR</code>. First, it was unsatisfying that this dataset only covered Africa. Second, users who are only interested in data for a single location, which is what <code>chillR</code> is designed for, shouldn’t have to download a large dataset, before they can run analyses. What was needed was a tool that could quickly access single-location data for weather stations anywhere on the planet.</p>
 <p>One of my early sources of climate information was a tool called ‘ClimateWizard’, put together by my friend and collaborator <a href="https://scholar.google.de/citations?user=Yh2sQY4AAAAJ&amp;hl=de">Evan Girvetz</a>, who now works for the International Centre for Tropical Agriculture (CIAT) in Nairobi. This tool initially only made gridded data available, but already for the California study cited above <span class="citation">(<a href="#ref-luedeling_climatic_2009">Luedeling et al., 2009d</a>)</span> <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0006166"><em>(Link)</em></a>, Evan had written a script to quickly extract information for single locations, which is really all that’s needed for single-site studies. Eventually, at CIAT, he made this function available to a wider audience through an application programming interface (API), to allow accessing outputs from 15 climate models for state-of-the-art RCP scenarios.</p>
 <p>This tool allowed us, in this case led by <a href="https://scholar.google.de/citations?hl=de&amp;user=ibSma_AAAAAJ">Eduardo Fernández</a>, to expand our geographic reach into South America. Focusing on nine locations throughout Chile, Eduardo analyzed past and future chill development across a wide climatic gradient <span class="citation">(<a href="#ref-fernandez2020prospects">Fernandez et al., 2020a</a>)</span> <a href="https://link.springer.com/article/10.1007/s10584-019-02608-1"><em>(Link)</em></a>.</p>
@@ -761,8 +755,8 @@ Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 </div>
 <p>We see here clearly the north-south gradient in available chill, as well as (less clearly) the tendency for lower chill towards the right panels, especially towards the lower right corner.</p>
 </div>
-<div id="chill-projection-for-patagonia" class="section level3 hasAnchor" number="6.1.9">
-<h3><span class="header-section-number">6.1.9</span> Chill projection for Patagonia<a href="winter-chill-projections.html#chill-projection-for-patagonia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="chill-projection-for-patagonia" class="section level3 hasAnchor" number="5.1.9">
+<h3><span class="header-section-number">5.1.9</span> Chill projection for Patagonia<a href="winter-chill-projections.html#chill-projection-for-patagonia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Some locations on our planet may become more hospitable for agriculture, as the climate changes. We used our analysis framework to look into the climatic suitability for fruit and nut trees near agriculture’s southern frontier - in Patagonia, in southern Argentina <span class="citation">(<a href="#ref-delclimate">del Barrio et al., 2020</a>)</span> <a href="https://rmets.onlinelibrary.wiley.com/doi/pdf/10.1002/joc.6649"><em>(Link)</em></a>.</p>
 <div class="float">
 <img src="pictures/Patagonia_map.png" style="width:90.0%" alt="Map of parts of Patagonia in Argentina, showing locations that were analyzed in this study" />
@@ -786,8 +780,8 @@ Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 </div>
 <p>This may all not look very spectacular, but it seems quite likely to me that the small changes we’re seeing will promote many locations from a climate that is really too cool for agriculture, especially for fruit trees, to a fairly optimal situation. For a change, some possibly good news related to climate change (though also this will likely come with negative implications for natural ecosystems and possibly other agricultural systems).</p>
 </div>
-<div id="chill-model-comparison" class="section level3 hasAnchor" number="6.1.10">
-<h3><span class="header-section-number">6.1.10</span> Chill model comparison<a href="winter-chill-projections.html#chill-model-comparison" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="chill-model-comparison" class="section level3 hasAnchor" number="5.1.10">
+<h3><span class="header-section-number">5.1.10</span> Chill model comparison<a href="winter-chill-projections.html#chill-model-comparison" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Eduardo Fernandez recently used our climate change analysis framework to compare chill models <span class="citation">(<a href="#ref-fernandez2020importance">Fernandez et al., 2020b</a>)</span> <a href="https://www.sciencedirect.com/science/article/abs/pii/S1161030120301106"><em>(Link)</em></a>, greatly expanding on my earlier chill model comparisons <span class="citation">(<a href="#ref-luedeling_global_2011">Luedeling et al., 2011a</a>)</span> <a href="https://link.springer.com/article/10.1007/s00484-010-0352-y"><em>(Link)</em></a>. He assembled a collection of 13 approaches to quantify chill accumulation from the literature and applied the models he found to datasets from a number of locations in Germany, Tunisia and Chile (the countries involved in our PASIT project). Here’s a map of the locations:</p>
 <div class="float">
 <img src="pictures/Model_comp_map.png" style="width:90.0%" alt="Locations used for comparing predictions by a total of 13 chill models across different climates" />
@@ -801,8 +795,8 @@ Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 <p>This figure shows the changes predicted by the 13 models (y-axes) across various sites and climate scenarios. Note that Eduardo already did a lot of data compression here, categorizing the various climate models into three categories (warm, moderate and cool), and summarizing across all models in each of the classes. What we see here should be pretty disturbing for everyone who (like me, a decade before) simply chooses the most convenient model for predicting something. This analysis reveals massive differences across the models! This can easily be seen by comparing the color distribution across the rows in each of the panels. A set of equivalent models would have produced the same shade of red or blue for each column of the plots in this figure. The result we obtained is far from that, showing huge differences in model predictions. For locations in Tunisia and Chile, this variation mainly concerns the extent of chill losses, with predictions ranging from rather mild to alarming. For locations in Germany, not even the direction of change is clear, with some models predicting increases, others decreases in available chill.</p>
 <p>These results clearly indicate that <strong>model choice matters</strong>! Fortunately, many of these models seem rather arbitrary and can easily be dismissed. Yet there surely is residual uncertainty about which of these models, if any, makes the right calls. This is an active field of research that creative minds can/will make meaningful contributions to in the future.</p>
 </div>
-<div id="chill-projection-for-all-of-tunisia" class="section level3 hasAnchor" number="6.1.11">
-<h3><span class="header-section-number">6.1.11</span> Chill projection for all of Tunisia<a href="winter-chill-projections.html#chill-projection-for-all-of-tunisia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="chill-projection-for-all-of-tunisia" class="section level3 hasAnchor" number="5.1.11">
+<h3><span class="header-section-number">5.1.11</span> Chill projection for all of Tunisia<a href="winter-chill-projections.html#chill-projection-for-all-of-tunisia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As mentioned above, we projected climate change impacts on winter chill for an orchard near Sfax in Central Tunisia <span class="citation">(<a href="#ref-benmoussa2018climate">Benmoussa et al., 2018</a>)</span> <a href="https://link.springer.com/article/10.1007/s00484-018-1628-x"><em>(Link)</em></a>. This is, however, not the most interesting region in the country for growing temperate fruit and nut trees. Despite its rather modest size, Tunisia is a climatically diverse country, with mountains and plains, coastal areas and interior deserts. Historic and future chill availability therefore shows considerable variation within the country.</p>
 <p>Led by Haifa Benmoussa, we mapped chill accumulation across Tunisia, based on the framework we’ve already encountered <span class="citation">(<a href="#ref-benmoussa2020severe">Benmoussa et al., 2020</a>)</span> <a href="https://link.springer.com/article/10.1007/s10584-020-02774-7"><em>(Link)</em></a> This analysis was based on 20 weather station locations across Tunisia and neighboring countries. By now, you probably have a pretty good idea of how we did this analysis - we just applied the analysis framework we developed to each of the 20 locations. In addition to the site-specific analysis we had produced earlier, we were now able to interpolate our results to produce chill maps that track chill availability in Tunisia over the past few decades:</p>
 <div class="float">
@@ -818,13 +812,13 @@ Figure 6.1: Location of the oases of Al Jabal Al Akhdar in the Sultanate of Oman
 </div>
 <p>What we see here is pretty concerning. The Dynamic Model, which we used to predict chill here, is considered rather credible, and we’re seeing massive decreases in Chill Portions, the units the Dynamic Model uses. This is bad news for most of Tunisia! Note that even in the places where we expect substantial winter chill to remain, farmers will likely have to adapt, because the trees they grow are aligned with the climate of the past. Adaptation strategies may involve transitioning to tree cultivars with low chilling requirements (if such cultivars are available).</p>
 </div>
-<div id="revisiting-chill-accumulation-in-oman" class="section level3 hasAnchor" number="6.1.12">
-<h3><span class="header-section-number">6.1.12</span> Revisiting chill accumulation in Oman<a href="winter-chill-projections.html#revisiting-chill-accumulation-in-oman" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="revisiting-chill-accumulation-in-oman" class="section level3 hasAnchor" number="5.1.12">
+<h3><span class="header-section-number">5.1.12</span> Revisiting chill accumulation in Oman<a href="winter-chill-projections.html#revisiting-chill-accumulation-in-oman" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>After a decade of foraging in other parts of the world, let’s come back to Oman. I’d long been a bit dissatisfied with the initial work we did there. Note that the first analysis was my first study on chill accumulation. At the time, I did not know about the hazards involved in model choice. I also didn’t have proper data on projected future climates then, and the process that converted daily to hourly temperatures was quite a bit less than ideal.</p>
 <p>My PhD supervisor and mentor <a href="https://scholar.google.de/citations?user=ZNvcJJ8AAAAJ&amp;hl=de">Prof. Dr. Andreas Bürkert</a> had pushed me for quite some time to redo the analysis for Oman. With our climate change analysis framework, we could finally do it. Adding some new ideas on how to convert daily into hourly temperatures in a place like the oases of Oman we were interested in (you’ll learn about these ideas later in this module), we produced updated assessments of past winter chill and forecasts of future chill for the oases of Al Jabal Al Akhdar. The results appeared once again in Climatic Change <span class="citation">(<a href="#ref-buerkert2020revisiting">Buerkert et al., 2020</a>)</span> <a href="https://link.springer.com/article/10.1007/s10584-020-02862-8"><em>(Link)</em></a>.</p>
 </div>
-<div id="future-studies" class="section level3 hasAnchor" number="6.1.13">
-<h3><span class="header-section-number">6.1.13</span> Future studies?<a href="winter-chill-projections.html#future-studies" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="future-studies" class="section level3 hasAnchor" number="5.1.13">
+<h3><span class="header-section-number">5.1.13</span> Future studies?<a href="winter-chill-projections.html#future-studies" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now we’ve reached the present. By now you should have a pretty good overview of the state of the art in chill modeling (or the modeling of climate change impacts on any temperature-related phenomenon). By the end of this module, you should be able to do such analyses yourself. The next steps will be up to you!</p>
 </div>
 </div>
