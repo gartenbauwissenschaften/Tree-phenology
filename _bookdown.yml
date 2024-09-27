@@ -6,7 +6,7 @@ language:
 
 rmd_files:
 - index.Rmd
-- 01-intro.Rmd
+# - 01-intro.Rmd ############### not needed anymore
 - 02-intro_tools.Rmd
 - 03-Tree_dormancy.Rmd
 - 04-Climate_change_and_impact_projection.Rmd
